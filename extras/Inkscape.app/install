@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#
+# Convenience script to install the Inkscape wrapper.
+# NB: your PATH value should be as explained in the setup script.
+#
+
+THIS_DIR="$(dirname $0)"
+APP_DIR_NAME="$(basename $THIS_DIR)"
+INSTALL_DIR=/Applications/
+
+cp -r $THIS_DIR $INSTALL_DIR/
+chmod +x $INSTALL_DIR/$APP_DIR_NAME/Contents/MacOs/*
+chmod +x $INSTALL_DIR/$APP_DIR_NAME/setup
+$INSTALL_DIR/$APP_DIR_NAME/setup

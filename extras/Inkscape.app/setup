@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#
+# This script replaces the @@PATH@@ placeholder in the launcher script
+# with the current value of the PATH environment variable.
+# The assumption is that the Inkscape executable is in your PATH and is
+# called 'inkscape'.
+#
+
+LAUNCHER="$(dirname $0)/Contents/MacOS/launcher"
+PATH_VALUE=$(printenv | grep '^PATH=')
+sed -i '' "s|@@PATH@@|$PATH_VALUE|" $LAUNCHER

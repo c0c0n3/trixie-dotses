@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleName</key>
+    <string>Inkscape</string>
+    <key>CFBundleDisplayName</key>
+    <string>Inkscape</string>
+    <key>CFBundleIdentifier</key>
+    <string>org.inkscape.Inkscape</string>
+    <key>CFBundleExecutable</key>
+    <string>launcher</string>
+    <key>CFBundleIconFile</key>
+    <string>Inkscape</string>
+
+    <!--
+     * Supported file types. Affect Finder "Open With" menu and recommended
+     * apps dialog. (Among other things I suppose.)
+     * The interwebs offer plenty of advice on how to do this...wrong. If I
+     * understand the official Apple dev docs (not claiming I do though), the
+     * code below is (close to?) how it should be done these days.
+     * In fact, most of the tags used in the examples I looked at have been
+     * deprecated: Inkscape's own plist as well as Chrome's and, (hear ye,
+     * hear ye!) Safari's.
+    -->
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeName</key>
+        <string>Scalable Vector Graphics Image</string>
+        <key>LSItemContentTypes</key>
+        <array>
+          <string>public.svg-image</string>
+        </array>
+        <key>LSHandlerRank</key>
+        <string>Alternate</string>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+      </dict>
+    </array>
+  </dict>
+</plist>

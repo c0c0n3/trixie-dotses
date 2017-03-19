@@ -1,0 +1,108 @@
+#!/bin/bash
+
+#
+# Simple-minded Inkscape launcher script.
+#
+# This how the script works. If there's an SVG file currently selected in
+# the Finder, then pass it along to Inkscape. In all other cases, start
+# Inkscape with no arguments. We use the 'open' command to start Inkscape
+# as this seems the best way to play along nicely with the Finder. Note
+# that we start a fresh Inkscape instance on each invocation of this
+# script using open's '-n' option.
+#
+# Before you can run this script, you need to set the PATH variable down
+# below so that it contains all the directories Inkscape expects to be in
+# the PATH. (This should be the value of PATH in the shell where you'd
+# normally run Inkscape.) Note that this script assumes the Inkscape
+# executable is called 'inkscape'.
+#
+# NOTES
+# -----
+# 1. Script name. Must be 'launcher'. If you rename it, then you have to
+# update 'Info.plist' and 'setup' accordingly.
+#
+# 2. Environment. Looking at the various scripts in the Inkscape code base
+# to start Inkscape on OS X, it seems I'd need to set a hell of a lot
+# more variables to make for an environment where Inkscape can run smoothly.
+# But when I use it straight from the command line all I have set is the
+# PATH and that's seems to be enough. So I'm not gonna bother for the time
+# being.
+#
+# 3. Single instance. If you'd rather have a single Inkscape instance around
+# (so that clicking on the app icon brings the running instance into focus),
+# just get rid or the '-n' option in the 'open' commands below.
+#
+# 4. Why check for the file type? Couldn't we just pass on the currently
+# selected file in the Finder, if any? Yes we could, but bear in mind
+# Inkscape will display an error dialog if you pass in a file it can't
+# open. This is exactly what you'd expect when trying to open some kind of
+# file Inkscape doesn't know how to handle. But now suppose you click on
+# the Inkscape app in the Launchpad cos you wanna create a new empty doc.
+# If you happen to have the same file selected in a Finder background window
+# you forgot about, then you'll get the same error dialog. (After which
+# Inkscape creates a new document.) I reckon this behaviour would be
+# surprising nine times out of ten! That's why I'm keeping the file type
+# check in this script for the time being, but read on.
+#
+# 5. Improving this script. Checking for file types is not what you want.
+# Think about adding checks for each and every type Inkscape supports!
+# Ouch! What I want: if you do an "Open With" Inkscape in the Finder, then
+# just ask Inkscape to open that file, no checks; otherwise create a new
+# doc when clicking on the Inkscape app (Launchpad, Dock, Finder).
+# But how to know if Inkscape was called to open a file in the Finder or
+# just started from the Launchpad? Doesn't look like you can use the arguments
+# OS X passes to the script. In fact, I was hoping to see a file path argument
+# when opening a file from the Finder and no file argument otherwise, i.e.
+# when starting Inkscape from the Launchpad. But it seems that depending on
+# the current phase of the moon, OS X passes in either an empty array or just
+# a weird argument string (starting with "-psn_"). You can use the code below
+# to see what actually ends up in the arguments vector and on `stdin`.
+#
+# echo $@ > /Users/andrea/Downloads/out
+# while read -r p; do
+#     printf "%s\n" $p >> /Users/andrea/Downloads/out
+# done
+# printenv >> /Users/andrea/Downloads/out
+#
+# 6. Beware of the 'open' command. In our set up the following command
+# *within this launcher script* causes an infinite loop:
+#
+#     open -n -a inkscape
+#
+# The reason for this is that if you don't specify the absolute path of the
+# executable to start, 'open' will try to find it by app name. Now our
+# Info.plist says the app name is 'Inkscape' (case is not relevant, so
+# 'inkscape' matches) which means it'll run what is specified in Info.plist,
+# i.e. this script, getting into an infinite loop. (To break the loop, delete
+# /Applications/Inkscape.app.)
+
+
+
+
+# You have to replace the @@placeholder@@ with an actual PATH=...
+export @@PATH@@
+
+# Apple Script to grab the item currently selected in Finder.
+FINDER_ITEM="$(cat << EOM
+tell application "Finder"
+    set sel to selection
+    if sel is not {} then
+        set hfsPath to item 1 of sel as text
+        set posixPath to (the POSIX path of hfsPath)
+        return posixPath
+    else
+        return {}
+    end if
+end tell
+EOM)"
+
+MAYBE_FILE=$(osascript -e "$FINDER_ITEM")
+
+if [ -f "$MAYBE_FILE" ]; then
+    file "$MAYBE_FILE" | grep -i 'Scalable Vector Graphics'
+    if [[ $? == 0 ]]; then
+        open -n -a "$(which inkscape)" --args "$MAYBE_FILE"
+        exit
+    fi
+fi
+open -n -a "$(which inkscape)"

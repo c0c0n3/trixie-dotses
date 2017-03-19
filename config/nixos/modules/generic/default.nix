@@ -1,0 +1,19 @@
+{
+  imports = [
+    ./aspell.nix
+    ./cli-tools.nix
+    ./dot-link.nix
+    ./emacs.nix
+    ./etermd.nix
+    ./gtk3-settings.nix
+    ./i3e-base.nix
+    ./i3g.nix
+    ./java-dev.nix
+    ./numix.nix
+    ./spacemacs.nix
+    ./swap-file.nix
+    ./users.nix
+    ./vbox-shares.nix
+    ./wmx.nix
+  ];
+}

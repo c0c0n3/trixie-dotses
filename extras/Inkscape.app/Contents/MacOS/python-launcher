@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+
+#
+# Python port of the Bash launcher.
+# Just in case things get more complicated...switch to Python cos 2.7
+# ships with OS X. (NB Python 2.7, not 3.x!)
+#
+
+import os
+import subprocess
+
+
+def output_of(cmd):
+    return subprocess.check_output(cmd).rstrip()
+
+def finder_selection_script():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(script_dir, "finder-selection.scpt")
+
+def current_selection_in_finder():
+    return output_of(["osascript", finder_selection_script()])
+
+def is_svg_file(path):
+    if os.path.isfile(path):
+        file_type = output_of(["file", "-b", path])
+        return "scalable vector graphics" in file_type.lower()
+    else:
+        return False
+
+
+inkscape_exe_name = "inkscape"
+
+# TODO the actual value should be written here at installation time!
+os.environ["PATH"] = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+inkscape_exe_path = output_of(["which", inkscape_exe_name])
+argv = ["open", "-n", "-a", inkscape_exe_path]
+maybe_file = current_selection_in_finder()
+
+if is_svg_file(maybe_file):
+    argv += ["--args", maybe_file]
+
+# open -n -a $(which inkscape)
+# open -n -a $(which inkscape) --args /path/to/file
+os.execvp("open", argv)

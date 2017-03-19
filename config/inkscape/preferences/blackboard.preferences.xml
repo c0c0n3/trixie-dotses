@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<inkscape
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    version="1">
+  <group id="tools">
+    <group id="shapes">
+      <eventcontext
+          id="rect"
+          style="fill:none;stroke:#cccccc;stroke-width:1"
+          rx="8"
+          ry="8"
+          usecurrent="0"/>
+    </group>
+    <eventcontext
+        id="calligraphic"
+        style="fill:#cccccc;stroke:none;"
+        usecurrent="0">
+      <group id="preset">
+        <group
+            id="my-marker"
+            name="my-marker"
+            width="3"
+            mass="2"
+            wiggle="0"
+            angle="90"
+            thinning="0"
+            tremor="0"
+            flatness="0"
+            cap_rounding="1"
+            tracebackground="0"
+            usepressure="0"
+            usetilt="0"/>
+        <group
+            id="my-pen"
+            name="my-pen"
+            width="4"
+            mass="2"
+            wiggle="0"
+            angle="45"
+            thinning="0"
+            tremor="0"
+            flatness="80"
+            cap_rounding="0"
+            usepressure="0"
+            tracebackground="0"
+            usetilt="0"/>
+        <group
+            id="my-calligraphy"
+            name="my-calligraphy"
+            width="10"
+            mass="2"
+            wiggle="0"
+            angle="30"
+            thinning="20"
+            tremor="0"
+            flatness="100"
+            cap_rounding="0"
+            usepressure="0"
+            tracebackground="0"
+            usetilt="0"/>
+      </group>
+    </eventcontext>
+    <eventcontext
+        id="text"
+        style="font-size:16pt;font-family:KG Miss Speechy IPA;fill:#90969b;"
+        usecurrent="0"/>
+  </group>
+  <group id="embedded">
+    <group
+        id="swatches"
+        panel_size="0"
+        panel_mode="1"
+        panel_ratio="100"
+        panel_wrap="0"
+        palette="Pastel"
+        panel_border="0"/>
+  </group>
+</inkscape>

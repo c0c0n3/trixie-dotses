@@ -1,0 +1,229 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+
+# ------------------------------------------------------------------------------
+#                               Navigation
+#
+
+# Use Mouse+$mod to drag floating windows to their wanted position.
+floating_modifier $mod
+
+# Change focus using the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window using the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+
+# Use Font Awesome circle (&#xf111;) as workspace name to make the bar less
+# boring. NB you won't see the circle character below, but it's there, don't
+# delete it! (You should see e.g. "set $ws1 1:" instead of "set $ws1 1:●".)
+# For this to work, you have to make the bar use Font Awesome, see below.
+set $ws1 1:
+set $ws2 2:
+set $ws3 3:
+set $ws4 4:
+set $ws5 5:
+set $ws6 6:
+set $ws7 7:
+set $ws8 8:
+set $ws9 9:
+set $ws10 10:
+
+# Switch to workspace.
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move focused container to workspace.
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# ------------------------------------------------------------------------------
+#                                Layout
+#
+mode "layout" {
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+
+    # resize window (you can also use the mouse for that)
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym Left resize shrink width 1 px or 1 ppt
+    bindsym Down resize grow height 1 px or 1 ppt
+    bindsym Up resize shrink height 1 px or 1 ppt
+    bindsym Right resize grow width 1 px or 1 ppt
+
+    # The split command makes the current window a split container.
+    # Split containers can contain multiple windows. Depending on the
+    # layout of the split container, new windows get placed to the right
+    # of the current one (splith) or new windows get placed below the
+    # current one (splitv).
+
+    # make workspace orientation horizontal (new windows placed on the right)
+    # or vertical (new windows placed below).
+    # NB will only work if the workspace is empty.
+    bindsym h split h
+    bindsym v split v
+
+    # enter fullscreen mode for the focused container
+    bindsym f fullscreen toggle
+
+    # change container layout (stacked, tabbed, toggle split)
+    # NB if windows have no borders (new_window none) then you can only have
+    # a split layout, so the commands below will do nothing.
+    bindsym s layout stacking
+    bindsym t layout tabbed
+    bindsym e layout toggle split
+
+    # toggle tiling / floating
+    bindsym Shift+space floating toggle
+
+    # change focus between tiling / floating windows
+    bindsym space focus mode_toggle
+}
+bindsym $mod+l mode "layout"
+
+# ------------------------------------------------------------------------------
+#                                Session
+#
+mode "session" {
+    # reload the i3 configuration file
+    bindsym Shift+c reload
+    # restart i3 in-place (preserves layout/session; can be used to upgrade i3)
+    bindsym Shift+r restart
+    # exit i3 (logs you out of your X session)
+    bindsym Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+    # system shutdown and reboot
+    bindsym s exec "systemctl poweroff"
+    bindsym r exec "systemctl reboot"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+BackSpace mode "session"
+
+# ------------------------------------------------------------------------------
+#                            App Shortcuts
+#
+
+# Kill focused window.
+bindsym $mod+Shift+k kill
+
+# Start an editor if one is available.
+bindsym $mod+Shift+e exec --no-startup-id "if [[ -n $I3_EDITOR ]]; then exec $I3_EDITOR; fi"
+
+# Start a web browser if one is available.
+bindsym $mod+Shift+w exec --no-startup-id "if [[ -n $I3_BROWSER ]]; then exec $I3_BROWSER; fi"
+
+# Open a terminal.
+bindsym $mod+Shift+Return exec i3-sensible-terminal
+
+# Start a program launcher.
+bindsym $mod+Shift+m exec --no-startup-id "if [[ -n $I3_LAUNCHER ]]; then exec $I3_LAUNCHER; else dmenu_run; fi"
+# NOTE There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+
+# Configure i3bar to show workspace buttons followed by a status line as
+# provided by i3status.
+bar {
+    status_command i3status -c ~/.config/i3/i3status.conf
+
+    # Only show the bar when hitting $mod.
+    # Besides having more screen estate, the advantage of this setting is that
+    # when the bar is hidden, the status line process is paused. According to
+    # the i3 manual, on hiding the bar, the status line process gets a SIGSTOP
+    # (pause) while it gets a SIGCONT (resume) just before showing the bar.
+    # In other words, with this setting, if you ain't looking at the bar you
+    # ain't wasting CPU cycles.
+    mode hide
+
+    #
+    # Bar theme.
+    #
+    position bottom
+    font pango: Ubuntu, Awesome 10
+    strip_workspace_numbers yes
+    separator_symbol " "
+
+    colors {
+        background $bar-bg
+        statusline $bar-fg
+        #                   border        background    text
+        focused_workspace   $bar-bg       $bar-bg       $bar-fg
+        active_workspace    $bar-bg       $bar-bg       $bar-no-focus
+        inactive_workspace  $bar-bg       $bar-bg       $bar-no-focus
+        urgent_workspace    $bar-focus    $bar-focus    $bar-bg
+    }
+}
+
+# ------------------------------------------------------------------------------
+#                         Function/Media Keys
+#
+
+# Volume.
+bindsym XF86AudioMute        exec --no-startup-id amixer -q set Master toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 5%- unmute
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 5%+ unmute
+
+# ------------------------------------------------------------------------------
+#                               i3 Theme
+#
+
+# Font for window titles.
+font pango: Ubuntu 10
+
+# Set wallpaper using feh.
+exec --no-startup-id feh --no-fehbg --bg-fill ~/.config/wallpaper
+
+# Tiny border, no title bar.
+new_window pixel 1
+
+# BG: #2E2E2E
+# Grey 3: #666666
+# Grey 2: #CCCCCC
+# Wewak: #F48F97
+
+set $bar-bg #2E2E2E
+set $bar-fg #CCCCCC
+set $bar-no-focus #666666
+set $bar-focus #F48F97
+
+#                       border      backgr.     text          indicator   child_border
+client.focused          $bar-bg     $bar-bg     $bar-fg       $bar-bg     $bar-bg
+client.focused_inactive $bar-fg     $bar-fg     $bar-bg       $bar-fg     $bar-fg
+client.unfocused        $bar-fg     $bar-fg     $bar-bg       $bar-fg     $bar-fg
+client.urgent           $bar-focus  $bar-focus  $bar-bg       $bar-focus  $bar-focus
+client.placeholder      $bar-bg     $bar-bg     $bar-no-focus $bar-bg     $bar-bg
+
+client.background       $bar-bg
