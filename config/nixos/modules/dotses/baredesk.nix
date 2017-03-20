@@ -77,20 +77,10 @@ in
 
   config = let
     cfg = config.ext.baredesk;
-    terminal = config.ext.etermd.client-cmd-name;
-    etermd = config.ext.etermd.daemon-name;
   in (mkIf cfg.enable
   {
     # Install a system base with i3, Emacs, and useful CLI tools.
     ext.i3e-base.enable = true;
-
-    # i3e-base sets up an Emacs daemon to open terminal buffers. We need this
-    # cos we wanna use the Spacemacs config but Spacemacs is a bit slow when
-    # starting up. Luckily the daemon makes opening a terminal lightning fast!
-    # Here we just make the daemon use our Spacemacs terminal config.
-    systemd.user.services."${etermd}".environment = {
-      SPACECONF="etermd";
-    };
 
     # Install our i3 config for all specified users, set a default wallpaper,
     # and make i3 launch Spacemacs when hitting the editor key.
@@ -101,9 +91,11 @@ in
       editor = "emacs";
     };
 
-    # Install our Spacemacs config for all specified users.
+    # Install Spacemacs with our config for all specified users and enable the
+    # terminal daemon, making it use our Spacemacs terminal config.
     ext.spacemacs.users = cfg.users;
     ext.spacemacs.config.enable = true;
+    ext.spacemacs.config.with-etermd = true;
 
     # Install our Bash config for all specified users.
     ext.bash.config.users = cfg.users;

@@ -55,13 +55,23 @@ in {
         Makes Spacemacs use this powerline-scale.
       '';
     };
+    ext.spacemacs.config.with-etermd = mkOption {
+      type = bool;
+      default = false;
+      description = ''
+        Enable it to start etermd and make it use our Spacemacs config.
+      '';
+    };
   };
 
   config = let
     enabled = length users != 0 && config.ext.spacemacs.config.enable;
     users = config.ext.spacemacs.users;
     font = config.ext.spacemacs.config.font;
+    with-etermd = config.ext.spacemacs.config.with-etermd;
+    etermd = config.ext.etermd.daemon-name;
   in (mkIf enabled {
+
     # Sym-link our Spacemacs config into homes.
     ext.dot-link.files = dot-link.mkLinks users [
       { src = paths.config ".spacemacs.d"; }
@@ -83,6 +93,16 @@ in {
         ")"
       ];
     };
+
+    # If requested, set up an Emacs daemon to open terminal buffers. We do this
+    # cos we wanna use the Spacemacs config but Spacemacs is a bit slow when
+    # starting up. Luckily the daemon makes opening a terminal lightning fast!
+    # SPACECONF makes the daemon use our Spacemacs terminal config.
+    ext.etermd.enable = with-etermd;
+    systemd.user.services."${etermd}".environment = mkIf with-etermd {
+      SPACECONF="etermd";
+    };
+
   });
 
 }
