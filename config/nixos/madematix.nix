@@ -49,6 +49,14 @@
   ext.spacemacs.config.font.size = 36;
 
 
-  ##########  Desktop Eye Candy  ###############################################
+  ##########  Desktop Extras  ##################################################
+
+  # Set any of the following to true to enable, see baredesk module.
+  ext.baredesk = {
+    with-browser = false;    # Use Chrome. NB requires allowUnfree.
+    with-launcher = false;   # Use Synapse instead of dmenu.
+    with-theme = false;      # Eye candy: Numix theme & icons.
+    with-composite = false;  # Eye candy: Compton. NB slows things down in a VM.
+  };
 
 }

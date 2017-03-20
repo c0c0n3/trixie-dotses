@@ -52,22 +52,9 @@ with lib;
 
       # Enable the selected DM. If we have an autoLoginUser, log her in
       # without a password, hiding the display manager login prompt.
-      /*
       displayManager."${dm}" = {
         enable = true;
-        autoLogin = {
-         enable = dm != "slim" && !(isNull user);
-         user = user.name;
-        };
-      };
-      displayManager.auto = {
-        enable = dm == "slim" && !(isNull user);
-        user = user.name;
-      };
-*/
-      displayManager."${dm}" = {
-        enable = true;
-        autoLogin = if dm == "slim" then !(isNull user)
+        autoLogin = if dm == "slim" then !(isNull user)        # NOTE (1)
                     else {
                       enable = !(isNull user);
                       user = user.name;
@@ -83,3 +70,8 @@ with lib;
   };
 
 }
+# Notes
+# -----
+# 1. Auto-login Hack. NixOS DM modules have an `autoLogin` set with `enable`
+# and `user` props. Except for Slim where `autoLogin` is a boolean and you
+# specify the user with `defaultUser`. (Ouch!)

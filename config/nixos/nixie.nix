@@ -10,7 +10,7 @@
   imports = [
     ./modules/dotses
     ./modules/generic
-    ./hidpi.nix
+#    ./hidpi.nix
   ];
 
   networking.hostName = "madematix";
@@ -31,7 +31,15 @@
     enable = true;
     username = "andrea";
   };
-  ext.i3g.enable = true;
+  # ext.i3g.enable = true;
+
+  ext.baredesk = {
+    with-browser = true;     # requires allowUnfree
+    with-launcher = true;
+    with-theme = true;
+    with-composite = true;
+  };
+  nixpkgs.config.allowUnfree = true;
 
   # Make my admin user a member of the Vbox group too.
   users.extraUsers.andrea.extraGroups = [ "vboxsf" ];
@@ -42,8 +50,8 @@
   };
 
   ext.git.config.user = config.users.extraUsers.andrea;
-  ext.spacemacs.config.font.size = 36;
-  ext.i3.config.launcher = "synapse"; # "dmenu_run -fn 'Ubuntu Mono-28'"; i3 doesn't like it
+#  ext.spacemacs.config.font.size = 36;
+
 /*
   environment.systemPackages = with pkgs; [
     chromium albert synapse
@@ -53,15 +61,6 @@
     imagemagick # TODO keep?
 
   ] ++ config.ext.numix.packages;
-#  ext.gtk3.users = [ config.users.extraUsers.andrea ];
-#  ext.numix.enable = true;
 */
-/*
-  services.compton = {
-    enable = true;
-    fade = true;
-    inactiveOpacity = "0.9";
-    menuOpacity = "0.95";
-  };
-*/
+
 }

@@ -98,7 +98,7 @@ with types;
 #
 #   bash = "${pkgs.bashInteractive}/bin/bash";
 #
-# should be standard way, but the two expressions below also work
+# should be the standard way, but the two expressions below also work
 #
 #   bash = "${pkgs.bash}/bin/bash";
 #   bash = pkgs.stdenv.shell;

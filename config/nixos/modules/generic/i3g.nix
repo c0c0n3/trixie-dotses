@@ -1,5 +1,5 @@
 #
-# Integrates the bare-bones desktop provided by i3e-base into GNOME 3.
+# Integrates GNOME 3 with the bare-bones desktop provided by i3e-base.
 #
 { config, lib, pkgs, ... }:
 
@@ -31,9 +31,10 @@ with types;
 
     # Add some more software on top of what GNOME core already provides
     # but get rid of most of GNOME's non-core packages.
-    environment.systemPackages = with pkgs; config.ext.numix.packages ++ [
-      synapse
-    ];
+    environment.systemPackages = with pkgs;
+      config.ext.numix.packages ++
+      [ # TODO
+      ];
     environment.gnome3.excludePackages = [
       # TODO
     ];
