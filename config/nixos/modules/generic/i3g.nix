@@ -1,4 +1,8 @@
 #
+# TODO not working!
+#      worked accidentally in a couple of devices not sure how/why.
+#      probably needs a custom .desktop file, see notes at the bottom.
+#
 # Integrates GNOME 3 with the bare-bones desktop provided by i3e-base.
 #
 { config, lib, pkgs, ... }:

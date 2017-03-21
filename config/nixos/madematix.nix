@@ -17,6 +17,10 @@
   networking.hostName = "madematix";
   ext.swapfile.enable = true;
 
+  # Hide boot loader menu. The loader will boot the latest NixOS generation.
+  # NB you won't be able to rollback to an earlier NixOS generation at boot.
+  boot.loader.timeout = 0;
+
   # VBox setup:
   # - enable virtualbox guest service (even though hardware-configuration.nix
   #   enables it already, we add it here too to make it more visible)

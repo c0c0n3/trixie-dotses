@@ -82,6 +82,11 @@ in
     # Install a system base with i3, Emacs, and useful CLI tools.
     ext.i3e-base.enable = true;
 
+    # Install Spacemacs with our config for all specified users and enable the
+    # terminal daemon, making it use our Spacemacs terminal config.
+    # Also install our Bash config for all specified users.
+    ext.base.config.users = cfg.users;
+
     # Install our i3 config for all specified users, set a default wallpaper,
     # and make i3 launch Spacemacs when hitting the editor key.
     ext.i3.config = {
@@ -90,15 +95,6 @@ in
         "/4ever.eu.splash,-atomic-explosion,-water-148870.jpg";
       editor = "emacs";
     };
-
-    # Install Spacemacs with our config for all specified users and enable the
-    # terminal daemon, making it use our Spacemacs terminal config.
-    ext.spacemacs.users = cfg.users;
-    ext.spacemacs.config.enable = true;
-    ext.spacemacs.config.with-etermd = true;
-
-    # Install our Bash config for all specified users.
-    ext.bash.config.users = cfg.users;
 
     # Install browser and/or app launcher if requested.
     environment.systemPackages = with pkgs;

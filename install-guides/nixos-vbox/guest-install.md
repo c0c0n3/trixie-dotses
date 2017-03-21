@@ -44,6 +44,7 @@ NixOS Guest Setup
 
     $ cd /etc/nixos
     $ nano configuration.nix   # add git to environment.systemPackages
+    $ nixos-rebuild switch
     $ git clone https://github.com/c0c0n3/trixie-dotses.git
     $ mv configuration.nix initial.configuration.nix.bak
     $ ln -s /etc/nixos/trixie-dotses/config/nixos/madematix.nix configuration.nix

@@ -1,10 +1,12 @@
 {
   imports = [
     ./aspell.nix
+    ./base.nix
     ./cli-tools.nix
     ./dot-link.nix
     ./emacs.nix
     ./etermd.nix
+    ./gnomix.nix
     ./gtk3-settings.nix
     ./i3e-base.nix
     ./i3g.nix
