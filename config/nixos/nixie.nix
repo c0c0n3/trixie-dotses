@@ -9,7 +9,7 @@
   imports = [
     ./modules/dotses
     ./modules/generic
-#    ./hidpi.nix
+    ./hidpi.nix
   ];
 
   ##########  Core System Setup  ###############################################
@@ -28,11 +28,15 @@
 
   users.users.andrea.extraGroups = [ "vboxsf" ];
   ext.vbox-shares = {
-    names = [ "github" ];  # [ "dropbox" "github" "playground" "projects" ];
+    names = [ "dropbox" "github" "playground" "projects" ];
     user = config.users.users.andrea;
   };
 
   ext.git.config.user = config.users.users.andrea;
-#  ext.spacemacs.config.font.size = 36;
+  ext.spacemacs.config.font.size = 36;
+
+  environment.systemPackages = [
+     (import ./pkgs/themes/flat-remix-gnome-theme.nix)
+  ];
 
 }
