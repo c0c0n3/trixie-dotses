@@ -47,6 +47,7 @@
   # Tweak Spacemacs font.
   ext.spacemacs.config.font.size = 22;
 
+  ext.gsettings.enable = true;
 
   ##########  Base Dev Env Setup  ##############################################
 

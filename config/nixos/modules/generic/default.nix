@@ -7,6 +7,7 @@
     ./emacs.nix
     ./etermd.nix
     ./gnomix.nix
+    ./gsettings.nix
     ./gtk3-settings.nix
     ./i3e-base.nix
     ./i3g.nix
