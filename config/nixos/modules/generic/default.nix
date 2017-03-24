@@ -14,6 +14,7 @@
     ./numix.nix
     ./spacemacs.nix
     ./swap-file.nix
+    ./trackpad.nix
     ./users.nix
     ./vbox-shares.nix
     ./wmx.nix

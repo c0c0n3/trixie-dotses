@@ -16,9 +16,9 @@ After installing NixOS:
     
 Hacking
 -------
-### This dir
-Top-level Nix expressions to build a system. One file for each box I use,
-named after that box's host name.
+### boxes
+Top-level Nix expressions to build a system. One directory for each box I
+use, named after that box's host name.
 
 ### modules/generic
 General-purpose modules you can possibly use somewhere else.

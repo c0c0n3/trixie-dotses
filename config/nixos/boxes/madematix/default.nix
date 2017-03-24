@@ -6,8 +6,8 @@
 {
 
   imports = [
-    ./modules/dotses
-    ./modules/generic
+    ../../modules/dotses
+    ../../modules/generic
     ./hidpi.nix
   ];
 
@@ -28,6 +28,8 @@
   virtualisation.virtualbox.guest.enable = true;
   boot.initrd.checkJournalingFS = false;
 
+  # Tweak resolution to take advantage of the retina display on my mactop.
+  ext.hidpi.enable = true;
 
   ##########  Desktop Setup  ###################################################
 

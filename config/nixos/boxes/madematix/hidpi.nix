@@ -5,25 +5,43 @@
 #
 { config, lib, pkgs, ... }:
 
+with lib;
+with types;
 {
 
-  # Force screen resolution and DPI as X doesn't get it right.
-  # NOTE (1)
-  services.xserver = {
-    monitorSection = ''
+  options = {
+    ext.hidpi.enable = mkOption {
+      type = bool;
+      default = false;
+      description = ''
+        Enables HiDPI tweaks.
+      '';
+    };
+  };
+
+  config = let
+    enabled = config.ext.hidpi.enable;
+  in (mkIf enabled {
+
+    # Force screen resolution and DPI as X doesn't get it right.
+    # NOTE (1)
+    services.xserver = {
+      monitorSection = ''
         DisplaySize    331 191
-    '';
-  };
+      '';
+    };
 
-  # Tweak GTK apps for HiDPI.
-  # NOTE (2)
-  environment.variables = {
-    GDK_SCALE = "2";
-  };
+    # Tweak GTK apps for HiDPI.
+    # NOTE (2)
+    environment.variables = {
+      GDK_SCALE = "2";
+    };
 
-  # Force KMS.
-  # NOTE (3)
-  boot.kernelParams = [ "video=1920x1200" ];
+    # Force KMS.
+    # NOTE (3)
+    boot.kernelParams = [ "video=1920x1200" ];
+
+  });
 
 }
 # Notes

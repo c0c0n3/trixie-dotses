@@ -47,7 +47,7 @@ NixOS Guest Setup
     $ nixos-rebuild switch
     $ git clone https://github.com/c0c0n3/trixie-dotses.git
     $ mv configuration.nix initial.configuration.nix.bak
-    $ ln -s /etc/nixos/trixie-dotses/config/nixos/madematix.nix configuration.nix
+    $ ln -s /etc/nixos/trixie-dotses/config/nixos/boxes/madematix/default.nix configuration.nix
 
 ### Build madematix
 
