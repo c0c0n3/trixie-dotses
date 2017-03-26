@@ -5,6 +5,13 @@
 
 with lib;
 with types;
+
+let
+  user-theme = (import ../../pkgs/gnome-shell-exts/user-theme);
+  flat-remix = (import ../../pkgs/themes/flat-remix-gnome-theme.nix);
+  shelltile  = (import ../../pkgs/gnome-shell-exts/shelltile.nix);
+  dyntopbar  = (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix);
+in
 {
 
   options = {
@@ -75,8 +82,15 @@ with types;
       '';
     };
     ext.gsettings.appearance.shell-theme = mkOption {
-      type = string;
-      default = "Flat Remix";
+      type = package;
+      default = flat-remix;
+      description = ''
+        GNOME Shell theme.
+      '';
+    };
+    ext.gsettings.shell.extensions = mkOption {
+      type = listOf package;
+      default = [ user-theme shelltile dyntopbar ];
       description = ''
         GNOME Shell theme.
       '';
@@ -95,25 +109,27 @@ with types;
         If true, you can use natural scrolling with the touchpad.
       '';
     };
-  };
 
-#     # Tell gsettings where to find the schemas.
-#      export XDG_DATA_DIRS="${desktop-schemas}:$XDG_DATA_DIRS";
+  };
 
   config = let
     cfg = config.ext.gsettings;
 
     bash = "${pkgs.bashInteractive}/bin/bash";
     set = "${pkgs.glib.dev}/bin/gsettings set";
-#    desktop-schemas = "/run/current-system/sw/share/gsettings-schemas/" +
-#                      "${pkgs.gnome3.gsettings_desktop_schemas.name}";
 
     toBool = b : if b then "true" else "false";
     schema-path = pkg : "/run/current-system/sw/share/gsettings-schemas/" +
-                        "${pkg.name}";  # NOTE (2)
+                        "${pkg.name}";  # NOTE (2) (3)
+    xdg-data-dirs = with pkgs.gnome3;
+      concatMapStringsSep ":" schema-path [
+        gsettings_desktop_schemas gnome-shell-extensions user-theme
+      ];
 
     script = pkgs.writeScriptBin cfg.cmd-name ''
       #!${bash}
+
+      export XDG_DATA_DIRS="${xdg-data-dirs}"
 
       # Look & Feel
       ${set} org.gnome.desktop.background picture-uri '${cfg.wallpaper}'
@@ -124,35 +140,34 @@ with types;
       ${set} org.gnome.desktop.wm.preferences titlebar-font '${cfg.fonts.window-titles}'
       ${set} org.gnome.desktop.interface gtk-theme '${cfg.appearance.gtk-theme}'
       ${set} org.gnome.desktop.interface icon-theme '${cfg.appearance.icon-theme}'
-      ${set} org.gnome.shell.extensions.user-theme name '${cfg.appearance.shell-theme}'
+      ${set} org.gnome.shell.extensions.user-theme name '${cfg.appearance.shell-theme.theme-name}'
 
       # Touchpad
       ${set} org.gnome.desktop.peripherals.touchpad tap-to-click ${toBool cfg.touchpad.tap-to-click}
       ${set} org.gnome.desktop.peripherals.touchpad natural-scroll ${toBool cfg.touchpad.natural-scrolling}
 
-      # Opinionated key bindings
+      # Hard-coded key bindings
       for i in {1..10}
       do
         ${set} org.gnome.desktop.wm.keybindings switch-to-workspace-"$i" "['<Super>$((i % 10))']"
         ${set} org.gnome.desktop.wm.keybindings move-to-workspace-"$i" "['<Super><Shift>$((i % 10))']"
       done
+      ${set} org.gnome.desktop.wm.keybindings close ['<Super><Shift>k']
 
+      # Hard-coded shell extensions
+      #${set} org.gnome.shell enabled-extensions \
+      #  "[ 'user-theme@gnome-shell-extensions.gcampax.github.com', \
+      #     'launch-new-instance@gnome-shell-extensions.gcampax.github.com'  \
+      #   ]"
   '';
   in (mkIf cfg.enable
   {
-    environment.systemPackages = with pkgs; [
-      glib glib.dev gnome3.gsettings_desktop_schemas
+    environment.systemPackages = with pkgs; with gnome3; [
+      glib glib.dev
+      gsettings_desktop_schemas gnome-shell-extensions
+      user-theme flat-remix shelltile dyntopbar
       script
     ];
-    environment.variables = with pkgs; {
-      #XDG_DATA_DIRS = "${desktop-schemas}";  # NOTE (2) (3)
-      XDG_DATA_DIRS =                                          # NOTE (2) (3)
-        "${schema-path gnome3.gsettings_desktop_schemas}" +
-        ":${schema-path gnome3.gnome-shell-extensions}";  # TODO not the right one for
-                                                          # org.gnome.shell.extensions.user-theme
-                                                          # probably comes with user theme ext
-                                                          # which I'll have to pkg myself...
-    };
   });
 
 }
@@ -166,7 +181,14 @@ with types;
 #     $ dconf dump /org/gnome/desktop/ > org.gnome.desktop
 #     $ dconf dump /org/gnome/shell/ > org.gnome.shell
 #
-# 2. GSettings Schemas. Looks like NixOS sym-links them under
+# 2. System Path. Ideally we shouldn't have to hard code it, i.e. this would
+# be better:
+#
+#     "${config.system.path}/share/gsettings-schemas/"
+#
+# but for some reason it causes infinite recursion!
+#
+# 3. GSettings Schemas. Looks like NixOS sym-links them under
 #
 #     /run/current-system/sw/share/gsettings-schemas
 #
@@ -176,13 +198,13 @@ with types;
 #  "At runtime, GSettings looks for schemas in the glib-2.0/schemas
 #   subdirectories of all directories specified in the XDG_DATA_DIRS
 #   environment variable."
-# Straight from the horse's mouth. For some reason NixOS isn't doing it,
-# which is why I'm doing it myself here. But there's possibly better ways
-# to go about this. I've seen a $GSETTINGS_SCHEMAS_PATH variable used all
-# over the show in the GNOME packages, didn't have time to dig deeper though...
+# Straight from the horse's mouth. NixOS GNOME session sets up XDG_DATA_DIRS
+# correctly with all those dirs (see gnome3.nix), but here we have to do it
+# ourselves cos the script may run outside of a GNOME session---e.g. called
+# by another module to do user configuration.
 #
-# 3. Merging of $XDG_DATA_DIRS. NixOS does that for you, so this
-#
-#     XDG_DATA_DIRS = "$XDG_DATA_DIRS:${desktop-schemas}";
-#
-# actually results in duplicating path entries in $XDG_DATA_DIRS.
+# 4. gnome-shell-extensions
+        # TODO not the right one for
+        # org.gnome.shell.extensions.user-theme
+        # probably comes with user theme ext
+        # which I'll have to pkg myself...

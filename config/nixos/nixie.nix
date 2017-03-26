@@ -9,7 +9,7 @@
   imports = [
     ./modules/dotses
     ./modules/generic
-    ./hidpi.nix
+    ./boxes/madematix/hidpi.nix
   ];
 
   ##########  Core System Setup  ###############################################
@@ -25,6 +25,7 @@
     enable = true;
     username = "andrea";
   };
+  ext.gsettings.enable = true;
 
   users.users.andrea.extraGroups = [ "vboxsf" ];
   ext.vbox-shares = {

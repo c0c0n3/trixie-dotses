@@ -68,10 +68,17 @@ with types;
 
     # Add some more software on top of what GNOME core already provides.
     environment.systemPackages = with pkgs;
-      config.ext.numix.packages ++
-      [ # TODO what else?
-      ];
-     fonts.fonts = with pkgs; [
+      config.ext.numix.packages ++ [
+      (import ../../pkgs/gnome-shell-exts/user-theme)
+      (import ../../pkgs/themes/flat-remix-gnome-theme.nix)
+      (import ../../pkgs/gnome-shell-exts/shelltile.nix)
+      (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix)
+    ];
+    services.xserver.desktopManager.gnome3.sessionPath = [
+      (import ../../pkgs/gnome-shell-exts/shelltile.nix)
+      (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix)
+    ];
+    fonts.fonts = with pkgs; [
       ubuntu_font_family
       source-code-pro
       (import ../../pkgs/fonts/alegreya.nix)

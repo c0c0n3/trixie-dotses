@@ -9,6 +9,8 @@ stdenv.mkDerivation rec {
 
   name = "flat-remix-gnome-theme";
 
+  theme-name = "Flat Remix";
+
   src = fetchgit {
     url = https://github.com/daniruiz/Flat-Remix-GNOME-theme.git;
     sha256 = "0ki3wc6phlynf5q34x3np9899v1dg99lb1jngmpmfdk59b2fa65y";
@@ -18,7 +20,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/share/themes
-    cp -r Flat\ Remix $out/share/themes/
+    cp -r "${theme-name}" $out/share/themes/
   '';
 
 }
