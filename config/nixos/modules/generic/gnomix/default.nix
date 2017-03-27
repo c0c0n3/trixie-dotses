@@ -31,7 +31,10 @@ with import ../../../pkgs;
 {
 
   imports = [
-    ./gsettings.nix
+    #./gsettings.nix
+    ./gsettings-look-n-feel.nix
+    ./gsettings-script.nix
+    ./shell-extensions.nix
   ];
 
   options = {
@@ -43,7 +46,7 @@ with import ../../../pkgs;
       '';
     };
     ext.gnomix.autoLoginUser = mkOption {
-      type = types.nullOr types.attrs;
+      type = nullOr attrs;
       default = null;
       description = ''
         If specified, this user gets automatically logged in.
@@ -75,24 +78,14 @@ with import ../../../pkgs;
     environment.systemPackages = with pkgs;
       config.ext.numix.packages ++ [
       user-theme flat-remix-gnome-theme shelltile dynamictopbar
-      /*
-      (import ../../pkgs/gnome-shell-exts/user-theme)
-      (import ../../pkgs/themes/flat-remix-gnome-theme.nix)
-      (import ../../pkgs/gnome-shell-exts/shelltile.nix)
-      (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix)
-      */
     ];
     services.xserver.desktopManager.gnome3.sessionPath = [
       shelltile dynamictopbar
-      # (import ../../pkgs/gnome-shell-exts/shelltile.nix)
-      # (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix)
     ];
     fonts.fonts = with pkgs; [
       ubuntu_font_family
       source-code-pro
       alegreya alegreya-sans
-      # (import ../../pkgs/fonts/alegreya.nix)
-      # (import ../../pkgs/fonts/alegreya-sans.nix)
     ];
 
     # TODO how to specify GNOME settings programmatically?

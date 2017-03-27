@@ -1,11 +1,12 @@
 #
-# GNOME 3 desktop settings.
+# GNOME 3 appearance settings.
 #
 { config, lib, pkgs, ... }:
 
 with lib;
 with types;
 with import ../../../pkgs;
+with import ./gsettings-utils.nix;
 {
 
   options = {
@@ -16,13 +17,6 @@ with import ../../../pkgs;
         Enable it to install a script that'll let you load these settings
         into the GNOME configuration database. The script will be in your
         PATH; run it to load the settings.
-      '';
-    };
-    ext.gsettings.cmd-name = mkOption {
-      type = string;
-      default = "gnomix-settings.load";
-      description = ''
-        The name of the script to load the settings.
       '';
     };
     ext.gsettings.wallpaper = mkOption {
@@ -110,25 +104,7 @@ with import ../../../pkgs;
   config = let
     cfg = config.ext.gsettings;
 
-    bash = "${pkgs.bashInteractive}/bin/bash";
-    set = "${pkgs.glib.dev}/bin/gsettings set";
-
-    toBool = b : if b then "true" else "false";
-    schema-path = pkg : "/run/current-system/sw/share/gsettings-schemas/" +
-                        "${pkg.name}";  # NOTE (2) (3)
-    xdg-data-dirs = with pkgs.gnome3;
-      concatMapStringsSep ":" schema-path [
-        gsettings_desktop_schemas gnome_shell gnome-shell-extensions user-theme
-      ];
-
-    shell-ext = "[" +
-      (concatMapStringsSep ", " (uuid : "'${uuid}'") cfg.shell.extensions) + "]";
-
-    script = pkgs.writeScriptBin cfg.cmd-name ''
-      #!${bash}
-
-      export XDG_DATA_DIRS="${xdg-data-dirs}"
-
+    script = ''
       # Look & Feel
       ${set} org.gnome.desktop.background picture-uri '${toString cfg.wallpaper}'
       ${set} org.gnome.desktop.screensaver picture-uri '${toString cfg.wallpaper}'
@@ -151,55 +127,28 @@ with import ../../../pkgs;
         ${set} org.gnome.desktop.wm.keybindings move-to-workspace-"$i" "['<Super><Shift>$((i % 10))']"
       done
       ${set} org.gnome.desktop.wm.keybindings close "['<Super><Shift>k']"
-
-      # Shell extensions
-      ${set} org.gnome.shell enabled-extensions "${shell-ext}"
-  '';
+    '';
   in (mkIf cfg.enable
   {
     environment.systemPackages = with pkgs; with gnome3; [
       glib glib.dev
       gsettings_desktop_schemas gnome-shell-extensions
-      user-theme flat-remix-gnome-theme shelltile dynamictopbar
-      script
+      flat-remix-gnome-theme
     ];
+
+        # Add a fragment to the gsettings script to enable the extensions.
+    # Also add the schema gsettings is going to need to set the value.
+    ext.gnomix.gsettings.script.lines.tmp = script;
+    ext.gnomix.gsettings.script.xdg-data-dirs = with pkgs.gnome3; [
+      gsettings_desktop_schemas gnome_shell gnome-shell-extensions user-theme
+    ];
+
+    ext.gnomix.shell.extensions.enable = true;
+    ext.gnomix.shell.extensions.packages = [
+      user-theme shelltile dynamictopbar
+    ];
+
+    ext.gnomix.gsettings.script.enable = true;
   });
 
 }
-# Notes
-# -----
-# 1. GNOME Settings. This is how I figured out the lay of the land:
-#  * Specify settings with Tweak Tool
-#  * Find corresponding key/values in dConf UI
-#  * Dump DB paths containing all keys you're interested in:
-#
-#     $ dconf dump /org/gnome/desktop/ > org.gnome.desktop
-#     $ dconf dump /org/gnome/shell/ > org.gnome.shell
-#
-# 2. System Path. Ideally we shouldn't have to hard code it, i.e. this would
-# be better:
-#
-#     "${config.system.path}/share/gsettings-schemas/"
-#
-# but for some reason it causes infinite recursion!
-#
-# 3. GSettings Schemas. Looks like NixOS sym-links them under
-#
-#     /run/current-system/sw/share/gsettings-schemas
-#
-# e.g. you'll find `gsettings-desktop-schemas-3.20.0` in there among others.
-# Each of these dirs should be added to $XDG_DATA_DIRS for `gsettings` to
-# be able to find the corresponding schema though. In fact,
-#  "At runtime, GSettings looks for schemas in the glib-2.0/schemas
-#   subdirectories of all directories specified in the XDG_DATA_DIRS
-#   environment variable."
-# Straight from the horse's mouth. NixOS GNOME session sets up XDG_DATA_DIRS
-# correctly with all those dirs (see gnome3.nix), but here we have to do it
-# ourselves cos the script may run outside of a GNOME session---e.g. called
-# by another module to do user configuration.
-#
-# 4. gnome-shell-extensions
-        # TODO not the right one for
-        # org.gnome.shell.extensions.user-theme
-        # probably comes with user theme ext
-        # which I'll have to pkg myself...
