@@ -5,13 +5,15 @@
 
 with lib;
 with types;
-
+with import ../../../pkgs;
+/*
 let
   user-theme = (import ../../pkgs/gnome-shell-exts/user-theme);
   flat-remix = (import ../../pkgs/themes/flat-remix-gnome-theme.nix);
   shelltile  = (import ../../pkgs/gnome-shell-exts/shelltile.nix);
   dyntopbar  = (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix);
 in
+*/
 {
 
   options = {
@@ -83,7 +85,7 @@ in
     };
     ext.gsettings.appearance.shell-theme = mkOption {
       type = package;
-      default = flat-remix;
+      default = flat-remix-gnome-theme;
       description = ''
         GNOME Shell theme.
       '';
@@ -91,7 +93,7 @@ in
     ext.gsettings.shell.extensions = mkOption {
       type = listOf string;
       default = [
-        user-theme.uuid shelltile.uuid dyntopbar.uuid
+        user-theme.uuid shelltile.uuid dynamictopbar.uuid
         "launch-new-instance@gnome-shell-extensions.gcampax.github.com" ];
       description = ''
         GNOME Shell theme.
@@ -166,7 +168,7 @@ in
     environment.systemPackages = with pkgs; with gnome3; [
       glib glib.dev
       gsettings_desktop_schemas gnome-shell-extensions
-      user-theme flat-remix shelltile dyntopbar
+      user-theme flat-remix-gnome-theme shelltile dynamictopbar
       script
     ];
   });

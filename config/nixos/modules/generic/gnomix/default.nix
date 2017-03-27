@@ -27,7 +27,12 @@
 
 with lib;
 with types;
+with import ../../../pkgs;
 {
+
+  imports = [
+    ./gsettings.nix
+  ];
 
   options = {
     ext.gnomix.enable = mkOption {
@@ -69,20 +74,25 @@ with types;
     # Add some more software on top of what GNOME core already provides.
     environment.systemPackages = with pkgs;
       config.ext.numix.packages ++ [
+      user-theme flat-remix-gnome-theme shelltile dynamictopbar
+      /*
       (import ../../pkgs/gnome-shell-exts/user-theme)
       (import ../../pkgs/themes/flat-remix-gnome-theme.nix)
       (import ../../pkgs/gnome-shell-exts/shelltile.nix)
       (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix)
+      */
     ];
     services.xserver.desktopManager.gnome3.sessionPath = [
-      (import ../../pkgs/gnome-shell-exts/shelltile.nix)
-      (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix)
+      shelltile dynamictopbar
+      # (import ../../pkgs/gnome-shell-exts/shelltile.nix)
+      # (import ../../pkgs/gnome-shell-exts/dynamictopbar.nix)
     ];
     fonts.fonts = with pkgs; [
       ubuntu_font_family
       source-code-pro
-      (import ../../pkgs/fonts/alegreya.nix)
-      (import ../../pkgs/fonts/alegreya-sans.nix)
+      alegreya alegreya-sans
+      # (import ../../pkgs/fonts/alegreya.nix)
+      # (import ../../pkgs/fonts/alegreya-sans.nix)
     ];
 
     # TODO how to specify GNOME settings programmatically?
