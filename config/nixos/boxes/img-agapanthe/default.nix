@@ -58,6 +58,7 @@
     google-chrome # requires allowUnfree
     # (samba.override { enablePrinting = true; }) system-config-printer
     # samba
+    remmina
   ];
 
 /*
