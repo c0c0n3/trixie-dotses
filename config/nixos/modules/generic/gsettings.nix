@@ -89,8 +89,10 @@ in
       '';
     };
     ext.gsettings.shell.extensions = mkOption {
-      type = listOf package;
-      default = [ user-theme shelltile dyntopbar ];
+      type = listOf string;
+      default = [
+        user-theme.uuid shelltile.uuid dyntopbar.uuid
+        "launch-new-instance@gnome-shell-extensions.gcampax.github.com" ];
       description = ''
         GNOME Shell theme.
       '';
@@ -109,7 +111,6 @@ in
         If true, you can use natural scrolling with the touchpad.
       '';
     };
-
   };
 
   config = let
@@ -123,8 +124,11 @@ in
                         "${pkg.name}";  # NOTE (2) (3)
     xdg-data-dirs = with pkgs.gnome3;
       concatMapStringsSep ":" schema-path [
-        gsettings_desktop_schemas gnome-shell-extensions user-theme
+        gsettings_desktop_schemas gnome_shell gnome-shell-extensions user-theme
       ];
+
+    shell-ext = "[" +
+      (concatMapStringsSep ", " (uuid : "'${uuid}'") cfg.shell.extensions) + "]";
 
     script = pkgs.writeScriptBin cfg.cmd-name ''
       #!${bash}
@@ -152,13 +156,10 @@ in
         ${set} org.gnome.desktop.wm.keybindings switch-to-workspace-"$i" "['<Super>$((i % 10))']"
         ${set} org.gnome.desktop.wm.keybindings move-to-workspace-"$i" "['<Super><Shift>$((i % 10))']"
       done
-      ${set} org.gnome.desktop.wm.keybindings close ['<Super><Shift>k']
+      ${set} org.gnome.desktop.wm.keybindings close "['<Super><Shift>k']"
 
-      # Hard-coded shell extensions
-      #${set} org.gnome.shell enabled-extensions \
-      #  "[ 'user-theme@gnome-shell-extensions.gcampax.github.com', \
-      #     'launch-new-instance@gnome-shell-extensions.gcampax.github.com'  \
-      #   ]"
+      # Shell extensions
+      ${set} org.gnome.shell enabled-extensions  "${shell-ext}"
   '';
   in (mkIf cfg.enable
   {
