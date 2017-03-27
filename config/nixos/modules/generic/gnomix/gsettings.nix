@@ -34,8 +34,8 @@ in
       '';
     };
     ext.gsettings.wallpaper = mkOption {
-      type = string;
-      default = "";
+      type = nullOr path;
+      default = null;
       description = ''
         Absolute pathname of the wallpaper picture to use both for the
         desktop and the screensaver.
@@ -138,8 +138,8 @@ in
       export XDG_DATA_DIRS="${xdg-data-dirs}"
 
       # Look & Feel
-      ${set} org.gnome.desktop.background picture-uri '${cfg.wallpaper}'
-      ${set} org.gnome.desktop.screensaver picture-uri '${cfg.wallpaper}'
+      ${set} org.gnome.desktop.background picture-uri '${toString cfg.wallpaper}'
+      ${set} org.gnome.desktop.screensaver picture-uri '${toString cfg.wallpaper}'
       ${set} org.gnome.desktop.interface font-name '${cfg.fonts.interface}'
       ${set} org.gnome.desktop.interface document-font-name '${cfg.fonts.documents}'
       ${set} org.gnome.desktop.interface monospace-font-name '${cfg.fonts.monospace}'
