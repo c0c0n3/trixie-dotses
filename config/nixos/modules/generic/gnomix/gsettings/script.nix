@@ -29,8 +29,8 @@ with types;
       description = ''
         The packages containing the GSettings schemas that have to be available
         to the gsettings for it to be able to set values in the config DB.
-        Each module adds packages depending on what settings they use in the
-        lines option.
+        Each of our gsettings modules must add packages here depending on what
+        settings it use in the lines option.
       '';
     };
   };
@@ -54,8 +54,11 @@ with types;
 
       ${concatStringsSep "\n" (attrValues cfg.lines)}
     '';
-  in (mkIf enabled {
-    environment.systemPackages = [ script ];
+  in (mkIf enabled
+  {
+    # Install the script as well as all the packages containing the referenced
+    # schemas.
+    environment.systemPackages = [ script ] ++ cfg.xdg-data-dirs;
   });
 
 }
