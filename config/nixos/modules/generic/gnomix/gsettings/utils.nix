@@ -14,14 +14,20 @@ rec {
   # e.g. (outer quotes and gsettings path omitted from RHS to improve
   # legibility)
   #     setIf null   "some.schema key"  ===>
+  #     setIf [null] "some.schema key"  ===>
   #     setIf "hi"   "some.schema key"  ===> gsettings set some.schema key 'hi'
   #     setIf ""     "some.schema key"  ===> gsettings set some.schema key ''
   #     setIf [1 2]  "s k"              ===> gsettings set s k "['1', '2']"
   #     setIf []     "s k"              ===> gsettings set s k "[]"
   setIf = v : k :
+    let
+      setList = vs :
+        if (any (x : x == null) vs) then ""
+        else "${set} ${k} ${lst v}";
+    in
     if v == null then ""
     else
-      if isList v then "${set} ${k} ${lst v}"
+      if isList v then setList v
       else "${set} ${k} ${val v}";
 
   # converts a boolean to it string rep.

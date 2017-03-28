@@ -25,7 +25,7 @@
     enable = true;
     username = "andrea";
   };
-  ext.gsettings.enable = true;
+  ext.gnomix.gsettings.enable = true;
 
   users.users.andrea.extraGroups = [ "vboxsf" ];
   ext.vbox-shares = {

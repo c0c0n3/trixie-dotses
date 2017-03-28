@@ -60,7 +60,7 @@ with import ./utils.nix;
       listToAttrs (zipListsWith nameValuePair ks vs);
 
     script = setIfFragment "Key bindings" ({
-      "org.gnome.desktop.wm.keybindings close" = cfg.close;
+      "org.gnome.desktop.wm.keybindings close" = [ cfg.close ];
     } // (mk-set "org.gnome.desktop.wm.keybindings switch-to-workspace-"
                  cfg.switch-to-workspace)
       // (mk-set "org.gnome.desktop.wm.keybindings move-to-workspace-"
