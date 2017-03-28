@@ -5,8 +5,12 @@
 
 with lib;
 with types;
-with import ./gsettings-utils.nix;
+with import ../gsettings/utils.nix;
 {
+
+  imports = [
+    ./user-theme.nix
+  ];
 
   options = {
     ext.gnomix.shell.extensions.enable = mkOption {
@@ -24,7 +28,7 @@ with import ./gsettings-utils.nix;
         attribute set to the UUID value as found in the extension's
         metadata. Also we expect the package links up the extension schema
         correctly as done in the NixOS shell extension packages or in our
-        extension packages in `pkgs/gnome-shell-exts`.
+        extension packages---see `pkgs/gnome-shell-exts`.
         We install each package and enable it in the GNOME Shell.
       '';
     };
@@ -32,11 +36,11 @@ with import ./gsettings-utils.nix;
       type = listOf string;
       default = [];
       description = ''
-        GNOME Shell extension UUID's. These are the UUID's of extensions you've
+        GNOME Shell extension UUID's. These are UUID's of extensions you've
         installed without using any of the packages listed in
           ext.gnomix.shell.extensions.packages
         We enable the extensions corresponding to the listed UUID's in the GNOME
-        Shell but we don't check the extension is actually installed correctly.
+        Shell but we don't check each extension is actually installed correctly.
       '';
     };
   };
@@ -46,9 +50,9 @@ with import ./gsettings-utils.nix;
     enabled = cfg.enable;
 
     uuids = cfg.uuids ++ (map (p : p.uuid) cfg.packages);
-    uuids-gvalue = "[" +
-                   (concatMapStringsSep ", " (u : "'${u}'") uuids) +
-                   "]";
+    script = setIfFragment "Shell extensions" {
+      "org.gnome.shell enabled-extensions" = uuids;
+    };
   in (mkIf enabled {
     # Install each extension provided as a Nix package and tell the NixOS
     # GNOME module to make the corresponding schemas available through
@@ -57,12 +61,9 @@ with import ./gsettings-utils.nix;
     environment.systemPackages = cfg.packages;
     services.xserver.desktopManager.gnome3.sessionPath = cfg.packages;
 
-    # Add a fragment to the gsettings script to enable the extensions.
-    # Also add the schema gsettings is going to need to set the value.
-    ext.gnomix.gsettings.script.lines.shell-extensions = ''
-      # Shell extensions
-      ${set} org.gnome.shell enabled-extensions "${uuids-gvalue}"
-    '';
+    # Add a fragment to the gsettings script to enable the extensions and
+    # specify the schema gsettings is going to need to set the value.
+    ext.gnomix.gsettings.script.lines.shell-extensions = script;
     ext.gnomix.gsettings.script.xdg-data-dirs = [ pkgs.gnome3.gnome_shell ];
   });
 

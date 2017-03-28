@@ -31,10 +31,8 @@ with import ../../../pkgs;
 {
 
   imports = [
-    #./gsettings.nix
-    ./gsettings-look-n-feel.nix
-    ./gsettings-script.nix
-    ./shell-extensions.nix
+    ./gsettings
+    ./shell-extensions
   ];
 
   options = {
