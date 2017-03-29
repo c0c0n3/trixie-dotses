@@ -17,6 +17,14 @@ with import ./utils.nix;
         The name of the script to load the settings.
       '';
     };
+    ext.gnomix.gsettings.script.package = mkOption {
+      type = nullOr package;
+      default = null;
+      description = ''
+        The package of the script to load the settings. We'll populate it
+        automatically on enabling this module.
+      '';
+    };
     ext.gnomix.gsettings.script.lines = mkOption {
       type = attrsOf string;
       default = {};
@@ -60,6 +68,10 @@ with import ./utils.nix;
     # Install the script as well as all the packages containing the referenced
     # schemas.
     environment.systemPackages = [ script ] ++ cfg.xdg-data-dirs;
+
+    # Populate the script package reference so it can be used by other modules
+    # to call the script.
+    ext.gnomix.gsettings.script.package = script;
   });
 
 }

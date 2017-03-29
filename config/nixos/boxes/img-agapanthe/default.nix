@@ -43,6 +43,8 @@
     enable = true;
     username = "andrea";
   };
+  # TODO you have to run the script to install our GNOME config cos the
+  # automated running of it on sys activation is currently broken!
 
   # Add custom key binding for Chrome.
   ext.gnomix.gsettings.keys.custom = [

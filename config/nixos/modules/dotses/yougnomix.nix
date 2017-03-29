@@ -52,6 +52,7 @@ in
 
       config = {
         enable = true;
+        users = [ owner ];  # TODO currently broken, run script manually!
         defaults.enable = true;
       };
       gsettings.wallpaper = paths.wallpapers
