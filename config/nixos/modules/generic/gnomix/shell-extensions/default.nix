@@ -53,7 +53,7 @@ with import ../gsettings/utils.nix;
     script = setIfFragment "Shell extensions" {
       "org.gnome.shell enabled-extensions" = uuids;
     };
-  in (mkIf enabled {
+  in (mkIf enabled {  # NOTE (1)
     # Install each extension provided as a Nix package and tell the NixOS
     # GNOME module to make the corresponding schemas available through
     # $XDG_DATA_DIRS. (We assume the package has symlinked the schema dirs
@@ -68,3 +68,8 @@ with import ../gsettings/utils.nix;
   });
 
 }
+# Notes
+# -----
+# 1. GSettings script. If `gnomix.config.enable == false` then the settings
+# script doesn't get generated which means the shell extensions won't be
+# enabled.

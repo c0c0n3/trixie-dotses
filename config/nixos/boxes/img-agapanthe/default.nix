@@ -44,10 +44,15 @@
     username = "andrea";
   };
 
+  # Add custom key binding for Chrome.
+  ext.gnomix.gsettings.keys.custom = [
+    { name    = "Browser";
+      command = "google-chrome-stable";
+      binding = "<Super><Shift>w";
+    }];
+
   # Tweak Spacemacs font.
   ext.spacemacs.config.font.size = 22;
-
-  ext.gnomix.gsettings.enable = true;
 
   ##########  Base Dev Env Setup  ##############################################
 

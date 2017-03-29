@@ -1,11 +1,12 @@
 #
 # Script to load GSettings specified by gnomix modules into the GNOME config
-# DB.
+# DB. The script will be in your PATH so you can run it to load the settings.
 #
 { config, lib, pkgs, ... }:
 
 with lib;
 with types;
+with import ./utils.nix;
 {
 
   options = {
@@ -28,22 +29,22 @@ with types;
       default = [];
       description = ''
         The packages containing the GSettings schemas that have to be available
-        to the gsettings for it to be able to set values in the config DB.
+        to gsettings for it to be able to set values in the config DB.
         Each of our gsettings modules must add packages here depending on what
-        settings it use in the lines option.
+        settings it uses in the lines option. We install each package you list
+        here.
       '';
     };
   };
 
   config = let
     cfg = config.ext.gnomix.gsettings.script;
-    enabled = config.ext.gnomix.gsettings.enable &&
-              length (attrNames cfg.lines) > 0;
+    enabled = config.ext.gnomix.config.enable;  # NOTE (1)
 
     bash = "${pkgs.bashInteractive}/bin/bash";
 
     schema-path = pkg : "/run/current-system/sw/share/gsettings-schemas/" +
-                        "${pkg.name}";  # NOTE (1) (2)
+                        "${pkg.name}";  # NOTE (2) (3)
     xdg-data-dirs = concatMapStringsSep ":" schema-path
                       (unique cfg.xdg-data-dirs);
 
@@ -52,7 +53,7 @@ with types;
 
       export XDG_DATA_DIRS="${xdg-data-dirs}"
 
-      ${concatStringsSep "\n" (attrValues cfg.lines)}
+      ${unlines (attrValues cfg.lines)}
     '';
   in (mkIf enabled
   {
@@ -64,14 +65,18 @@ with types;
 }
 # Notes
 # -----
-# 1. System Path. Ideally we shouldn't have to hard code it, i.e. this would
+# 1. Script Generation. If no module adds lines, we gonna end up with a script
+# with no statements past the `export`. So it'll do nothing when you run it.
+# But we still keep to avoid runtime errors if other modules call it.
+#
+# 2. System Path. Ideally we shouldn't have to hard code it, i.e. this would
 # be better:
 #
 #     "${config.system.path}/share/gsettings-schemas/"
 #
 # but for some reason it causes infinite recursion!
 #
-# 2. GSettings Schemas. Looks like NixOS sym-links them under
+# 3. GSettings Schemas. Looks like NixOS sym-links them under
 #
 #     /run/current-system/sw/share/gsettings-schemas
 #

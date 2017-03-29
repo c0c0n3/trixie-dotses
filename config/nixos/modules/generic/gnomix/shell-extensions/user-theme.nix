@@ -55,7 +55,7 @@ with import ../gsettings/utils.nix;
   in (mkIf enabled
   {
     # Install and enable the extension in the GNOME Shell.
-    ext.gnomix.shell.extensions.packages = [ user-theme ];
+    ext.gnomix.shell.extensions.packages = [ user-theme ];  # NOTE (1)
 
     # Add a fragment to the gsettings script to configure the extension and
     # specify the schema gsettings is going to need to set config values.
@@ -69,3 +69,6 @@ with import ../gsettings/utils.nix;
   });
 
 }
+# Notes
+# 1. Shell extensions module. It's got to be enabled for this module to
+# actually to anything.

@@ -10,7 +10,6 @@ with lib;
 with types;
 with import ./utils.nix;
 {
-  # TODO get rid of default values. move default config to gnomix/default.nix?
 
   options = {
     ext.gnomix.gsettings.wallpaper = mkOption {
@@ -23,44 +22,58 @@ with import ./utils.nix;
     };
     ext.gnomix.gsettings.fonts.window-titles = mkOption {
       type = nullOr string;
-      default = "Ubuntu Medium 11";
+      default = null;
       description = ''
         Window titles font.
       '';
     };
     ext.gnomix.gsettings.fonts.interface = mkOption {
       type = nullOr string;
-      default = "Ubuntu Regular 13";
+      default = null;
       description = ''
         Interface font.
       '';
     };
     ext.gnomix.gsettings.fonts.documents = mkOption {
       type = nullOr string;
-      default = "Ubuntu Regular 13";
+      default = null;
       description = ''
         Documents font.
       '';
     };
     ext.gnomix.gsettings.fonts.monospace = mkOption {
       type = nullOr string;
-      default = "Ubuntu Mono Regular 15";
+      default = null;
       description = ''
         Monospace font.
       '';
     };
     ext.gnomix.gsettings.gtk-theme = mkOption {
       type = nullOr string;
-      default = "Numix";
+      default = null;
       description = ''
         GTK theme.
       '';
     };
+    ext.gnomix.gsettings.gtk-theme-prefer-dark = mkOption {
+      type = nullOr bool;
+      default = null;
+      description = ''
+        Should GTK use the dark theme variant if available?
+      '';
+    };
     ext.gnomix.gsettings.icon-theme = mkOption {
       type = nullOr string;
-      default = "Numix-Circle";
+      default = null;
       description = ''
         Icon theme.
+      '';
+    };
+    ext.gnomix.gsettings.clock-show-date = mkOption {
+      type = nullOr bool;
+      default = null;
+      description = ''
+        Wanna see the date too on the status bar?
       '';
     };
   };
@@ -68,7 +81,7 @@ with import ./utils.nix;
   config = let
     cfg = config.ext.gnomix.gsettings;
 
-    script = setIfFragment "Look & Feel" {  # NOTE (2)
+    script1 = setIfFragment "Look & Feel" {  # NOTE (2)
       "org.gnome.desktop.background picture-uri" = cfg.wallpaper;
       "org.gnome.desktop.screensaver picture-uri" = cfg.wallpaper;
       "org.gnome.desktop.interface font-name" = cfg.fonts.interface;
@@ -77,11 +90,21 @@ with import ./utils.nix;
       "org.gnome.desktop.wm.preferences titlebar-font" = cfg.fonts.window-titles;
       "org.gnome.desktop.interface gtk-theme" = cfg.gtk-theme;
       "org.gnome.desktop.interface icon-theme" = cfg.icon-theme;
+      "org.gnome.desktop.interface clock-show-date" = cfg.clock-show-date;
     };
+    script2 = if cfg.gtk-theme-prefer-dark == null then ""
+    else ''
+      mkdir -p $HOME/.config/gtk-3.0
+      cat <<EOF > $HOME/.config/gtk-3.0/settings.ini
+      [Settings]
+      gtk-application-prefer-dark-theme=${if cfg.gtk-theme-prefer-dark
+                                          then "1" else "0"}
+      EOF
+    ''; # NOTE (3)
   in {  # NOTE (1)
     # Add a fragment to the gsettings script to store our settings into the
     # GNOME config DB.
-    ext.gnomix.gsettings.script.lines.look-n-feel = script;
+    ext.gnomix.gsettings.script.lines.look-n-feel = script1 + script2;
 
     # Specify the schema gsettings is going to need to set our config values.
     ext.gnomix.gsettings.script.xdg-data-dirs = with pkgs.gnome3; [
@@ -93,6 +116,13 @@ with import ./utils.nix;
 # Notes
 # -----
 # 1. Enabling Config. Pointless to add an "enabled" check here. Blindly add
-# lines to the script: if gsettings.enable == false nothing happens.
+# lines to the script: if gnomix.config.enable == false nothing happens.
+#
 # 2. Null values. The scriptFragment function skips them, so if null, the
 # option's value isn't set in the GNOME DB.
+#
+# 3. GTK dark theme. This is a funny one. If you specify a theme name or icons
+# in `settings.ini` GNOME ignores it. In fact, these values are stored in the
+# GSettings DB. But there doesn't seem to be a key for the dark theme which is
+# probably why the Tweak Tool writes this setting to `settings.ini`. So we're
+# doing the same.

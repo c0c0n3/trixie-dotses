@@ -68,8 +68,12 @@ rec {
   let
     cmds = filter (x : x != "")
                   (mapAttrsToList (n : v : setIf v n) kvSet);
-    lines = [ "# ${header}" ] ++ cmds;
+    lines = if length cmds > 0 then [ "# ${header}" ] ++ cmds ++ [ "" ]
+            else [];
   in
-    concatStringsSep "\n" lines;
+    unlines lines;
+
+  # joins a list of strings appending a new line to each string.
+  unlines = concatStringsSep "\n";
 
 }
