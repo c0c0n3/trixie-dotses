@@ -10,6 +10,9 @@
 
 with lib;
 with types;
+let
+  paths = import ./paths.nix;
+in
 {
 
   options = {
@@ -41,10 +44,19 @@ with types;
     ext.users.admins = [ owner-name ];
 
     # Build a GNOME desktop for him and log him in automatically, hiding the
-    # display manager.
+    # display manager. Also spice up the base GNOME desktop a bit with our
+    # default GNOME configuration and wallpaper.
     ext.gnomix = {
       enable = true;
       autoLoginUser = owner;
+
+      config = {
+        enable = true;
+        users = [ owner ];  # TODO currently broken, run script manually!
+        defaults.enable = true;
+      };
+      gsettings.wallpaper = paths.wallpapers
+        "/4ever.eu.splash,-atomic-explosion,-water-148870.jpg";
     };
 
     # Make him use our Spacemacs and Bash config.

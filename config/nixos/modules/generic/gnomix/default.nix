@@ -15,11 +15,8 @@
 # * Emacs the default editor system-wide (`EDITOR` environment variable)
 #
 # The Emacs terminal daemon is available from the CLI, you may want to bind
-# the command to a key combination---as in i3. This module also installs the
-# Numix theme and icons as well as some extra fonts: Alegreya, Ubuntu, and
-# Source Code Pro. To use any of these goodies you'll have to set them in
-# the GNOME prefs yourself.
-
+# the command to a key combination---as in i3.
+#
 # This is a full-blown, fat desktop. If you'd rather want a lightweight one,
 # look at the `i3e-base` module.
 #
@@ -28,6 +25,13 @@
 with lib;
 with types;
 {
+
+  imports = [
+    ./gsettings
+    ./shell-extensions
+    ./config-defaults.nix
+    ./config.nix
+  ];
 
   options = {
     ext.gnomix.enable = mkOption {
@@ -38,7 +42,7 @@ with types;
       '';
     };
     ext.gnomix.autoLoginUser = mkOption {
-      type = types.nullOr types.attrs;
+      type = nullOr attrs;
       default = null;
       description = ''
         If specified, this user gets automatically logged in.
@@ -66,33 +70,6 @@ with types;
       desktopManager.gnome3.enable = true;
     };
 
-    # Add some more software on top of what GNOME core already provides.
-    environment.systemPackages = with pkgs;
-      config.ext.numix.packages ++
-      [ # TODO what else?
-      ];
-     fonts.fonts = with pkgs; [
-      ubuntu_font_family
-      source-code-pro
-      (import ../../pkgs/fonts/alegreya.nix)
-      (import ../../pkgs/fonts/alegreya-sans.nix)
-    ];
-
-    # TODO how to specify GNOME settings programmatically?
-    # It can be done using dconf + gsettings, see e.g.
-    #   https://github.com/pixelastic/dconf-export
-    # but how to do it in NixOS?!
-    # Things I'd like to set:
-    # - key bindings similar to i3, terminal daemon in particular
-    # - numix theme & icons
-    # - prefer dark theme
-    # - default fonts
-    # - wallpaper
-    # - gnome-terminal w/o menu + font spec
-    # - GNOME shell
-    #   * extensions: User Themes, Shelltile, Dynamic Top Bar
-    #   * theme: Flat Remix
-    # - what else?
   });
 
 }

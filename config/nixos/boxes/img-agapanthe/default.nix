@@ -43,11 +43,18 @@
     enable = true;
     username = "andrea";
   };
+  # TODO you have to run the script to install our GNOME config cos the
+  # automated running of it on sys activation is currently broken!
+
+  # Add custom key binding for Chrome.
+  ext.gnomix.gsettings.keys.custom = [
+    { name    = "Browser";
+      command = "google-chrome-stable";
+      binding = "<Super><Shift>w";
+    }];
 
   # Tweak Spacemacs font.
   ext.spacemacs.config.font.size = 22;
-
-  ext.gsettings.enable = true;
 
   ##########  Base Dev Env Setup  ##############################################
 
@@ -58,6 +65,7 @@
     google-chrome # requires allowUnfree
     # (samba.override { enablePrinting = true; }) system-config-printer
     # samba
+    remmina
   ];
 
 /*

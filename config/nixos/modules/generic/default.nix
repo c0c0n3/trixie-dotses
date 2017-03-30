@@ -6,8 +6,7 @@
     ./dot-link.nix
     ./emacs.nix
     ./etermd.nix
-    ./gnomix.nix
-    ./gsettings.nix
+    ./gnomix
     ./gtk3-settings.nix
     ./i3e-base.nix
     ./i3g.nix

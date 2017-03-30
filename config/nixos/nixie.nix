@@ -9,7 +9,7 @@
   imports = [
     ./modules/dotses
     ./modules/generic
-    ./hidpi.nix
+    ./boxes/madematix/hidpi.nix
   ];
 
   ##########  Core System Setup  ###############################################
