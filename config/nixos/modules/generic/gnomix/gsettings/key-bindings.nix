@@ -12,6 +12,20 @@ with import ./utils.nix;
 {
 
   options = {
+    ext.gnomix.gsettings.keys.switch-to-workspace-down = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to switch to the next workspace down the stack.
+      '';
+    };
+    ext.gnomix.gsettings.keys.switch-to-workspace-up = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to switch to the next workspace up in the stack.
+      '';
+    };
     ext.gnomix.gsettings.keys.switch-to-workspace = mkOption {
       type = nullOr string;
       default = null;
@@ -34,11 +48,60 @@ with import ./utils.nix;
         workspace, ..., "k9" to the 9th, and "k0" to the 10th.
       '';
     };
-    ext.gnomix.gsettings.keys.close = mkOption {
-      type = nullOr string;
+    ext.gnomix.gsettings.keys.move-to-monitor-left = mkOption {
+      type = nullOr (listOf string);
       default = null;
       description = ''
-        Key combination to close a window.
+        List of key combinations to move to the monitor to the left.
+      '';
+    };
+    ext.gnomix.gsettings.keys.move-to-monitor-right = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to move to the monitor to the right.
+      '';
+    };
+    ext.gnomix.gsettings.keys.move-to-monitor-up = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to move to the monitor above.
+      '';
+    };
+    ext.gnomix.gsettings.keys.move-to-monitor-down = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to move to the monitor below.
+      '';
+    };
+    ext.gnomix.gsettings.keys.close = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to close a window.
+      '';
+    };
+    ext.gnomix.gsettings.keys.maximize = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to maximise a window.
+      '';
+    };
+    ext.gnomix.gsettings.keys.unmaximize = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to restore a window.
+      '';
+    };
+    ext.gnomix.gsettings.keys.minimize = mkOption {
+      type = nullOr (listOf string);
+      default = null;
+      description = ''
+        List of key combinations to minimise a window.
       '';
     };
     ext.gnomix.gsettings.keys.custom = mkOption {
@@ -73,7 +136,26 @@ with import ./utils.nix;
       listToAttrs (zipListsWith nameValuePair ks vs);
 
     script1 = setIfFragment "Key bindings" ({  # NOTE (2) (3)
-      "org.gnome.desktop.wm.keybindings close" = [ cfg.close ];
+      "org.gnome.desktop.wm.keybindings maximize" =
+                 cfg.maximize;
+      "org.gnome.desktop.wm.keybindings unmaximize" =
+                 cfg.unmaximize;
+      "org.gnome.desktop.wm.keybindings minimize" =
+                 cfg.minimize;
+      "org.gnome.desktop.wm.keybindings close" =
+                 cfg.close;
+      "org.gnome.desktop.wm.keybindings move-to-monitor-up" =
+                 cfg.move-to-monitor-up;
+      "org.gnome.desktop.wm.keybindings move-to-monitor-down" =
+                 cfg.move-to-monitor-down;
+      "org.gnome.desktop.wm.keybindings move-to-monitor-right" =
+                 cfg.move-to-monitor-right;
+      "org.gnome.desktop.wm.keybindings move-to-monitor-left" =
+                 cfg.move-to-monitor-left;
+      "org.gnome.desktop.wm.keybindings switch-to-workspace-down" =
+                 cfg.switch-to-workspace-down;
+      "org.gnome.desktop.wm.keybindings switch-to-workspace-up" =
+                 cfg.switch-to-workspace-up;
     } // (mk-set "org.gnome.desktop.wm.keybindings switch-to-workspace-"
                  cfg.switch-to-workspace)
       // (mk-set "org.gnome.desktop.wm.keybindings move-to-workspace-"
@@ -104,20 +186,6 @@ with import ./utils.nix;
               else unlines (
                      (concatLists (imap custom-key-setters cfg.custom)) ++
                      [ (custom-ref-setter cfg.custom) "" ]);
-
-
-  /*
-  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "[]"
-  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings
-  "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
-
-
-
-
-  XDG_DATA_DIRS=/run/current-system/sw/share/gsettings-schemas/gnome-settings-daemon-3.20.1
-  /nix/store/7w1pp05fzjn6xi91m2vndfp2dg0yk7f0-glib-2.48.2-dev/bin/gsettings
-  get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name
-  */
   in {  # NOTE (1)
     # Add a fragment to the gsettings script to store our settings into the
     # GNOME config DB.

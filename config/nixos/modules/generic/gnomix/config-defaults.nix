@@ -43,9 +43,14 @@ with import ../../../pkgs;
         clock-show-date = true;
 
         keys = {
+          switch-to-workspace-down = [ "<Super>Down" ];
+          switch-to-workspace-up = [ "<Super>Up" ];
           switch-to-workspace = "<Super>";
           move-to-workspace = "<Super><Shift>";
-          close = "<Super><Shift>k";
+          maximize = [];
+          unmaximize = [];
+          minimize = [];
+          close = [ "<Super><Shift>k" ];
           custom = [{ name    = "Emacs";
                       command = emacs;
                       binding = "<Super><Shift>e";
