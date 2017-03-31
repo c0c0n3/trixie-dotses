@@ -46,6 +46,18 @@
   # TODO you have to run the script to install our GNOME config cos the
   # automated running of it on sys activation is currently broken!
 
+  # Use Slim instead of GDM.
+  # TODO switch back to GDM when they fix it.
+  # GDM's currently broken, see:
+  # - https://github.com/NixOS/nixpkgs/issues/24172
+  # Me too, I get this error:
+  #   gdm-3.22.0/libexec/gdm-x-session[1055]: (WW) xf86OpenConsole:
+  #   VT_ACTIVATE failed: Operation not permitted
+  # See also:
+  # - https://bugzilla.redhat.com/show_bug.cgi?id=1335511
+  #
+  ext.gnomix.dmName = "slim";
+
   # Add custom key binding for Chrome.
   ext.gnomix.gsettings.keys.custom = [
     { name    = "Browser";
