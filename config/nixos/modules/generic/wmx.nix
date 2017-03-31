@@ -5,11 +5,12 @@
 { config, pkgs, lib, ... }:
 
 with lib;
+with types;
 {
 
   options = {
     ext.wmx.enable = mkOption {
-      type = types.bool;
+      type = bool;
       default = false;
       description = ''
         If enabled, you'll get a lightweight desktop with X running a WM of
@@ -17,21 +18,21 @@ with lib;
       '';
     };
     ext.wmx.wmName = mkOption {
-      type = types.string;
+      type = nullOr string;
       default = "i3";
       description = ''
         What WM to use.
       '';
     };
     ext.wmx.autoLoginUser = mkOption {
-      type = types.nullOr types.attrs;
+      type = nullOr attrs;
       default = null;
       description = ''
         If specified, this user gets automatically logged in.
       '';
     };
-    ext.vmx.dmName = mkOption {
-      type = types.string;
+    ext.wmx.dmName = mkOption {
+      type = string;
       default = "slim";
       description = ''
         What display manager to use, e.g. "gdm".
@@ -43,7 +44,7 @@ with lib;
     enabled = config.ext.wmx.enable;
     wm = config.ext.wmx.wmName;
     user = config.ext.wmx.autoLoginUser;
-    dm = config.ext.vmx.dmName;
+    dm = config.ext.wmx.dmName;
   in
   {
     services.xserver = mkIf enabled ({
