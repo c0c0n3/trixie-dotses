@@ -46,9 +46,8 @@ with lib;
     dm = config.ext.vmx.dmName;
   in
   {
-    services.xserver = mkIf enabled {
+    services.xserver = mkIf enabled ({
       enable = true;
-      windowManager."${wm}".enable = true;
 
       # Enable the selected DM. If we have an autoLoginUser, log her in
       # without a password, hiding the display manager login prompt.
@@ -61,12 +60,19 @@ with lib;
                     };
       } // (if (dm == "slim") then { defaultUser = user.name; } else {});
 
-      # You'll need both the following lines for auto login to work properly.
-      # Without either of them, you'll end up with an xterm on screen and no
+
+    } // (if wm == null then {} else {
+      # Enable the requested WM.
+      windowManager."${wm}".enable = true;
+
+      # You'll need both the following lines for auto login to work properly
+      # with a standalone window manager, i.e. without a desktop manager such
+      # as GNOME.
+      # Without either line, you'll end up with an xterm on screen and no
       # window manager.
       windowManager.default = wm;
       desktopManager.xterm.enable = false;
-    };
+    }));
   };
 
 }
