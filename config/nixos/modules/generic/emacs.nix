@@ -14,7 +14,7 @@ let
   # emacs25 below. Change it back to pkgs.emacs when NixOS update it to
   # point to the latest Emacs. Also note that by default the package
   # builds Emacs with GTK 2, so we have to request GTK 3 explicitly.
-  latestEmacs = pkgs.emacs25.override {
+  latestEmacs = pkgs.emacs.override {
     withGTK3 = true;
     withGTK2 = false;
   };
