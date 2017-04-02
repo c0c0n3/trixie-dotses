@@ -4,6 +4,9 @@
 #
 { config, lib, pkgs, ... }:
 
+let
+  adminName = "andrea";
+in
 {
 
   imports = [
@@ -18,25 +21,22 @@
   virtualisation.virtualbox.guest.enable = true;
   boot.initrd.checkJournalingFS = false;
   boot.loader.timeout = 0;
+  ext.hidpi.enable = true;
 
   ##########  Desktop Setup  ###################################################
 
   ext.yougnomix = {
     enable = true;
-    username = "andrea";
+    username = adminName;
   };
+  ext.gnomix.dmName = "slim";
 
-  users.users.andrea.extraGroups = [ "vboxsf" ];
   ext.vbox-shares = {
     names = [ "dropbox" "github" "playground" "projects" ];
-    user = config.users.users.andrea;
+    username = adminName;
   };
 
   ext.git.config.user = config.users.users.andrea;
   ext.spacemacs.config.font.size = 36;
-
-  environment.systemPackages = [
-     (import ./pkgs/themes/flat-remix-gnome-theme.nix)
-  ];
 
 }
