@@ -3,6 +3,9 @@
 #
 { config, lib, pkgs, ... }:
 
+let
+  adminName = "andrea";
+in
 {
 
   imports = [
@@ -37,15 +40,14 @@
   # a bare-bones desktop for him, with automatic login.
   ext.youdesk = {
     enable = true;
-    username = "andrea";
+    username = adminName;
   };
 
   # Make my admin user a member of the Vbox group too and set up my usual
   # VBox shares for him.
-  users.extraUsers.andrea.extraGroups = [ "vboxsf" ];
   ext.vbox-shares = {
     names = [ "dropbox" "github" "playground" "projects" ];
-    user = config.users.extraUsers.andrea;
+    username = adminName;
   };
 
   # Make my admin use my git config.

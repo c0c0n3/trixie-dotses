@@ -5,11 +5,12 @@
 { config, pkgs, lib, ... }:
 
 with lib;
+with types;
 {
 
   options = {
     ext.wmx.enable = mkOption {
-      type = types.bool;
+      type = bool;
       default = false;
       description = ''
         If enabled, you'll get a lightweight desktop with X running a WM of
@@ -17,21 +18,21 @@ with lib;
       '';
     };
     ext.wmx.wmName = mkOption {
-      type = types.string;
+      type = nullOr string;
       default = "i3";
       description = ''
         What WM to use.
       '';
     };
     ext.wmx.autoLoginUser = mkOption {
-      type = types.nullOr types.attrs;
+      type = nullOr attrs;
       default = null;
       description = ''
         If specified, this user gets automatically logged in.
       '';
     };
-    ext.vmx.dmName = mkOption {
-      type = types.string;
+    ext.wmx.dmName = mkOption {
+      type = string;
       default = "slim";
       description = ''
         What display manager to use, e.g. "gdm".
@@ -43,32 +44,36 @@ with lib;
     enabled = config.ext.wmx.enable;
     wm = config.ext.wmx.wmName;
     user = config.ext.wmx.autoLoginUser;
-    dm = config.ext.vmx.dmName;
-  in
+    dm = config.ext.wmx.dmName;
+  in mkIf enabled
   {
-    services.xserver = mkIf enabled {
+    services.xserver = {
       enable = true;
-      windowManager."${wm}".enable = true;
 
       # Enable the selected DM. If we have an autoLoginUser, log her in
       # without a password, hiding the display manager login prompt.
       displayManager."${dm}" = {
         enable = true;
-        autoLogin = if dm == "slim" then !(isNull user)        # NOTE (1)
+        autoLogin = if dm == "slim" then (user != null)        # NOTE (1)
                     else {
-                      enable = !(isNull user);
+                      enable = user != null;
                       user = user.name;
                     };
-      } // (if (dm == "slim") then { defaultUser = user.name; } else {});
+      } // (if dm == "slim" then { defaultUser = user.name; } else {});
 
-      # You'll need both the following lines for auto login to work properly.
-      # Without either of them, you'll end up with an xterm on screen and no
+    } // (if wm == null then {} else {
+      # Enable the requested WM.
+      windowManager."${wm}".enable = true;
+
+      # You'll need both the following lines for auto login to work properly
+      # with a standalone window manager, i.e. without a desktop manager such
+      # as GNOME.
+      # Without either line, you'll end up with an xterm on screen and no
       # window manager.
       windowManager.default = wm;
       desktopManager.xterm.enable = false;
-    };
+    });
   };
-
 }
 # Notes
 # -----

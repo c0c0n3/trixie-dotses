@@ -8,7 +8,7 @@
 
 with lib;
 with types;
-with import ../../../pkgs;
+with import ../../../../pkgs;
 {
 
   options = {

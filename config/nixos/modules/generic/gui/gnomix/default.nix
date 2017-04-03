@@ -48,28 +48,34 @@ with types;
         If specified, this user gets automatically logged in.
       '';
     };
+    ext.gnomix.dmName = mkOption {
+      type = types.string;
+      default = "gdm";
+      description = ''
+        What display manager to use, e.g. "slim".
+      '';
+    };
   };
 
   config = let
     enabled = config.ext.gnomix.enable;
     user = config.ext.gnomix.autoLoginUser;
+    dm = config.ext.gnomix.dmName;
   in (mkIf enabled {
     # Install our core system base.
     ext.base.enable = true;
 
-    # Install and set up GNOME 3.
-    services.xserver = {
-       enable = true;
-       displayManager.gdm = {
-        enable = true;
-        autoLogin = {
-          enable = !(isNull user);
-          user = user.name;
-        };
-      };
-      desktopManager.gnome3.enable = true;
+    # Use our wmx module to install and enable X, the DM, and handle auto
+    # login if requested.
+    ext.wmx = {
+      enable = true;
+      wmName = null;  # don't use a WM, GNOME comes with its own.
+      dmName = dm;
+      autoLoginUser = user;
     };
 
+    # Install and enable GNOME 3.
+    services.xserver.desktopManager.gnome3.enable = true;
   });
 
 }

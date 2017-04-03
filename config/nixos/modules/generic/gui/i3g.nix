@@ -31,7 +31,7 @@ with types;
 
     # Integrate our bare-bones desktop into GNOME 3.
     services.xserver.desktopManager.gnome3.enable = true;
-    ext.vmx.dmName = "gdm";  # i3 session won't work with slim.
+    ext.wmx.dmName = "gdm";  # i3 session won't work with slim.
 
     # Add some more software on top of what GNOME core already provides
     # but get rid of most of GNOME's non-core packages.
