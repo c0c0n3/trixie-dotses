@@ -7,6 +7,7 @@
 
 with lib;
 with types;
+with import ../../pkgs;
 let
   paths = import ./paths.nix;
   dot-link = import ../generic/dot-link-utils.nix;
@@ -31,10 +32,13 @@ in {
       { src = paths.config "/inkscape/palettes/pastel.gpl";
           dst = ".config/inkscape/palettes/"; }
     ];
-  in {
+  in mkIf enabled {
     # Sym-link Inkscape config into homes.
     # NB does nothing if users == [].
     ext.dot-link.files = dot-link.mkLinks users links;
+
+    # We use these fonts in the Inkscape prefs files.
+    fonts.fonts = [ kg-miss-speechy-ipa ];  # NOTE (2)
   };
 
 }
@@ -47,3 +51,7 @@ in {
 # but Inkscape will reshuffle the tags, even if you add no new settings from
 # the UI. So it's kinda pointless to sym-link it from our git repo to track
 # changes.
+#
+# 2. Fonts. We also install the font used in the preference files noted in
+# (1). Even though we don't sym link those files, it's convenient to have
+# the font ready for use.
