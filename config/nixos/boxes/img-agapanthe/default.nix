@@ -72,12 +72,16 @@
 
   ext.git.config.user = config.users.users.andrea;
   ext.java.dev.enable = true;
+  ext.inkscape.config.users = [ config.users.users.andrea ];
+  # NB manual step: copy one of the prefs files in config/inkscape/preferences
+  # to ~/.config/inkscape/preferences.xml
 
   environment.systemPackages = with pkgs; [
     google-chrome # requires allowUnfree
     # (samba.override { enablePrinting = true; }) system-config-printer
     # samba
     remmina
+    inkscape
   ];
 
 /*
