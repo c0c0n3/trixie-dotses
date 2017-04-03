@@ -10,15 +10,7 @@ with lib;
 with types;
 
 let
-  # NOTE Currently pkgs.emacs points to emacs24 which is why we're using
-  # emacs25 below. Change it back to pkgs.emacs when NixOS update it to
-  # point to the latest Emacs. Also note that by default the package
-  # builds Emacs with GTK 2, so we have to request GTK 3 explicitly.
-  latestEmacs = pkgs.emacs.override {
-    withGTK3 = true;
-    withGTK2 = false;
-  };
-
+  latestEmacs = pkgs.emacs;  # NOTE (1)
 in {
 
   options = {
@@ -45,3 +37,18 @@ in {
   };
 
 }
+# Notes
+# -----
+# 1. Emacs Override. In NixOS 16.09, `pkgs.emacs` pointed to emacs24 built
+# with GTK 2. So I had this override
+#
+#     latestEmacs = pkgs.emacs25.override {
+#       withGTK3 = true;
+#       withGTK2 = false;
+#     };
+#
+# to use Emacs 25 with GTK 3. In NixOS 17.03, `pkgs.emacs` is Emacs 25 with
+# GTK 3 so I don't need the override anymore. I'm still keeping this module
+# though just in case it could be useful going forward. I've opened an issue
+# too to remind me:
+# - https://github.com/c0c0n3/trixie-dotses/issues/14
