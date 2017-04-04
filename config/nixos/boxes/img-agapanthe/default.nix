@@ -65,7 +65,8 @@
       binding = "<Super><Shift>w";
     }];
 
-  # Tweak Spacemacs font.
+  # Install my usual fonts and tweak Spacemacs font.
+  ext.fonts.font-pack.enable = true;
   ext.spacemacs.config.font.size = 22;
 
   ##########  Base Dev Env Setup  ##############################################

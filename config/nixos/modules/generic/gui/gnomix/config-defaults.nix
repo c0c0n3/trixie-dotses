@@ -1,8 +1,8 @@
 #
 # Enable this module to pre-configure GNOME with our fonts, key-bindings,
 # theme, etc. See code below.
-# This module also installs the Numix theme and icons as well as some extra
-# fonts: Alegreya, Ubuntu, and Source Code Pro.
+# This module also installs the Numix theme and icons as well as the Ubuntu
+# font family that we use as a default font in our settings.
 #
 { config, lib, pkgs, ... }:
 
@@ -85,11 +85,9 @@ with import ../../../../pkgs;
       gnome-shell-extensions  # installs launch-new-instance extension
     ] ++ config.ext.numix.packages;
 
-    # Install fonts used in our settings as well as some extra ones.
+    # Install fonts used in our settings.
     fonts.fonts = with pkgs; [
       ubuntu_font_family       # used in gsettings.fonts.*
-      source-code-pro          # extra
-      alegreya alegreya-sans   # extra
     ];
   });
 

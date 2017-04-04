@@ -4,6 +4,7 @@
     ./base-config.nix
     ./bash-config.nix
     ./core.nix
+    ./font-pack.nix
     ./git-config.nix
     ./i3-config.nix
     ./inkscape-config.nix
