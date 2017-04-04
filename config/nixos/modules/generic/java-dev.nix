@@ -20,26 +20,27 @@ with types;
 
   config = mkIf config.ext.java.dev.enable
   {
+    programs.java.enable = true;  # NOTE (1)
     environment.systemPackages = with pkgs; [
-      jdk gradle idea.idea-community
+      gradle idea.idea-community
     ];
-    environment.variables = {
-      JAVA_HOME = "${pkgs.jdk}";
-    };
   };
 
 }
 # Notes
 # -----
-# You may be better off using nix-shell to manage dev profiles instead of
-# installing globally. E.g. use this Nix expression to get an isolated dev
-# env that is the same as the above:
+# 1. Java Home. The `java` module install a JDK by default and takes care of
+# setting up JAVA_HOME accordingly. Look at their source to see exactly how.
+#
+# 2. Nix Shell. You may be better off using `nix-shell` to manage dev profiles
+# instead of installing globally. E.g. use this Nix expression to get an
+# isolated dev env that is the same as the above:
 /*
 
 with import <nixpkgs> {}; {
   java-env = stdenv.mkDerivation {
     name = "java-env";
-    JAVA_HOME = "${jdk}";
+    JAVA_HOME = "${pkgs.jdk.home}/lib/openjdk";
 
     buildInputs = [ jdk gradle idea.idea-community ];
   };
