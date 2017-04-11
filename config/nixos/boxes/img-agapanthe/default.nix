@@ -77,12 +77,13 @@
   # NB manual step: copy one of the prefs files in config/inkscape/preferences
   # to ~/.config/inkscape/preferences.xml
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; with import ../../pkgs; [
     google-chrome # requires allowUnfree
     # (samba.override { enablePrinting = true; }) system-config-printer
     # samba
     remmina
     inkscape
+    zoom-us # requires allowUnfree
   ];
 
 /*

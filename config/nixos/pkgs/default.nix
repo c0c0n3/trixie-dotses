@@ -18,4 +18,5 @@
   dynamictopbar = import gnome-shell-exts/dynamictopbar.nix;
   shelltile = import gnome-shell-exts/shelltile.nix;
   flat-remix-gnome-theme = import themes/flat-remix-gnome-theme.nix;
+  zoom-us = import ./zoom-us.nix;
 }
