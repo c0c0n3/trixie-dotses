@@ -12,6 +12,7 @@ in
   imports = [
     ./modules/dotses
     ./modules/generic
+    ./pkgs
     ./boxes/madematix/hidpi.nix
   ];
 
@@ -37,6 +38,8 @@ in
   };
 
   ext.git.config.user = config.users.users.andrea;
+  ext.inkscape.config.users = [ config.users.users.andrea ];
+  ext.fonts.font-pack.enable = true;
   ext.spacemacs.config.font.size = 36;
 
 }

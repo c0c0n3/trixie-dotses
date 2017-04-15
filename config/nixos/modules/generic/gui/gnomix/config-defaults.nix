@@ -8,7 +8,6 @@
 
 with lib;
 with types;
-with import ../../../../pkgs;
 {
 
   options = {
@@ -69,12 +68,12 @@ with import ../../../../pkgs;
 
       shell.extensions = {
         enable = true;
-        packages = [ shelltile dynamictopbar ];
+        packages = with config.ext.pkgs; [ shelltile dynamictopbar ];
         uuids = [
           "launch-new-instance@gnome-shell-extensions.gcampax.github.com" ];
         user-theme = {
           enable = true;
-          package = flat-remix-gnome-theme;
+          package = config.ext.pkgs.flat-remix-gnome-theme;
         };
       };
     };

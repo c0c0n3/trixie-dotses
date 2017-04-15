@@ -7,7 +7,6 @@
 
 with lib;
 with types;
-with import ../../pkgs;
 {
 
   options = {
@@ -23,7 +22,7 @@ with import ../../pkgs;
   config = let
     enabled = config.ext.fonts.font-pack.enable;
   in mkIf enabled {
-    fonts.fonts = with pkgs; [
+    fonts.fonts = with pkgs; with config.ext.pkgs; [
       alegreya alegreya-sans
       cherry-cream-soda
       kaushan-script

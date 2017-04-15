@@ -7,7 +7,6 @@
 
 with lib;
 with types;
-with import ../../pkgs;
 let
   paths = import ./paths.nix;
   dot-link = import ../generic/dot-link-utils.nix;
@@ -38,7 +37,7 @@ in {
     ext.dot-link.files = dot-link.mkLinks users links;
 
     # We use these fonts in the Inkscape prefs files.
-    fonts.fonts = [ kg-miss-speechy-ipa ];  # NOTE (2)
+    fonts.fonts = [ config.ext.pkgs.kg-miss-speechy-ipa ];  # NOTE (2)
   };
 
 }

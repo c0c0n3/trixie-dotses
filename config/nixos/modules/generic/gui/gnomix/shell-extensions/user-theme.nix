@@ -8,7 +8,6 @@
 
 with lib;
 with types;
-with import ../../../../../pkgs;
 with import ../gsettings/utils.nix;
 {
 
@@ -52,6 +51,8 @@ with import ../gsettings/utils.nix;
     script = setIfFragment "GNOME Shell theme" {
       "org.gnome.shell.extensions.user-theme name" = theme-name;
     };
+
+    user-theme = config.ext.pkgs.user-theme;
   in (mkIf enabled
   {
     # Install and enable the extension in the GNOME Shell.

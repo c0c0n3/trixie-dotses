@@ -8,6 +8,7 @@
   imports = [
     ../../modules/dotses
     ../../modules/generic
+    ../../pkgs
     ./hidpi.nix            # TODO not working! stuck with 96 dpi
     ./wireless-input.nix   # TODO don't think I need this w/ GNOME?
   ];
@@ -77,7 +78,7 @@
   # NB manual step: copy one of the prefs files in config/inkscape/preferences
   # to ~/.config/inkscape/preferences.xml
 
-  environment.systemPackages = with pkgs; with import ../../pkgs; [
+  environment.systemPackages = with pkgs; with config.ext.pkgs; [
     google-chrome # requires allowUnfree
     # (samba.override { enablePrinting = true; }) system-config-printer
     # samba
