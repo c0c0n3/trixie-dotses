@@ -2,6 +2,10 @@
 # Mounts VirtualBox shared folders under a given user's home, making him own
 # the shares and a member of the VirtualBox `vboxsf` group.
 #
+# NB because of a circular dependency issue in NixOS 17.03, the username you
+# specify must be that of a user you've created through our `ext.users.admin`
+# option. See NOTE (1).
+#
 { config, pkgs, lib, ... }:
 
 with lib;
@@ -46,10 +50,12 @@ with types;
 
     # Helper function to make a mount point attribute out of a dir name.
     #
-    usr = config.users.users."${username}";
-    mnt = "/home/${username}"; # "${usr.home}";  TODO (1)
-    uid = "1000"; # toString usr.uid;  TODO (1)
-    gid =  "100"; # toString config.users.groups."${usr.group}".gid;  TODO (1)
+    usr = config.ext.users.admins-generated."${username}";
+    # ideally, this would be: usr = config.users.users."${username}";
+    # but we can't do that in 17.03, see NOTE (1)
+    mnt = "${usr.home}";
+    uid = toString usr.uid;
+    gid = toString config.users.groups."${usr.group}".gid;
     mount = d: {
       "${mnt}/${d}" = {
         fsType = "vboxsf";
@@ -72,14 +78,10 @@ with types;
 }
 # Notes
 # -----
-# 1. Hard-coded User. Temp workaround to NixOS 17.03 recursion woes. If I
-# don't hard-code the user's details and get them instead from the usr set,
-# Nix bombs out with an infinite recursion error. This is why I've commented
-# out the querying of usr. Now hard-coding the values works cos I only ever
-# use this module in a VirtualBox VM with a single admin user created with
-# my own `users` module---see code there. I've submitted a bug report:
+# 1. Workaround to NixOS 17.03 recursion woes. If I get the user's details
+# from the `users.users` set, Nix bombs out with an infinite recursion error.
+# I've submitted a bug report:
 # - https://github.com/NixOS/nixpkgs/issues/24570
-# Hope it'll get fixed sometime so I can get rid of the hard-coding.
 # NB: this is not a bug I've introduced refactoring the previous version of
 # this module that used to work in 16.09. In fact, even if you take this
 # module's previous version, you'll see it too is broken in 17.03.
