@@ -7,13 +7,13 @@ Install
 -------
 After installing NixOS:
 
-    $ cd /etc/nixos
-    $ rm configuration.nix
-    $ ln -s /path/to/trixie-dotses ./
-    $ ln -s trixie-dotses/config/nixos/[machine name].nix configuration.nix
-    $ nixos-rebuild switch
+    # rm /etc/nixos/configuration.nix
+    # ln -s \
+        /path/to/trixie-dotses/config/nixos/boxes/[machine name]/default.nix \
+        /etc/nixos/configuration.nix
+    # nixos-rebuild switch
 
-    
+
 Hacking
 -------
 ### boxes
