@@ -1,5 +1,5 @@
 #
-# TODO
+# Helper module to avoid NixOS container networking gotchas.
 #
 { config, pkgs, lib, ... }:
 
@@ -12,14 +12,17 @@ with types;
       type = bool;
       default = false;
       description = ''
-        TODO
+        Enable this module to make sure Network Manager won't interfer with
+        NixOS container networking and optionally let containers access the
+        external network.
       '';
     };
     ext.containers.networking.nat-interface = mkOption {
       type = nullOr string;
       default = null;
       description = ''
-        TODO
+        Specify an actual host network interface, e.g. "enp0s25" if you want
+        containers to be able to access the external network through NAT-ing.
       '';
     };
   };
