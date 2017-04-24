@@ -5,6 +5,7 @@
     ./aspell.nix
     ./base.nix
     ./cli-tools.nix
+    ./containers-net.nix
     ./dot-link.nix
     ./java-dev.nix
     ./swap-file.nix

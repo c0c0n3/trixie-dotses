@@ -21,8 +21,10 @@
 
   ##########  Core System Setup  ###############################################
 
-  # Set host name.
+  # Set host name and enable container networking.
   networking.hostName = "img-agapanthe";
+  ext.containers.networking.enable = true;
+  ext.containers.networking.nat-interface = "enp0s25";
 
   # X: use NVidia driver.
   services.xserver = {
