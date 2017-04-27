@@ -48,14 +48,14 @@ Fonts
     $ brew cask install font-architects-daughter
     $ brew cask install font-cherry-cream-soda
     $ brew cask install font-kaushan-script
-
-Now download and install *KG Miss Speechy IPA* yourself as I couldn't find
-a cask for it. Then on to the next batch of installs:
-
     $ brew cask install font-sansita-one
     $ brew cask install font-source-code-pro
     $ brew cask install font-ubuntu
     
+Now download and install *KG Miss Speechy IPA* yourself as I couldn't find
+a cask for it. Same for the [icon fonts][all-the-icons-fonts] used by the
+[all-the-icons.el][all-the-icons] Emacs package.
+
 ###### Notes
 1. **Alegreya & AlegreyaSC**. Using both fonts for blog and doc sites.
 The formulas above install all variants: black, black-italic, bold,
@@ -72,7 +72,8 @@ it doesn't have Greek letters!)
 8. **Ubuntu**. Actually the only font in the family I've ever used is
 *Ubuntu Mono* for presentations, but couldn't find a cask for just this
 font, so am installing the whole family.
-
+9. [all-the-icons.el][all-the-icons]'s fonts add some eye-candy to my
+Spacemacs theme.
 
 Google Chrome
 -------------
@@ -197,6 +198,10 @@ with it so I had to put it on my personal laptop.
 
 
 
+[all-the-icons]: https://github.com/domtronn/all-the-icons.el
+    "all-the-icons.el on GitHub"
+[all-the-icons-fonts]: https://github.com/domtronn/all-the-icons.el/tree/master/fonts
+    "all-the-icons.el fonts directory on GitHub"
 [backup]: backup.md
     "Backups"
 [inkscape]: inkscape.md
