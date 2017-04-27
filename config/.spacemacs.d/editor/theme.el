@@ -34,6 +34,10 @@
   )
 
 (defun theme/user-config ()
+  ;; Make NeoTree and dired use the icons provided by 'all-the-icons' pkg.
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
   ;; Fill column indicator style.
   (setq fci-rule-width 1)
   (setq fci-rule-color "#073642")  ;; Solarized Base02

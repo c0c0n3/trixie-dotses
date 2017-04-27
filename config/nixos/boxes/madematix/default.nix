@@ -11,6 +11,7 @@ in
   imports = [
     ../../modules/dotses
     ../../modules/generic
+    ../../pkgs
     ./hidpi.nix
   ];
 

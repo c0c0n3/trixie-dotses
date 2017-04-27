@@ -79,7 +79,11 @@ in {
     # NB does nothing if users == [].
 
     # We use these fonts in our Spacemacs config.
-    fonts.fonts = mkIf enabled [ pkgs.source-code-pro ];
+    # See: .spacemacs.d/editor/theme.el
+    fonts.fonts = mkIf enabled (with pkgs; with config.ext.pkgs; [
+      source-code-pro
+      emacs-all-the-icons
+    ]);
 
     # Use SPACEFONT to set Spacemacs font params. (See our editor/theme.el)
     environment.variables = {

@@ -29,6 +29,7 @@ values."
                                        version-control)
    dotspacemacs-excluded-packages '(;; get rid of tildes on empty lines.
                                     vi-tilde-fringe)
+   dotspacemacs-additional-packages '(all-the-icons all-the-icons-dired)
    )
   )
 ;; NOTES
@@ -38,7 +39,11 @@ values."
 ;;     (put 'dired-find-alternate-file 'disabled nil)
 ;; Likely Spacemacs does that already somewhere in those config layers.
 ;; 2. Spell-check comments. Already configured in those layers. Yay!
-
+;; 3. Icon add-ons. 'all-the-icons' makes font icons available to Emacs
+;; packages. NeoTree (which ships with Spacemacs) has built-in support
+;; for it and 'dired' is supported through 'all-the-icons-dired'. Besides
+;; configuring NeoTree and 'dired' to use 'all-the-icons' (see 'theme.el'),
+;; you also have to install the icon fonts---details on 'all-the-icons' site.
 
 (defun dotspacemacs/init ()
   "Initialization function.

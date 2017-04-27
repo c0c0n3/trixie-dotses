@@ -25,6 +25,7 @@ with types;
     fonts.fonts = with pkgs; with config.ext.pkgs; [
       alegreya alegreya-sans
       cherry-cream-soda
+      emacs-all-the-icons
       kaushan-script
       kg-miss-speechy-ipa
       sansita-one
