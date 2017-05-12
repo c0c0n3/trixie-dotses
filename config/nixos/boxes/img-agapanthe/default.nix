@@ -81,6 +81,7 @@
   # to ~/.config/inkscape/preferences.xml
 
   environment.systemPackages = with pkgs; with config.ext.pkgs; [
+    nix-repl
     google-chrome # requires allowUnfree
     # (samba.override { enablePrinting = true; }) system-config-printer
     # samba
