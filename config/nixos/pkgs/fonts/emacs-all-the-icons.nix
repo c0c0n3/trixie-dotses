@@ -10,7 +10,8 @@ stdenv.mkDerivation rec {
 
   src = fetchgit {
     url = https://github.com/domtronn/all-the-icons.el.git;
-    sha256 = "0kbgznwxh83jr1lg3pqa6nd9lsdjyca3kdmsgiszylvz1d0qlsaj";
+    rev = "d070531959036edabc38f39ae8cb1a15608af993";
+    sha256 = "1a6j09n0bgxihyql4p49g61zbdwns23pbhb1abphrwn3c2aap2lx";
   };
 
   phases = [ "unpackPhase" "installPhase" ];

@@ -15,7 +15,8 @@ stdenv.mkDerivation rec {
 
   src = fetchgit {
     url = https://github.com/emasab/shelltile.git;
-    sha256 = "1khscmwvkpn8jsw6zmqki6jd0w3aibjmrqrys6mgqpg4pyfxj8r8";
+    rev = "0ece8f1e53ad94f8c95d4d3a5e887868547bb346";
+    sha256 = "0iclfrbdxkhb4bwnmbvvnmf1w42a5kg35hkmk50pzlrcfny9jifi";
   };
 
   uuid = "ShellTile@emasab.it";

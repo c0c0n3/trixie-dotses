@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
 
   src = fetchgit {
     url = https://github.com/AMDG2/GnomeShell_DynamicTopBar.git;
+    rev = "563b8995562b8ebe8463993cbf8f40386a0aa277";
     sha256 = "09fvmy22127mghb0k6svlrabd2qw5r3raxr0x9qm0kni8f5fflcb";
   };
 

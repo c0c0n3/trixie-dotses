@@ -13,7 +13,8 @@ stdenv.mkDerivation rec {
 
   src = fetchgit {
     url = https://github.com/daniruiz/Flat-Remix-GNOME-theme.git;
-    sha256 = "0ki3wc6phlynf5q34x3np9899v1dg99lb1jngmpmfdk59b2fa65y";
+    rev = "717aab0afe2a5b3f4d97e47874d8c231e6cd2545";
+    sha256 = "1bv0x15pdny1n2z1g1n980i5r4wn7ka0hxjwnnd11l5ai8z8a4mr";
   };
 
   phases = [ "unpackPhase" "installPhase" ];
