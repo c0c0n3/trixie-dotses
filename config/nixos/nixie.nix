@@ -47,4 +47,18 @@ in
   # ext.fonts.font-pack.enable = true;
   ext.spacemacs.config.font.size = 36;
 
+
+  # to make the stuff below work:
+  # 1. exclude users.nix module from imports
+  # 2. run
+  #    sudo NIXOS_EXTRA_MODULE_PATH=/home/andrea/github/ome-odd-n-ends/nixos/modules \
+  #         nixos-rebuild switch
+  omero = {
+    server.enable = true;
+    db = {
+      enable = true;
+      user.password = "abc123";
+    };
+    users.root.password = "abc123";
+  };
 }
