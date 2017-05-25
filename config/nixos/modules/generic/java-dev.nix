@@ -16,13 +16,23 @@ with types;
         Installs a Java dev env.
       '';
     };
+    ext.java.dev.gradle = mkOption {
+      type = package;
+      default = pkgs.gradle;
+      description = ''
+        Gradle package to install.
+      '';
+    };
   };
 
-  config = mkIf config.ext.java.dev.enable
+  config =
+  let
+    cfg = config.ext.java.dev;
+  in mkIf cfg.enable
   {
     programs.java.enable = true;  # NOTE (1)
     environment.systemPackages = with pkgs; [
-      gradle idea.idea-community
+      cfg.gradle idea.idea-community
     ];
   };
 

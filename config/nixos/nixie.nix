@@ -46,13 +46,17 @@ in
   # ext.inkscape.config.users = [ config.users.users.andrea ];
   # ext.fonts.font-pack.enable = true;
   ext.spacemacs.config.font.size = 36;
-
+  ext.java.dev = {
+    enable = true;
+    gradle = pkgs.gradle_2_14;
+  };
 
   # to make the stuff below work:
   # 1. exclude users.nix module from imports
   # 2. run
   #    sudo NIXOS_EXTRA_MODULE_PATH=/home/andrea/github/ome-odd-n-ends/nixos/modules \
   #         nixos-rebuild switch
+  /*
   omero = {
     server.enable = true;
     db = {
@@ -61,4 +65,5 @@ in
     };
     users.root.password = "abc123";
   };
+  */
 }
