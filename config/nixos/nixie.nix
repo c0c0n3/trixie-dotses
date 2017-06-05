@@ -18,6 +18,7 @@ in
 
   ##########  Core System Setup  ###############################################
   networking.hostName = "madematix";
+  networking.firewall.enable = false;
   ext.swapfile.enable = true;
   virtualisation.virtualbox.guest.enable = true;
   boot.initrd.checkJournalingFS = false;
@@ -63,7 +64,10 @@ in
       enable = true;
       user.password = "abc123";
     };
+    web.enable = true;
     users.root.password = "abc123";
+    smuggler.enable = true;
   };
+  users.users.smuggler.extraGroups = [ "users" "vboxsf" ];
   */
 }
