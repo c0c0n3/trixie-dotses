@@ -75,10 +75,9 @@
   ##########  Base Dev Env Setup  ##############################################
 
   ext.git.config.user = config.users.users.andrea;
-  ext.java.dev = {
-    enable = true;
-    gradle = pkgs.gradle_2_14;
-  };
+
+  ext.java.dev.enable = true;
+
   ext.inkscape.config.users = [ config.users.users.andrea ];
   # NB manual step: copy one of the prefs files in config/inkscape/preferences
   # to ~/.config/inkscape/preferences.xml
