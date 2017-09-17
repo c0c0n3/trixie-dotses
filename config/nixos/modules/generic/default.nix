@@ -7,6 +7,7 @@
     ./cli-tools.nix
     ./containers-net.nix
     ./dot-link.nix
+    ./haskell-dev.nix
     ./java-dev.nix
     ./swap-file.nix
     ./trackpad.nix

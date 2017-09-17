@@ -57,7 +57,6 @@ in
   # Tweak Spacemacs font.
   ext.spacemacs.config.font.size = 36;
 
-
   ##########  Desktop Extras  ##################################################
 
   # Set any of the following to true to enable, see baredesk module.
@@ -66,6 +65,14 @@ in
     with-launcher = false;   # Use Synapse instead of dmenu.
     with-theme = false;      # Eye candy: Numix theme & icons.
     with-composite = false;  # Eye candy: Compton. NB slows things down in a VM.
+  };
+
+  ##########  Additional Software  #############################################
+
+  # Install a fairly complete Haskell dev env.
+  ext.haskell.dev = {
+    enable = true;
+    with-extra-hpkgs = ps: with ps; [ here ];
   };
 
 }
