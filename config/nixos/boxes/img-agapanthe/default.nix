@@ -82,6 +82,11 @@
   # NB manual step: copy one of the prefs files in config/inkscape/preferences
   # to ~/.config/inkscape/preferences.xml
 
+  ext.haskell.dev = {
+    enable = true;
+    with-extra-hpkgs = ps: with ps; [ here ];
+  };
+
   environment.systemPackages = with pkgs; with config.ext.pkgs; [
     nix-repl
     google-chrome # requires allowUnfree
