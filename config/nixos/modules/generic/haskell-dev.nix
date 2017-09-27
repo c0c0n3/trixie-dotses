@@ -55,6 +55,7 @@ with types;
   let
     cfg = config.ext.haskell.dev;
 
+    skip-tests = pkgs.haskell.lib.dontCheck;
     listDevBase = ps: with ps; [
       # Programs and Tools
       # ------------------
@@ -63,7 +64,7 @@ with types;
       # - needed by Spacemacs Haskell layer and generally useful anyway.
       apply-refact hlint stylish-haskell hasktags hoogle
       # - other tools I've found useful.
-      hakyll pandoc pandoc-types shake
+      hakyll pandoc pandoc-types shake hpack
 
       # Libs
       # ----
@@ -82,8 +83,13 @@ with types;
       #   Haskell platform.
       aeson criterion optparse-applicative safe-exceptions
       # - Common libs recommended by haskell-lang but not included in the
-      #   Haskell platform.
-      conduit hspec http-client pipes tasty wreq
+      #   Haskell platform, excluding hspec and tasty.
+      conduit http-client pipes wreq
+
+      # - Tasty framework with the components I've found most useful.
+      tasty tasty-hunit tasty-golden tasty-smallcheck tasty-quickcheck
+      tasty-html
+      (skip-tests tasty-discover)  # for some reason these tests keep on failing
     ];
 
     listPkgs = ps: (listDevBase ps) ++ (cfg.with-extra-hpkgs ps);
