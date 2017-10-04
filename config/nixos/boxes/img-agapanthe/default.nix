@@ -84,7 +84,9 @@
 
   ext.haskell.dev = {
     enable = true;
-    with-extra-hpkgs = ps: with ps; [ here ];
+    with-extra-hpkgs = ps: with ps; [
+      here diagrams diagrams-graphviz diagrams-rasterific
+    ];
   };
 
   environment.systemPackages = with pkgs; with config.ext.pkgs; [
@@ -95,6 +97,7 @@
     remmina
     inkscape
     zoom-us # requires allowUnfree
+    graphviz
   ];
 
 /*
