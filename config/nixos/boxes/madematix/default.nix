@@ -72,7 +72,16 @@ in
   # Install a fairly complete Haskell dev env.
   ext.haskell.dev = {
     enable = true;
-    with-extra-hpkgs = ps: with ps; [ here ];
+    with-extra-hpkgs = ps: with ps; [
+      here
+      diagrams diagrams-graphviz
+    ];
   };
+
+  environment.systemPackages = with pkgs; [
+    graphviz  # needed by diagrams-graphviz
+    # TODO Latex: figure out which pkgs you need, then put in modules/dotses
+    texlive.combined.scheme-small
+  ];
 
 }
