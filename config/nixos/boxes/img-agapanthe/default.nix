@@ -101,18 +101,20 @@
   ];
 
   # Open up OMERO ports and forward TCP packets to homer container.
-  networking.firewall = let
-    port = 80;
+  networking.firewall = with lib;
+  let
+    ports = [ 80 4064 ];
     ext-if = "enp0s25";
     container-ip = "10.233.1.2";
-    cmd = p : i : d :
+    cmd = i : d : p :
     ''
-      iptables -t nat -A PREROUTING -i ${i} -p tcp --dport ${toString p} -j DNAT --to-dest ${d}
+      iptables -t nat -A PREROUTING -i ${i} -p tcp --dport ${p} -j DNAT --to-dest ${d}
     '';
+    cmds = concatMapStrings (cmd ext-if container-ip) (map toString ports);
   in {
     enable = true;
-    extraCommands = cmd port ext-if container-ip;
-    allowedTCPPorts = [ port ];
+    extraCommands = cmds;
+    allowedTCPPorts = ports;
   };
 
 /*
