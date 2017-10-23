@@ -78,6 +78,8 @@ in
     ];
   };
 
+  ext.java.dev.enable = true;
+
   environment.systemPackages = with pkgs; [
     graphviz  # needed by diagrams-graphviz
     # TODO Latex: figure out which pkgs you need, then put in modules/dotses
