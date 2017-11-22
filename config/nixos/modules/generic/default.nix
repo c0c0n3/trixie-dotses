@@ -9,6 +9,7 @@
     ./dot-link.nix
     ./haskell-dev.nix
     ./java-dev.nix
+    ./latex-dev.nix
     ./swap-file.nix
     ./trackpad.nix
     ./users.nix
