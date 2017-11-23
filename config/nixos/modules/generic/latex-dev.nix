@@ -1,5 +1,5 @@
 #
-# Installs a LaTeX environment with a smallish set of packages.
+# Installs a LaTeX environment with a medium set of packages.
 # To install more packages in the same environment, use the
 # `.with-extra-texlive-pkgs` function.
 # This is a quick, hassle-free way to try LaTeX but installs everything
@@ -45,6 +45,7 @@ with types;
       inherit (texlive)
 
       # same as scheme-medium without lang*, context, luatex, texworks, xetex
+      # but with latexextra in place of latexrecommended
       collection-basic
       collection-binextra
       collection-fontsrecommended
@@ -52,10 +53,13 @@ with types;
       collection-genericrecommended
       collection-langenglish
       collection-latex
-      collection-latexrecommended
+      collection-latexextra
       collection-mathextra
       collection-metapost
       collection-plainextra
+
+      # tikz and friends
+      collection-pictures
 
       # hand-picked fonts from collection-fontsextra
       alegreya
