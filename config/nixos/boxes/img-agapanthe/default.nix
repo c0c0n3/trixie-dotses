@@ -89,6 +89,8 @@
     ];
   };
 
+  ext.latex.dev.enable = true;
+
   environment.systemPackages = with pkgs; with config.ext.pkgs; [
     nix-repl
     google-chrome # requires allowUnfree
