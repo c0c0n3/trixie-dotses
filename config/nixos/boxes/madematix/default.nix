@@ -19,6 +19,7 @@ in
 
   # Set hostname and enable swap.
   networking.hostName = "madematix";
+  networking.firewall.enable = false;
   ext.swapfile.enable = true;
 
   # Hide boot loader menu. The loader will boot the latest NixOS generation.
