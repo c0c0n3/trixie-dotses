@@ -112,3 +112,13 @@ The directory usually doesn't exists, so
 
 Then copy over `letters-and-numbers.svg`. (This is the only lib I've used
 so far, the others are just experiments.)
+
+Additionally you can download SVG symbol libs from the interwebs. Make sure
+to add a `title` tag to the SVG doc so that it shows in the Inkscape symbols
+drop down menu. (See `letters-and-numbers.svg` for an example.)
+One place where you can find nice icons is [svg-icon][svg-icon]. I've used
+the `font-awesome` and `logos` sets in the past.
+
+
+[svg-icon]: https://leungwensen.github.io/svg-icon/
+    "svg-icon"
