@@ -58,9 +58,13 @@ These configuration items you can only set from the command line.
 ### Framebuffer Resolution
 Set framebuffer resolution in EFI to `1920x1200`:
 
-    $ VBoxManage setextradata "madematix" VBoxInternal2/EfiGopMode 5
+    $ VBoxManage setextradata "madematix" VBoxInternal2/EfiGraphicsResolution 1920x1200
 
 See VirtualBox [manual][efividmode].
+
+###### Note
+On older versions of VirtualBox you should use `VBoxInternal2/EfiGopMode 5`
+instead of `VBoxInternal2/EfiGraphicsResolution 1920x1200`.
 
 ### KMS Custom Mode
 Make above resolution also available to Linux virtual consoles:

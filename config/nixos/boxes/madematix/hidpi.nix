@@ -76,10 +76,11 @@ with types;
 #
 # 3. KMS. Without this the virtual console is tiny. With the VM shutdown:
 #
-#  $ VBoxManage setextradata "madematix" VBoxInternal2/EfiGopMode 5
+#  $ VBoxManage setextradata "madematix" VBoxInternal2/EfiGraphicsResolution 1920x1200
 #
-# The above sets the framebuffer resolution in EFI to 1920x1200 which is the
-# largest mentioned in the VBox manual:
+# (For older versions of VBox use `VBoxInternal2/EfiGopMode 5` instead.)
+# This sets the framebuffer resolution in EFI to 1920x1200 as explained in
+# the VBox manual:
 #
 # - https://www.virtualbox.org/manual/ch03.html#efividmode
 #
@@ -96,3 +97,7 @@ with types;
 # See
 # - https://wiki.archlinux.org/index.php/VirtualBox#Set_optimal_framebuffer_resolution
 #
+# A final note. The reason I used a 1920x1200 resolution is that at the time
+# it was the largest VBox supported, now you have plenty more so you may want
+# to try your luck with a higher resolution and custom video mode of 32 bpp
+# rather than 24 as in `CustomVideoMode1 1920x1200x32`.
