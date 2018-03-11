@@ -34,7 +34,7 @@ with types;
     # Tweak GTK apps for HiDPI.
     # NOTE (2)
     environment.variables = {
-      GDK_SCALE = "4";
+      GDK_SCALE = "2";
     };
 
     # Force KMS.
