@@ -56,7 +56,10 @@ in
   ext.git.config.user = config.users.extraUsers.andrea;
 
   # Tweak Spacemacs font.
-  ext.spacemacs.config.font.size = 36;
+  ext.spacemacs.config.font = {
+    size = 40;
+    weight = "light";
+  };
 
   ##########  Desktop Extras  ##################################################
 
