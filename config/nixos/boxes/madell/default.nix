@@ -73,6 +73,11 @@ in
 
   ##########  Additional Software  #############################################
 
+  # By default Nix won't install packages that have a non-free software
+  # license. We need a couple of those (see notes down below) so we have
+  # to override the default setting to force Nix to install them.
+  nixpkgs.config.allowUnfree = true;
+
   # Install a fairly complete Haskell dev env.
   ext.haskell.dev = {
     enable = true;
@@ -88,6 +93,32 @@ in
 
   environment.systemPackages = with pkgs; [
     graphviz  # needed by diagrams-graphviz
+
+    stack     # see NOTE (1)
+    vscode    # requires allowUnfree; see NOTE (2)
   ];
 
 }
+
+# NOTE
+# 1. Stack. Installs fine but then can't build GHC when you set up a project.
+# In fact, Stack normally downloads and builds the GHC version tied to the LTS
+# in your stack project config. With my Nix config this doesn't work since you
+# need to have a number of things in your path to build GHC---gcc, gnumake, and
+# probably others. Instead of installing GHC build deps globally, I decided to
+# use the LTS snapshot corresponding to the GHC version installed globally by
+# the Haskell dev env (ext.haskell.dev) and enable nix support in stack which
+# makes it use the GHC in your path if it's compatible with the configured LTS.
+#
+# 2. Haskell IDE Engine (HIE): https://github.com/haskell/haskell-ide-engine
+# Due to some issues, HIE isn't yet available as a Nix package, but they've
+# provided an interim solution to install it through Nix:
+#
+#     $ git clone https://github.com/domenkozar/hie-nix.git
+#     $ nix-env -f hie-nix -iA hie80
+#
+# (hie80 selects GHC 8.0.2, read the installation instructions for details.)
+# I installed the "Haskell Language Server Client" plugin to integrate HIE
+# into VS Code---installed using VS Code, not Nix.
+# NB I'm using VS Code for Haskell development since Spacemacs started acting
+# up and freezing when editing Haskell files.
