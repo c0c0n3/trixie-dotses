@@ -5,6 +5,14 @@
 
 let
   adminName = "andrea";
+
+  my-nodejs = pkgs.nodejs.overrideAttrs (oldAttrs: rec {
+    version = "6.10.2";
+    src = pkgs.fetchurl {
+      url = "http://nodejs.org/dist/v${version}/node-v${version}.tar.xz";
+      sha256 = "1dj6x35r9jsfs4g77h35yrimpgn62chnwr4r7abi76597lri3al0";
+    };
+  });
 in
 {
 
@@ -65,7 +73,7 @@ in
 
   # Set any of the following to true to enable, see baredesk module.
   ext.baredesk = {
-    with-browser = false;    # Use Chrome. NB requires allowUnfree.
+    with-browser = true;    # Use Chrome. NB requires allowUnfree.
     with-launcher = false;   # Use Synapse instead of dmenu.
     with-theme = false;      # Eye candy: Numix theme & icons.
     with-composite = false;  # Eye candy: Compton. NB slows things down in a VM.
@@ -96,6 +104,10 @@ in
 
     stack     # see NOTE (1)
     vscode    # requires allowUnfree; see NOTE (2)
+
+    yarn
+    my-nodejs
+    awscli
   ];
 
 }
