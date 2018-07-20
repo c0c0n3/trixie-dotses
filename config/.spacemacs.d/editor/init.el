@@ -16,7 +16,8 @@ values."
                                        better-defaults
                                        emacs-lisp
                                        git
-                                       haskell
+                                       (haskell :variables haskell-completion-backend 'intero)
+                                       javascript
                                        markdown
                                        latex
                                        nixos
@@ -27,7 +28,8 @@ values."
                                        (spell-checking :variables
                                                        ispell-dictionary "en_GB")
                                        syntax-checking
-                                       version-control)
+                                       version-control
+                                       yaml)
    dotspacemacs-excluded-packages '(;; get rid of tildes on empty lines.
                                     vi-tilde-fringe)
    dotspacemacs-additional-packages '(all-the-icons all-the-icons-dired)
