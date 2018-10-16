@@ -71,20 +71,20 @@ in
   ##########  Additional Software  #############################################
 
   # Install a fairly complete Haskell dev env.
-#  ext.haskell.dev = {
-#    enable = true;
-#    with-extra-hpkgs = ps: with ps; [
-#      here
-#      diagrams diagrams-graphviz
-#    ];
-#  };
+  ext.haskell.dev = {
+    enable = true;
+    with-extra-hpkgs = ps: with ps; [
+      here
+      diagrams diagrams-graphviz
+    ];
+  };
 
   # Install Java and LaTeX dev environments.
 #  ext.java.dev.enable = true;
 #  ext.latex.dev.enable = true;
 
-#  environment.systemPackages = with pkgs; [
-#    graphviz  # needed by diagrams-graphviz
-#  ];
+  environment.systemPackages = with pkgs; [
+    graphviz  # needed by diagrams-graphviz
+  ];
 
 }
