@@ -47,13 +47,13 @@ in
 
   # Make my admin user a member of the Vbox group too and set up my usual
   # VBox shares for him.
-  ext.vbox-shares = {
-    names = [ "dropbox" "github" "playground" "projects" ];
-    username = adminName;
-  };
+#  ext.vbox-shares = {
+#    names = [ "dropbox" "github" "playground" "projects" ];
+#    username = adminName;
+#  };
 
   # Make my admin use my git config.
-  ext.git.config.user = config.users.extraUsers.andrea;
+  ext.git.config.user = config.users.users.andrea;
 
   # Tweak Spacemacs font.
   ext.spacemacs.config.font.size = 36;
@@ -71,20 +71,20 @@ in
   ##########  Additional Software  #############################################
 
   # Install a fairly complete Haskell dev env.
-  ext.haskell.dev = {
-    enable = true;
-    with-extra-hpkgs = ps: with ps; [
-      here
-      diagrams diagrams-graphviz
-    ];
-  };
+#  ext.haskell.dev = {
+#    enable = true;
+#    with-extra-hpkgs = ps: with ps; [
+#      here
+#      diagrams diagrams-graphviz
+#    ];
+#  };
 
   # Install Java and LaTeX dev environments.
-  ext.java.dev.enable = true;
-  ext.latex.dev.enable = true;
+#  ext.java.dev.enable = true;
+#  ext.latex.dev.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    graphviz  # needed by diagrams-graphviz
-  ];
+#  environment.systemPackages = with pkgs; [
+#    graphviz  # needed by diagrams-graphviz
+#  ];
 
 }

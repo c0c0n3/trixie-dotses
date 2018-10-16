@@ -50,7 +50,7 @@ without a login. Here's how to do it:
       # prompt.
       displayManager.auto = {
           enable = true;
-          user = config.users.extraUsers.usr.name;
+          user = config.users.users.usr.name;
       };
 
       # but you'll need these two lines to make it work!

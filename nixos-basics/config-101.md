@@ -51,7 +51,7 @@ in its current state, similar to what you'd do with Ansible, Puppet, or Chef.
 For example, instead of creating a user account with `useradd`, you can
 declare it in your system config (example lifted from the manual):
 
-    users.extraUsers.alice = {
+    users.users.alice = {
         isNormalUser = true;
         home = "/home/alice";
         description = "Alice Foobar";

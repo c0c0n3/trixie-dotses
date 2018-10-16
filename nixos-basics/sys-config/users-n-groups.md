@@ -25,7 +25,7 @@ Adding a User
 This Nix expression adds a regular user named `andrea`, makes him a member
 of `wheel`, and sets his password to `abc123`:
 
-    users.extraUsers.andrea = {
+    users.users.andrea = {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
         hashedPassword = "$6$DmW6Owb/Swuzs7$DKca.vHGUP3bTz/G5vae4/egALZVVdsGdkhzISU11ZsFy2jmMVkZtIwTbNzK5cau9AOmb2B4LTd6BxcOKR1oW1";
