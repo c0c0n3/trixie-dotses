@@ -27,7 +27,7 @@ with types;
     # NOTE (1)
     services.xserver = {
       monitorSection = ''
-        DisplaySize    331 191
+        DisplaySize    331 207
       '';
     };
 
@@ -57,7 +57,9 @@ with types;
 #
 #     $ xdpyinfo | grep -B 2 resolution
 #
-# To fix this, I've computed the actual dims myself:
+# If I enter full-screen mode, then the reported resolution becomes 2880x1800
+# (correct!) but I'm still stuck with the low DPI (96).
+# To fix this, I've computed myself the actual dims for a maximised VM window:
 #
 #     $ echo 'scale=5;sqrt(2880^2+1800^2)' | bc
 #     3396.23320
@@ -66,15 +68,31 @@ with types;
 #     $ echo 'scale=5;(15.4/3396)*1660*25.4' | bc
 #     191.00292
 #
+# To get the dims for a VM in full-screen mode, use the first two computations
+# above but replace the last with:
+#
+#     $ echo 'scale=5;(15.4/3396)*1800*25.4' | bc
+#     207.11160
+#
 # See:
 # - https://wiki.archlinux.org/index.php/Xorg#Display_size_and_DPI
 #
-# 2. GTK Scale. Without it, GTK apps will be too small. Some apps like i3
+# 2. TODO: X Display Size. With the above tweak in place, I was able to get a
+# a DPI of 221 right after booting into the system. That was NixOS 17.03. With
+# NixOS 18.09, for some reason X doesn't pick up the DisplaySize setting after
+# booting and I get a DPI of 96. If I reboot the system or just restart the
+# display manager:
+#
+#     $ sudo systemctl restart display-manager
+#
+# then I get back the 221 DPI. What the hell's going on?
+#
+# 3. GTK Scale. Without it, GTK apps will be too small. Some apps like i3
 # and Chromium use the DPI given by X, so (1) fixes them being too small.
 # See:
 # - https://wiki.archlinux.org/index.php/HiDPI
 #
-# 3. KMS. Without this the virtual console is tiny. With the VM shutdown:
+# 4. KMS. Without this the virtual console is tiny. With the VM shutdown:
 #
 #  $ VBoxManage setextradata "madematix" VBoxInternal2/EfiGraphicsResolution 1920x1200
 #
