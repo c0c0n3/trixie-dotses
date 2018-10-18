@@ -32,13 +32,13 @@ with types;
     };
 
     # Tweak GTK apps for HiDPI.
-    # NOTE (2)
-    environment.variables = {
-      GDK_SCALE = "2";
-    };
+    # NOTE (3)
+#    environment.variables = {
+#      GDK_SCALE = "2";
+#    };
 
     # Force KMS.
-    # NOTE (3)
+    # NOTE (4)
     boot.kernelParams = [ "video=1920x1200" ];
 
   });
@@ -87,8 +87,10 @@ with types;
 #
 # then I get back the 221 DPI. What the hell's going on?
 #
-# 3. GTK Scale. Without it, GTK apps will be too small. Some apps like i3
-# and Chromium use the DPI given by X, so (1) fixes them being too small.
+# 3. GTK Scale. Without it, some GTK apps were too small on NixOS 17.03. This
+# isn't the case anymore on NixOS 18.09, so I'm commenting it out for now.
+# Note that some apps like i3 and Chromium use the DPI given by X instead, so
+# (1) fixes them being too small.
 # See:
 # - https://wiki.archlinux.org/index.php/HiDPI
 #
