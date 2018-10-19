@@ -29,16 +29,17 @@ with types;
       monitorSection = ''
         DisplaySize    331 207
       '';
+      dpi = 221;
     };
 
     # Tweak GTK apps for HiDPI.
-    # NOTE (3)
+    # NOTE (2)
 #    environment.variables = {
 #      GDK_SCALE = "2";
 #    };
 
     # Force KMS.
-    # NOTE (4)
+    # NOTE (3)
     boot.kernelParams = [ "video=1920x1200" ];
 
   });
@@ -46,8 +47,9 @@ with types;
 }
 # Notes
 # -----
-# 1. X Display Size. Without this, things, (esp. fonts) are gonna look
-# blurry. My MacBook Pro Retina 15 has a monitor resolution of 2880x1800.
+# 1. X Monitor Settings. Without this, things, (esp. fonts) will look blurry.
+# My MacBook Pro Retina 15 has a monitor resolution of 2880x1800 at 220 PPI.
+# (As per Apple's specs, but actual PPI seems 220.53, see link below.)
 # I'm using VBox unscaled HiDPI output and, after maximising the VM window
 # to fit the screen, `xrandr` reports a resolution of 2880x1660 from the
 # NixOS guest. (Think this is cos VBox subtracts automatically the title
@@ -74,27 +76,30 @@ with types;
 #     $ echo 'scale=5;(15.4/3396)*1800*25.4' | bc
 #     207.11160
 #
-# See:
-# - https://wiki.archlinux.org/index.php/Xorg#Display_size_and_DPI
-#
-# 2. TODO: X Display Size. With the above tweak in place, I was able to get a
-# a DPI of 221 right after booting into the system. That was NixOS 17.03. With
-# NixOS 18.09, for some reason X doesn't pick up the DisplaySize setting after
-# booting and I get a DPI of 96. If I reboot the system or just restart the
-# display manager:
+# Given the dims, X should be able to compute the DPI. So why force it with
+# the `dpi` param above? (BTW, it gets turned into a CLI arg of `-dpi 221`
+# and then used to start X---see `xserver.nix` module.) Turns out X computes
+# a DPI of 96 after booting but if I reboot the system or just restart the
+# display manager
 #
 #     $ sudo systemctl restart display-manager
 #
-# then I get back the 221 DPI. What the hell's going on?
+# then the DPI becomes 221. Funny thing is, in NixOS 17.03 I didn't need to
+# set the DPI myself. In fact, a ` DisplaySize 331 207` directive was enough
+# for X set the DPI to 221 on the first shot, after booting the system.
 #
-# 3. GTK Scale. Without it, some GTK apps were too small on NixOS 17.03. This
+# See:
+# - https://wiki.archlinux.org/index.php/Xorg#Display_size_and_DPI
+# - https://pixensity.com/list/apple-macbook-pro-15-inch-retina-display-16/
+#
+# 2. GTK Scale. Without it, some GTK apps were too small on NixOS 17.03. This
 # isn't the case anymore on NixOS 18.09, so I'm commenting it out for now.
 # Note that some apps like i3 and Chromium use the DPI given by X instead, so
 # (1) fixes them being too small.
 # See:
 # - https://wiki.archlinux.org/index.php/HiDPI
 #
-# 4. KMS. Without this the virtual console is tiny. With the VM shutdown:
+# 3. KMS. Without this the virtual console is tiny. With the VM shutdown:
 #
 #  $ VBoxManage setextradata "madematix" VBoxInternal2/EfiGraphicsResolution 1920x1200
 #
