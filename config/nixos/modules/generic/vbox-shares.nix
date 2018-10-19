@@ -53,9 +53,9 @@ with types;
     usr = config.ext.users.admins-generated."${username}";
     # ideally, this would be: usr = config.users.users."${username}";
     # but we can't do that in 17.03, see NOTE (1)
-    mnt = "${usr.home}";
+    mnt = usr.home;
     uid = toString usr.uid;
-    gid = toString config.users.groups."${usr.group}".gid;
+    gid = toString usr.gid;
     mount = d: {
       "${mnt}/${d}" = {
         fsType = "vboxsf";
