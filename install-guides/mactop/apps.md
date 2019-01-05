@@ -6,10 +6,10 @@ configured them. But first checkout the `mactop` branch of Trixie Dotses
 as we'll be using `git` to manage as much config as we can.
 
     $ cd /Volumes/data/github
-    $ git clone -b mactop https://github.com/c0c0n3/trixie-dotses.git
+    $ git clone https://github.com/c0c0n3/trixie-dotses.git
 
-Note that you need to keep this repo around with the `mactop` branch
-checked out as we'll be sym-linking config files and dirs.
+Note that you need to keep this repo around as we'll be sym-linking config
+files and dirs.
 
 
 Astropad
