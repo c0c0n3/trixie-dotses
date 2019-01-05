@@ -10,8 +10,8 @@ scratch; so it's pointless to back up these two directories. All the other
 top-level directories should get backed up to my Google drives.
 
 To do that, I've put together some simple scripts and config that use 
-[Rclone][rclone] to do the heavy lifting, all documented [over here]
-[backup-scripts].
+[Rclone][rclone] to do the heavy lifting, all documented
+[over here][backup-scripts].
 
 
 
