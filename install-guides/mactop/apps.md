@@ -12,26 +12,10 @@ Note that you need to keep this repo around with the `mactop` branch
 checked out as we'll be sym-linking config files and dirs.
 
 
-Bamboo Tablet
--------------
-Download the driver's installer package from [Wacom support][wacom-support].
-You have to look for it in the "Drivers for Previous Generation Products"
-section, where you'll find the download link for Bamboo CTH. The version I
-downloaded is [pentablet_5.3.7-6.dmg][pentablet_5.3.7-6.dmg] (click to
-download again).
+Astropad
+--------
 
-###### NOTES
-1. **How to uninstall?** The driver's installer package installs a Wacom Utility
-app; open it up and click on the Remove button under Tablet Software. It'll
-do a clean uninstall of the driver and then remove itself too.
-2. **Why not use Homebrew?** Cos the formula doesn't clean up all the installed
-files. (The Wacom Utility is still in the Applications folder after a `zap`
-and you have to uninstall it yourself.)
-3. **A bit of history**. I initially installed driver and apps from my DVD.
-Never really used the apps and the driver stopped working after upgrading
-from OS X 10.9 (Mavericks) to OS X 10.10 (Yosemite): OS X moved it into
-`/Incompatible Software` during the upgrade. I then installed a new driver
-(`pentablet_5.3.5-4.dmg`) that Wacom [released][wacom-blog] for Yosemite.
+    $ brew cask install astropad
 
 
 Git
@@ -44,7 +28,7 @@ Git
 Fonts
 -----
 
-    $ brew cask install font-alegreya font-alegreya-sc
+    $ brew cask install font-alegreya
     $ brew cask install font-architects-daughter
     $ brew cask install font-cherry-cream-soda
     $ brew cask install font-kaushan-script
@@ -58,8 +42,8 @@ a cask for it. Same for the [icon fonts][all-the-icons-fonts] used by the
 
 ###### Notes
 1. **Alegreya & AlegreyaSC**. Using both fonts for blog and doc sites.
-The formulas above install all variants: black, black-italic, bold,
-bold-italic, italic, regular.
+The `font-alegreya` formula above contains both and installs all variants:
+black, black-italic, bold, bold-italic, italic, regular.
 2. **Architects Daughter**. I used it for lots of maths (hand-drawn)
 diagrams but have now switched to *KG Miss Speechy IPA*.
 3. **Cherry Cream Soda**. Been using it for presentations.
@@ -83,19 +67,21 @@ Google Chrome
 
 Inkscape
 --------
-Install the Inkscape 0.91 Quartz build using [this DMG][inkscape-dmg].
-Then install [my configuration][inkscape-config].
+Install the Inkscape 0.91 native build using the DMG stashed away in the
+[draft release][inkscape-dmg]. Then install [my configuration][inkscape-config].
 
 ###### Notes
-1. Inkscape native (Quartz) builds. That's what you want. Much smoother
-drawing experience than an X11 build running with the old X11 on OS X.
-(Which you'll have to install, BTW; it doesn't ship with OS X anymore.)
-2. Inkscape 0.92. Not yet available through Cask. If you feel adventurous
-you can cruft together your own GTK3/Quartz installation, [read this]
-[inkscape]!
-3. Inkscape 0.91 Quartz DMG. I'm saving the only DMG that worked for me
-in `extras` cos it's no longer available from `osxmenu`. It's the only
-one pre-configured with a dark theme.
+1. Inkscape native builds. That's what you want. Much smoother drawing
+experience than an X11 build running with X11 on macOS. (BTW you'll have
+to install Quartz to run an X11 build of Inkscape since the old X11 doesn't
+ship with macOS anymore.)
+2. Inkscape 0.92. Available through Cask but it's the X11 build. In fact,
+the formula just installs the official DMG for macOS from Inkscape which
+is still based on X11. If you feel adventurous you can cruft together your
+own GTK3 native installation, [read this][inkscape]!
+3. Inkscape 0.91 DMG. Saved to a [draft release][inkscape-dmg] cos it's
+no longer available from `osxmenu`. It's the only native build with macOS
+integration and dark theme that worked for me.
 
 
 Rclone
@@ -126,7 +112,7 @@ some options that make it more Mac-friendly as well as the Spacemacs icon.
 
     $ brew tap d12frosted/emacs-plus
     $ brew install emacs-plus
-    $ brew linkapps emacs-plus
+    $ ln -s /usr/local/opt/emacs-plus/Emacs.app /Applications
 
 Hook up my config.
 
@@ -159,6 +145,12 @@ Then set preferences as below:
 * *Input ➲ Virtual Machine ➲ Host Key Combination*: right ⌘
 * *Update ➲ Check for Updates*: off
 
+###### Note
+On Mojave, the first installation attempt [might fail][vbox-kext] due to
+KEXT security. If it does, go to *System Preferences ➲ Security & Privacy
+➲ General* and allow Oracle to load. Then run again the above install
+command.
+
 
 On Hold
 -------
@@ -172,9 +164,27 @@ form the App Store if I wanted to. I can count on the fingers of one hand
 the number of times I've used these apps, so am not installing any of them
 for now.
 
-### TAM Smart Card Plugin
-TAM app to drive the smart card reader to use for buying monthly passes.
-Not sure I'm going to need it...
+### Bamboo Tablet
+Not using it anymore, but if you need it again, follow the instructions below.
+
+Download the driver's installer package from [Wacom support][wacom-support].
+You have to look for it in the "Drivers for Previous Generation Products"
+section, where you'll find the download link for Bamboo CTH. The version I
+downloaded is [pentablet_5.3.7-6.dmg][pentablet_5.3.7-6.dmg] (click to
+download again).
+
+###### Notes
+1. **How to uninstall?** The driver's installer package installs a Wacom Utility
+app; open it up and click on the Remove button under Tablet Software. It'll
+do a clean uninstall of the driver and then remove itself too.
+2. **Why not use Homebrew?** Cos the formula doesn't clean up all the installed
+files. (The Wacom Utility is still in the Applications folder after a `zap`
+and you have to uninstall it yourself.)
+3. **A bit of history**. I initially installed driver and apps from my DVD.
+Never really used the apps and the driver stopped working after upgrading
+from OS X 10.9 (Mavericks) to OS X 10.10 (Yosemite): OS X moved it into
+`/Incompatible Software` during the upgrade. I then installed a new driver
+(`pentablet_5.3.5-4.dmg`) that Wacom [released][wacom-blog] for Yosemite.
 
 ### SourceTree
 Homebrew forced me to install the XCode CLI tools which include `git` so
@@ -206,16 +216,18 @@ with it so I had to put it on my personal laptop.
     "Backups"
 [inkscape]: inkscape.md
     "Inkscape"
-[inkscape-config]: ../config/inkscape/README.md
+[inkscape-config]: ../../config/inkscape/README.md
     "Inkscape Set Up"
-[inkscape-dmg]: ../extras/Inkscape-osxmenu-r12898-1-quartz-10.7-x86_64.dmg
-    "Inkscape 0.91 Quartz DMG"
+[inkscape-dmg]: https://github.com/c0c0n3/trixie-dotses/issues/7
+    "Inkscape-osxmenu-r12898-1-quartz-10.7-x86_64.dmg"
 [keyboard]: ../../config/osx-keyboard/README.md
     "OS X Keyboard Layouts"
 [pentablet_5.3.7-6.dmg]: http://cdn.wacom.com/u/productsupport/drivers/mac/consumer/pentablet_5.3.7-6.dmg
     "Wacom Driver Installer"
 [spacemacs-install]: https://github.com/syl20bnr/spacemacs#install
     "Spacemacs Installation Docs"
+[vbox-kext]: https://apple.stackexchange.com/questions/301303
+    "VirtualBox 5.1.28 fails to install on MacOS 10.13 due to KEXT security"
 [wacom-blog]: http://community.wacom.com/en/inspiration/blog/2014/october/using-wacom-drivers-with-mac-os-x-yosemite/
     "Using Wacom Drivers with Mac OS X Yosemite"
 [wacom-support]: http://www.wacom.com/en-us/support/product-support/drivers

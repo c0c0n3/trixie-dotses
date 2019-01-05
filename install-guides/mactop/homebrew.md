@@ -15,7 +15,7 @@ Stop Homebrew from sending out data for analytics:
 
     $ brew analytics off
 
-###### NOTES
+###### Note
 Lots of Homebrew formulas depend on the XCode Command Line Tools so the
 installer will prompt you to install them.
 

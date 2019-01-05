@@ -8,8 +8,8 @@ Finder
 ------
 
 ### Sidebar
-Show only: AirDrop, Desktop, Downloads, Home, Shared (all), Devices (all), 
-Tags (all).
+Show only: AirDrop, Desktop, Downloads, Home, Hard and external disks,
+Bojour computers, Connected servers, Tags (all).
 
 ### Advanced
 Show all filename extensions.
