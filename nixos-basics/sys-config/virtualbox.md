@@ -24,17 +24,26 @@ when creating a VM to host NixOS:
 * Acceleration
   + Paravirtualization Interface: KVM
 
+###### Settings ➲ Display
+* Graphics Controller: VBoxVGA
+
 ### Notes
 ###### VT-x/AMD-V acceleration
 The manual says to enable "VT-x/AMD-V" acceleration but I can't find that
 setting under *Settings ➲ System ➲ Acceleration*. It's definitely enabled
-on all my Macs, but I still can't see that setting in VirtualBox. Not sure
-what the story is here. More about enabling "VT-x/AMD-V" acceleration [over
-here][enable-virt]; Macs specifics [here][enable-virt-macbook].
+on all my Macs, but I still can't see that setting in VirtualBox, even though
+the VirtualBox summary pane correctly reports "Acceleration: VT-x/AMD-V".
+Not sure what the story is here. More about enabling "VT-x/AMD-V" acceleration
+[over here][enable-virt]; Macs specifics [here][enable-virt-macbook].
 
 ###### KVM
 The NixOS manual doesn't mention it, but the VirtualBox manual does.
 That's the right setting for a Linux guest.
+
+###### VBoxVGA
+The NixOS manual doesn't mention it, but if you set Graphics Controller to
+anything else than "VBoxVGA", you'll end up with a black screen in your hands
+when booting from the NixOS ISO or when booting NixOS itself after installation!
 
 
 Additional NixOS Configuration
@@ -82,14 +91,19 @@ then easily mount it yourself from NixOS to tweak permissions, e.g.
     fileSystems."/vbox-shares/d" = {
         fsType = "vboxsf";
         device = "d";
-        options = [ "rw" "dmode=0777" "fmode=0666" ];
+        options = [ "nofail" "rw" "dmode=0777" "fmode=0666" ];
     };
+
+    security.rngd.enable = false;
 
 will give any user permissions to create files and directories in `d`
 as well as read and write permissions on all existing files. If the
 `/vbox-shares` directory doesn't exist, it'll be created for you.
 (Change the name to whatever you like or even get rid of this extra dir
 if you want `d` right under your root dir, i.e. `/d`.)
+As of 19.03, to be able to mount VBox shared folders, you'll have to mount
+with the `nofail` option and disable the `rngd`, the random number generator
+daemon. If you don't do this, the system won't boot!
 
 But you'll hit a snag with this approach: `root` owns all files and dirs,
 even those other users create! That is, if you're logged in as `pwned`
@@ -106,7 +120,7 @@ a gid of `100`. Then
     fileSystems."/vbox-shares/d" = {
         fsType = "vboxsf";
         device = "d";
-        options = [ "rw" "uid=1000" "gid=100" "umask=0022" ];
+        options = [ "nofail" "rw" "uid=1000" "gid=100" "umask=0022" ];
     };
 
 mounts `d` with an ownership of `pwned`/`users` and ensures permissions
