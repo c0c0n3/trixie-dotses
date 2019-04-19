@@ -1,7 +1,8 @@
 ;; Spacemacs editor configuration.
 
-(load-rel "frame.el")
 (load-rel "edit.el")
+(load-rel "frame.el")
+(load-rel "layers.el")
 (load-rel "shell.el")
 (load-rel "speedbar.el")
 (load-rel "theme.el")
@@ -12,24 +13,7 @@
 You should not put any user code in this function besides modifying the variable
 values."
   (setq-default
-   dotspacemacs-configuration-layers '(auto-completion
-                                       better-defaults
-                                       emacs-lisp
-                                       git
-                                       (haskell :variables haskell-completion-backend 'intero)
-                                       javascript
-                                       markdown
-                                       latex
-                                       nixos
-                                       (shell :variables
-                                              shell-default-shell 'multi-term
-                                              shell-default-height 30
-                                              shell-default-position 'bottom)
-                                       (spell-checking :variables
-                                                       ispell-dictionary "en_GB")
-                                       syntax-checking
-                                       version-control
-                                       yaml)
+   dotspacemacs-configuration-layers (layers/list)
    dotspacemacs-excluded-packages '(;; get rid of tildes on empty lines.
                                     vi-tilde-fringe)
    dotspacemacs-additional-packages '(all-the-icons all-the-icons-dired)

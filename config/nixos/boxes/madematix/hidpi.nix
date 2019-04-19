@@ -27,15 +27,16 @@ with types;
     # NOTE (1)
     services.xserver = {
       monitorSection = ''
-        DisplaySize    331 191
+        DisplaySize    331 207
       '';
+      dpi = 221;
     };
 
     # Tweak GTK apps for HiDPI.
     # NOTE (2)
-    environment.variables = {
-      GDK_SCALE = "2";
-    };
+#    environment.variables = {
+#      GDK_SCALE = "2";
+#    };
 
     # Force KMS.
     # NOTE (3)
@@ -46,8 +47,9 @@ with types;
 }
 # Notes
 # -----
-# 1. X Display Size. Without this, things, (esp. fonts) are gonna look
-# blurry. My MacBook Pro Retina 15 has a monitor resolution of 2880x1800.
+# 1. X Monitor Settings. Without this, things, (esp. fonts) will look blurry.
+# My MacBook Pro Retina 15 has a monitor resolution of 2880x1800 at 220 PPI.
+# (As per Apple's specs, but actual PPI seems 220.53, see link below.)
 # I'm using VBox unscaled HiDPI output and, after maximising the VM window
 # to fit the screen, `xrandr` reports a resolution of 2880x1660 from the
 # NixOS guest. (Think this is cos VBox subtracts automatically the title
@@ -57,7 +59,9 @@ with types;
 #
 #     $ xdpyinfo | grep -B 2 resolution
 #
-# To fix this, I've computed the actual dims myself:
+# If I enter full-screen mode, then the reported resolution becomes 2880x1800
+# (correct!) but I'm still stuck with the low DPI (96).
+# To fix this, I've computed myself the actual dims for a maximised VM window:
 #
 #     $ echo 'scale=5;sqrt(2880^2+1800^2)' | bc
 #     3396.23320
@@ -66,11 +70,32 @@ with types;
 #     $ echo 'scale=5;(15.4/3396)*1660*25.4' | bc
 #     191.00292
 #
+# To get the dims for a VM in full-screen mode, use the first two computations
+# above but replace the last with:
+#
+#     $ echo 'scale=5;(15.4/3396)*1800*25.4' | bc
+#     207.11160
+#
+# Given the dims, X should be able to compute the DPI. So why force it with
+# the `dpi` param above? (BTW, it gets turned into a CLI arg of `-dpi 221`
+# and then used to start X---see `xserver.nix` module.) Turns out X computes
+# a DPI of 96 after booting but if I reboot the system or just restart the
+# display manager
+#
+#     $ sudo systemctl restart display-manager
+#
+# then the DPI becomes 221. Funny thing is, in NixOS 17.03 I didn't need to
+# set the DPI myself. In fact, a ` DisplaySize 331 207` directive was enough
+# for X set the DPI to 221 on the first shot, after booting the system.
+#
 # See:
 # - https://wiki.archlinux.org/index.php/Xorg#Display_size_and_DPI
+# - https://pixensity.com/list/apple-macbook-pro-15-inch-retina-display-16/
 #
-# 2. GTK Scale. Without it, GTK apps will be too small. Some apps like i3
-# and Chromium use the DPI given by X, so (1) fixes them being too small.
+# 2. GTK Scale. Without it, some GTK apps were too small on NixOS 17.03. This
+# isn't the case anymore on NixOS 18.09, so I'm commenting it out for now.
+# Note that some apps like i3 and Chromium use the DPI given by X instead, so
+# (1) fixes them being too small.
 # See:
 # - https://wiki.archlinux.org/index.php/HiDPI
 #

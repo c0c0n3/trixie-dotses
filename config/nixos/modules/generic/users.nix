@@ -41,18 +41,22 @@ with types;
           value = {
               isNormalUser = true;
               uid = 1000 + ix;
-              group = "users";
+              group = "users";  # see addGidAttr below
               extraGroups = [ "wheel" ];
               hashedPassword = pwd;
               home = "/home/${username}";
           };
     };
+    addGidAttr = nv: {
+               name  = nv.name;
+               value = nv.value // { gid = config.ids.gids.users; };
+    };
     adminsAttrs = zipListsWith mkusr admins (range 0 (length admins));
-    adminUsers = listToAttrs adminsAttrs;  # does nothing if admins is empty.
-  in
+    adminsGenAttrs = map addGidAttr adminsAttrs;
+  in  # basically nothing happens if admins is empty.
   {
-    users.users = adminUsers;
-    ext.users.admins-generated = adminUsers;
+    users.users = listToAttrs adminsAttrs;
+    ext.users.admins-generated = listToAttrs adminsGenAttrs;
   };
 
 }

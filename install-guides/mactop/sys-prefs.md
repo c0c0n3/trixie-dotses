@@ -8,15 +8,24 @@ General
 -------
 * *Highlight color*: FFBEB4
 
+###### Note
+In Mojave the colour will look dimmer than in the previous macOS's---probably
+Mojave introduced some L&F changes and the highlight colour value gets rendered
+on screen with an alpha value less than 100%.
+
 Desktop & Screen Saver
 ----------------------
 * *Desktop*: choose wallpaper from Trixie Dotses repo
-* *Screen Saver*: Classic; *Source*: National Geographic
+* *Screen Saver*: Classic; *Source*: Sierras
 * *Screen Saver ➲ Start After*: 10 min
 
-###### NOTES
-The Trixie Dotses repo should be on the `data` partition. Add this path
+###### Notes
+1. Trixie Dotses repo. It should be on the `data` partition. Add this path
 to *Folders*: `/Volumes/data/github/trixie-dotses/wallpapers`.
+2. National Geographic screen saver. Apparenlty Mojave
+[ditched it][nat-geo-screen-saver] it. You can still get the pics from the
+interwebs though, put them in a folder and add that folder to the screen
+savers.
 
 Dock
 ----
@@ -32,7 +41,7 @@ Language & Region
 * *Region*: United Kingdom
 * *Preferred languages*: English (U.K.) --- Primary
 
-###### NOTE
+###### Note
 Setting the region to South Africa and the language to "English (South
 Africa)" results in no `LANG` environment variable being set, whereas
 the setting above gives `LANG=en_GB.UTF-8`. Didn't have time to find
@@ -45,7 +54,7 @@ Security & Privacy
 * *FileValut*: off
 * *Firewall*: off
 * *Privacy ➲ Location Services*: off
-* *Privacy ➲ Diagnostic & Usage*: don’t send any data (disable all)
+* *Privacy ➲ Analytics*: don’t send any data (disable all)
 
 Displays
 --------
@@ -66,7 +75,11 @@ Trackpad
 
 iCloud
 ------
-Turn off completely: disable all features and then sign out.
+Turn off completely (disable all features and then sign out) if you don't
+need to share files with your iPad. Otherwise:
+
+1. Unckeck all features except for *iCloud Drive*.
+2. *iCloud Drive ➲ Options ➲ Documents*: unckeck all apps.
 
 Sharing
 -------
@@ -88,3 +101,8 @@ Accessibility
 -------------
 *Mouse & Trackpad ➲ Trackpad Options ➲ Enable dragging*: three finger drag
 
+
+
+
+[nat-geo-screen-saver]: https://discussions.apple.com/thread/8630718
+    "National Geographic Screen Saver Missing"

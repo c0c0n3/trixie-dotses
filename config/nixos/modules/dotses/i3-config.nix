@@ -107,7 +107,7 @@ in {
 # instead:
 #
 # displayManager.sessionCommands = let
-#   user = config.users.extraUsers.andrea;
+#   user = config.users.users.andrea;
 # in ''
 #    WALLPAPER="${user.home}/.config/wallpaper"
 #    [ -f $WALLPAPER ] && feh --no-fehbg --bg-scale $WALLPAPER

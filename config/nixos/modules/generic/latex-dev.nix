@@ -50,13 +50,12 @@ with types;
       collection-binextra
       collection-fontsrecommended
       collection-fontutils
-      collection-genericrecommended
       collection-langenglish
       collection-latex
       collection-latexextra
-      collection-mathextra
+      collection-mathscience
       collection-metapost
-      collection-plainextra
+      collection-plaingeneric
 
       # tikz and friends
       collection-pictures

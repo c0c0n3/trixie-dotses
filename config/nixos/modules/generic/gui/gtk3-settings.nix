@@ -10,7 +10,7 @@ with lib;
 with types;
 
 let
-  dot-link = import ./dot-link-utils.nix;
+  dot-link = import ../dot-link-utils.nix;
   boolToString = b: if b then "true" else "false";
 in {
 

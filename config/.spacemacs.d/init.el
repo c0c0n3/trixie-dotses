@@ -12,6 +12,10 @@
  this load-rel function."
   (load-file (resolve-rel file)))
 
+(defun load-if (file)
+  "Loads an .el FILE if it exists, does nothing otherwise."
+  (if (file-exists-p file) (load-file file)))
+
 (defun spaceconf ()
   "Reads the vaule of SPACECONF, falling back to 'editor' if the variable
  isn't set or set to null/empty."
