@@ -24,6 +24,6 @@
   time.timeZone = "Europe/Paris";
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "18.09";
+  system.stateVersion = "19.03";
 
 }
