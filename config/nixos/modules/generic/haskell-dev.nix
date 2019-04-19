@@ -60,7 +60,8 @@ with types;
       # Programs and Tools
       # ------------------
       # - Haskell platform tools except for Stack.
-      alex cabal-install haddock happy hscolour
+      alex cabal-install # haddock # marked as broken in NixOS 19.03!!!
+      happy hscolour
       # - needed by Spacemacs Haskell layer and generally useful anyway.
       apply-refact hlint stylish-haskell hasktags hoogle
       # - other tools I've found useful.
