@@ -85,8 +85,11 @@ will be all messed up.
 
 ### Explicit Mount
 Another option you have is that you do *not* check the auto-mount option
-when adding a directory `d` to your VirtualBox shared folders. You can
-then easily mount it yourself from NixOS to tweak permissions, e.g.
+when adding a directory `d` to your VirtualBox shared folders. To be able
+to mount shared folders, you'll have to mount with the `nofail` option and
+disable the `rngd`, the random number generator daemon. If you don't do this,
+the system won't boot! (Don't ask why; this is noted in the NixOS manual too.)
+You can then easily mount it yourself from NixOS to tweak permissions, e.g.
 
     fileSystems."/vbox-shares/d" = {
         fsType = "vboxsf";
@@ -101,9 +104,6 @@ as well as read and write permissions on all existing files. If the
 `/vbox-shares` directory doesn't exist, it'll be created for you.
 (Change the name to whatever you like or even get rid of this extra dir
 if you want `d` right under your root dir, i.e. `/d`.)
-As of 19.03, to be able to mount VBox shared folders, you'll have to mount
-with the `nofail` option and disable the `rngd`, the random number generator
-daemon. If you don't do this, the system won't boot!
 
 But you'll hit a snag with this approach: `root` owns all files and dirs,
 even those other users create! That is, if you're logged in as `pwned`
