@@ -60,7 +60,8 @@ with types;
       "${mnt}/${d}" = {
         fsType = "vboxsf";
         device = "${d}";
-        options = [ "rw" "uid=${uid}" "gid=${gid}" "umask=0022" ];
+        options = [ "nofail"  # see NOTE (2)
+                    "rw" "uid=${uid}" "gid=${gid}" "umask=0022" ];
       };
     };
 
@@ -70,6 +71,9 @@ with types;
   {
     # Set up the mount points.
     fileSystems = mountPoints;
+
+    # Disable random number generator daemon, see NOTE (2)
+    security.rngd.enable = false;
 
     # Also add the user to VirtualBox's file system group.
     users.users."${username}".extraGroups = [ "vboxsf" ];
@@ -85,3 +89,7 @@ with types;
 # NB: this is not a bug I've introduced refactoring the previous version of
 # this module that used to work in 16.09. In fact, even if you take this
 # module's previous version, you'll see it too is broken in 17.03.
+# 2. Boot failures when mounting shared folders. As of 19.03, to be able to
+# mount VBox shared folders, you'll have to mount with the "nofail" option
+# and disable the `rngd`, the random number generator daemon. If you don't
+# do this, the system won't boot!

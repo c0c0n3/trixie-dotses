@@ -24,17 +24,26 @@ when creating a VM to host NixOS:
 * Acceleration
   + Paravirtualization Interface: KVM
 
+###### Settings ➲ Display
+* Graphics Controller: VBoxVGA
+
 ### Notes
 ###### VT-x/AMD-V acceleration
 The manual says to enable "VT-x/AMD-V" acceleration but I can't find that
 setting under *Settings ➲ System ➲ Acceleration*. It's definitely enabled
-on all my Macs, but I still can't see that setting in VirtualBox. Not sure
-what the story is here. More about enabling "VT-x/AMD-V" acceleration [over
-here][enable-virt]; Macs specifics [here][enable-virt-macbook].
+on all my Macs, but I still can't see that setting in VirtualBox, even though
+the VirtualBox summary pane correctly reports "Acceleration: VT-x/AMD-V".
+Not sure what the story is here. More about enabling "VT-x/AMD-V" acceleration
+[over here][enable-virt]; Macs specifics [here][enable-virt-macbook].
 
 ###### KVM
 The NixOS manual doesn't mention it, but the VirtualBox manual does.
 That's the right setting for a Linux guest.
+
+###### VBoxVGA
+The NixOS manual doesn't mention it, but if you set Graphics Controller to
+anything else than "VBoxVGA", you'll end up with a black screen in your hands
+when booting from the NixOS ISO or when booting NixOS itself after installation!
 
 
 Additional NixOS Configuration
@@ -76,14 +85,19 @@ will be all messed up.
 
 ### Explicit Mount
 Another option you have is that you do *not* check the auto-mount option
-when adding a directory `d` to your VirtualBox shared folders. You can
-then easily mount it yourself from NixOS to tweak permissions, e.g.
+when adding a directory `d` to your VirtualBox shared folders. To be able
+to mount shared folders, you'll have to mount with the `nofail` option and
+disable the `rngd`, the random number generator daemon. If you don't do this,
+the system won't boot! (Don't ask why; this is noted in the NixOS manual too.)
+You can then easily mount it yourself from NixOS to tweak permissions, e.g.
 
     fileSystems."/vbox-shares/d" = {
         fsType = "vboxsf";
         device = "d";
-        options = [ "rw" "dmode=0777" "fmode=0666" ];
+        options = [ "nofail" "rw" "dmode=0777" "fmode=0666" ];
     };
+
+    security.rngd.enable = false;
 
 will give any user permissions to create files and directories in `d`
 as well as read and write permissions on all existing files. If the
@@ -106,7 +120,7 @@ a gid of `100`. Then
     fileSystems."/vbox-shares/d" = {
         fsType = "vboxsf";
         device = "d";
-        options = [ "rw" "uid=1000" "gid=100" "umask=0022" ];
+        options = [ "nofail" "rw" "uid=1000" "gid=100" "umask=0022" ];
     };
 
 mounts `d` with an ownership of `pwned`/`users` and ensures permissions

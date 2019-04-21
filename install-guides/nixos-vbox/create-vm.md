@@ -46,7 +46,12 @@ Edit the virtual machine configuration in VirtualBox.
 ### Display
 * Screen
   + Video Memory: 128MB
-  + Use Unscaled HiDPI Output
+  + Graphics Controller: VBoxVGA
+
+###### Note
+If you set Graphics Controller to anything else than "VBoxVGA", you'll
+end up with a black screen in your hands when booting from the NixOS
+ISO or when booting NixOS itself after installation!
 
 ### Audio
 * Disable audio

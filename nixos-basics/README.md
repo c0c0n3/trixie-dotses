@@ -18,8 +18,8 @@ found useful as a *starting point* to be able to run NixOS and keep the
 system in good shape. Much of the stuff I've collected here comes from
 the Nix and NixOS manuals, the NixOS wiki, and the Arch wiki. I've found
 that NixOS docs are overall good but lack depth, so I've used the Arch
-wiki alot to fill the gaps. In particular, the [General Recommendations]
-[arch-recommends] page on the Arch wiki is a terrific source of knowledge.
+wiki alot to fill the gaps. In particular, the [General Recommendations][arch-recommends]
+page on the Arch wiki is a terrific source of knowledge.
 
 
 Contents
