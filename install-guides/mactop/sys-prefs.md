@@ -6,6 +6,7 @@ System Preferences app.
 
 General
 -------
+* *Appearance*: light
 * *Highlight color*: FFBEB4
 
 ###### Note
@@ -31,6 +32,7 @@ Dock
 ----
 * *Magnification*: 3/4 of the way
 * Automatically hide and show the Dock
+* Don't show recent applications in Dock
 
 Mission Control
 ---------------
@@ -47,6 +49,10 @@ Africa)" results in no `LANG` environment variable being set, whereas
 the setting above gives `LANG=en_GB.UTF-8`. Didn't have time to find
 out if not having `LANG` set is a bad thing, so I'd rather keep it like
 this for now.
+
+Screen Time
+-----------
+Disable entirely.
 
 Security & Privacy
 ------------------
