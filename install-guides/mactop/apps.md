@@ -126,7 +126,7 @@ Hook up my config.
 
 Install spell checker.
 
-    $ brew install aspell --with-lang-en
+    $ brew install aspell
 
 ###### Notes
 1. Spacemacs spell-checking layer. I load it in my config. It uses Flyspell
@@ -163,10 +163,8 @@ Then set preferences as below:
 * *Update ➲ Check for Updates*: off
 
 ###### Note
-On Mojave, the first installation attempt [might fail][vbox-kext] due to
-KEXT security. If it does, go to *System Preferences ➲ Security & Privacy
-➲ General* and allow Oracle to load. Then run again the above install
-command.
+Since Mojave, the first installation attempt [fails][vbox-kext] due to
+KEXT security.
 
 
 On Hold
