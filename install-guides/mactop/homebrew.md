@@ -20,12 +20,9 @@ Lots of Homebrew formulas depend on the XCode Command Line Tools so the
 installer will prompt you to install them.
 
 ### Cask
-
-    $ brew tap caskroom/cask
-
 Bring in the fonts Cask too (see [usage docs][cask-additional-taps]):
 
-    $ brew tap caskroom/fonts
+    $ brew tap Homebrew/cask-fonts
 
 
 Usage
