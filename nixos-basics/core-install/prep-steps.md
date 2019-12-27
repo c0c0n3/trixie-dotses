@@ -29,8 +29,10 @@ installer won't be able to configure and install the boot loader properly.
 
 ### Boot Installer
 Now stick your USB drive in and reboot. Your firmware should give you an
-option to boot into the NixOS CD which should drop you right into a root
-shell from where you can start doing stuff.
+option to boot into the NixOS CD which should drop you right into a shell
+from where you can start doing stuff. Your user should be 'nixos', have
+admin superpowers and an empty password so you can easily `sudo` your way
+to installation without entering passwords.
 
 
 Prepare Storage Drive
@@ -43,7 +45,7 @@ Choose the hard drive where you want to install and start `parted` to edit
 that device's table, e.g.
 
     $ lsblk                             # list disks attached to system
-    $ parted -a optimal /dev/sda        # edit chosen disk
+    # parted -a optimal /dev/sda        # edit chosen disk
 
 Note the `-a optimal` option to tell `parted` to choose optimal partition
 alignment. In `parted`:
@@ -73,8 +75,8 @@ Here's how to encrypt the whole NixOS and data partition. (Note you should
 *not* encrypt the boot partition; it could be done but it's not practical.) 
 If you don't need encryption, skip ahead.
 
-    $ cryptsetup luksFormat /dev/sda2
-    $ cryptsetup open --type luks /dev/sda2 root
+    # cryptsetup luksFormat /dev/sda2
+    # cryptsetup open --type luks /dev/sda2 root
 
 The first line sets up encryption for the partition. The program will first
 ask you to confirm the (destructive) command; type an *uppercase* YES or
@@ -86,31 +88,31 @@ should use `/dev/mapper/root` to refer to this the partition rather than
 `/dev/sda2`.
 
 ###### Notes
-1. *More about DM Crypt*. As usual, the Arch wiki is an excellent [source]
-[arch-dm-crypt]!
+1. *More about DM Crypt*. As usual, the Arch wiki is an excellent
+[source][arch-dm-crypt]!
 2. *NixOS Specifics*. The NixOS wiki has an article on how to [encrypt the
 root partition][nixos-crypt-root] when using LVM.
 
 ### Formatting
 Create file systems
 
-    $ mkfs.vfat -F32 /dev/sda1
-    $ mkfs.ext4 /dev/sda2         # if you haven't encrypted it
+    # mkfs.fat -F32 /dev/sda1
+    # mkfs.ext4 /dev/sda2         # if you haven't encrypted it
 
 If you've encrypted the disk, then replace the second line above with
 
-    $ mkfs.ext4 /dev/mapper/root
+    # mkfs.ext4 /dev/mapper/root
 
 ### Mounting
 Mount partitions:
  
-    $ mount /dev/sda2 /mnt         # if you haven't encrypted it
-    $ mkdir -p /mnt/boot
-    $ mount /dev/sda1 /mnt/boot
+    # mount /dev/sda2 /mnt         # if you haven't encrypted it
+    # mkdir -p /mnt/boot
+    # mount /dev/sda1 /mnt/boot
 
 If you've encrypted the disk, then replace the first line above with
 
-    $ mount /dev/mapper/root /mnt
+    # mount /dev/mapper/root /mnt
 
 
 Considerations
@@ -147,7 +149,7 @@ add a swap file later when and if you need it.
     "BIOS and UEFI Bootable USB"
 [lvm-performance]: https://www.researchgate.net/publication/284897601_LVM_in_the_Linux_environment_Performance_examination
     "LVM Performance Examination"
-[nixos-crypt-root]: https://nixos.org/wiki/Encrypted_Root_on_NixOS
+[nixos-crypt-root]: https://nixos.wiki/wiki/Full_Disk_Encryption
     "Encrypted Root on NixOS"
 [nixos-download]: https://nixos.org/nixos/download.html
     "Download NixOS"

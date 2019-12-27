@@ -32,7 +32,7 @@ with import ../gsettings/utils.nix;
       '';
     };
     ext.gnomix.shell.extensions.user-theme.name = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         The name of the theme you want the GNOME Shell to use. We'll only

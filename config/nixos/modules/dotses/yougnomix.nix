@@ -24,7 +24,7 @@ in
       '';
     };
     ext.yougnomix.username = mkOption {
-      type = string;
+      type = str;
       default = null;
       description = ''
         The desktop owner's user name.

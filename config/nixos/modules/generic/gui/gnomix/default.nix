@@ -49,7 +49,7 @@ with types;
       '';
     };
     ext.gnomix.dmName = mkOption {
-      type = types.string;
+      type = str;
       default = "gdm";
       description = ''
         What display manager to use, e.g. "slim".

@@ -18,7 +18,7 @@ with types;
       '';
     };
     ext.swapfile.pathname = mkOption {
-      type = string;
+      type = str;
       default = "/swapfile";
       description = ''
         Path to the swap file.

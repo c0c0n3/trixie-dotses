@@ -28,14 +28,14 @@ with types;
       '';
     };
     ext.etermd.term-sexpr = mkOption {
-      type = string;
+      type = str;
       default = ''(ansi-term "bash")'';
       description = ''
         Emacs S-expression to start a terminal.
       '';
     };
     ext.etermd.daemon-name = mkOption {
-      type = string;
+      type = str;
       default = "etermd";
       description = ''
         Emacs daemon name. We use a name so that you can have other Emacs
@@ -46,7 +46,7 @@ with types;
       '';
     };
     ext.etermd.client-cmd-name = mkOption {
-      type = string;
+      type = str;
       default = "etermd-client";
       description = ''
         The name of the command you want to use to start a terminal in the

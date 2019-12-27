@@ -24,20 +24,20 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 
-# Use Font Awesome circle (&#xf111;) as workspace name to make the bar less
-# boring. NB you won't see the circle character below, but it's there, don't
-# delete it! (You should see e.g. "set $ws1 1:" instead of "set $ws1 1:●".)
+# Use Font Awesome (5.10) desktop (&#xf108;) as workspace name to make the
+# bar less boring. NB you won't see the desktop character below unless you
+# installed Font Awesone. But it's there, don't delete it!
 # For this to work, you have to make the bar use Font Awesome, see below.
-set $ws1 1:
-set $ws2 2:
-set $ws3 3:
-set $ws4 4:
-set $ws5 5:
-set $ws6 6:
-set $ws7 7:
-set $ws8 8:
-set $ws9 9:
-set $ws10 10:
+set $ws1 1:
+set $ws2 2:
+set $ws3 3:
+set $ws4 4:
+set $ws5 5:
+set $ws6 6:
+set $ws7 7:
+set $ws8 8:
+set $ws9 9:
+set $ws10 10:
 
 # Switch to workspace.
 bindsym $mod+1 workspace $ws1

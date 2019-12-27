@@ -28,7 +28,7 @@ in {
       '';
     };
     ext.i3.config.editor = mkOption {
-      type = string;
+      type = str;
       default = "";
       description = ''
         If specified, it must be a command name, e.g. 'emacs', that our i3
@@ -36,7 +36,7 @@ in {
       '';
     };
     ext.i3.config.browser = mkOption {
-      type = string;
+      type = str;
       default = "";
       description = ''
         If specified, it must be a command name, e.g. 'chromium', that our i3
@@ -44,7 +44,7 @@ in {
       '';
     };
     ext.i3.config.launcher = mkOption {
-      type = string;
+      type = str;
       default = "";
       description = ''
         If specified, it must be a command name, e.g. 'synapse', that our i3
@@ -75,7 +75,7 @@ in {
 
     # We use these fonts in the i3 config file.
     fonts.fonts = mkIf enabled (with pkgs; [
-      font-awesome-ttf ubuntu_font_family
+      font-awesome ubuntu_font_family
     ]);
 
     # Sym-link i3 config into homes.
