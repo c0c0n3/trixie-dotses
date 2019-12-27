@@ -75,7 +75,7 @@ in {
 
     # We use these fonts in the i3 config file.
     fonts.fonts = mkIf enabled (with pkgs; [
-      font-awesome-ttf ubuntu_font_family
+      font-awesome ubuntu_font_family
     ]);
 
     # Sym-link i3 config into homes.
