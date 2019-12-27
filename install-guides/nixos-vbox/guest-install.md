@@ -42,16 +42,15 @@ NixOS Guest Setup
 
 ### Bootstrap
 
-    $ cd /etc/nixos
-    $ nano configuration.nix   # add git to environment.systemPackages
-    $ nixos-rebuild switch
-    $ git clone https://github.com/c0c0n3/trixie-dotses.git
-    $ mv configuration.nix initial.configuration.nix.bak
-    $ ln -s /etc/nixos/trixie-dotses/config/nixos/boxes/madematix/default.nix configuration.nix
+    # cd /etc/nixos
+    # nix-env -i git
+    # git clone https://github.com/c0c0n3/trixie-dotses.git
+    # mv configuration.nix initial.configuration.nix.bak
+    # ln -s /etc/nixos/trixie-dotses/config/nixos/boxes/madematix/default.nix configuration.nix
 
 ### Build madematix
 
-    $ nixos-rebuild switch
+    # nixos-rebuild switch
 
 ### Post-build
 The Emacs terminal daemon won't start until Spacemacs has downloaded all

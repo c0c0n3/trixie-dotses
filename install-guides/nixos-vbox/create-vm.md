@@ -22,7 +22,7 @@ created under the "Default Machine Folder"; this can be changed to e.g.
 * VDI
 * Dynamically allocated
 * madematix.hd (make sure it goes in the VM's new folder created above)
-* 20GB
+* 50GB
 
 VM Settings
 -----------
@@ -49,9 +49,14 @@ Edit the virtual machine configuration in VirtualBox.
   + Graphics Controller: VBoxVGA
 
 ###### Note
-If you set Graphics Controller to anything else than "VBoxVGA", you'll
-end up with a black screen in your hands when booting from the NixOS
-ISO or when booting NixOS itself after installation!
+With Virtual Box `< 6`, if you set Graphics Controller to anything
+else than "VBoxVGA", you'll end up with a black screen in your hands
+when booting from the NixOS ISO or when booting NixOS itself after
+installation! From version `>= 6`, there's a new "VMSVGA" setting
+that's supposed to make things better. If I use that setting, then
+booting goes smooth but then the actual host resolution isn't
+available to the guest---it gets close but it's not the same which
+makes my Nix HDMI tweaks go haywire...
 
 ### Audio
 * Disable audio
