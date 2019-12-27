@@ -78,7 +78,7 @@ in
     enable = true;
     with-extra-hpkgs = ps: with ps; [
       here
-      diagrams # diagrams-graphviz # marked as broken in NixOS 19.03!!!
+      diagrams # diagrams-graphviz # marked as broken since NixOS 19.03!!!
     ];
   };
 

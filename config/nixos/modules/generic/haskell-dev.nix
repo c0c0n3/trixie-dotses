@@ -60,7 +60,7 @@ with types;
       # Programs and Tools
       # ------------------
       # - Haskell platform tools except for Stack.
-      alex cabal-install # haddock # marked as broken in NixOS 19.03!!!
+      alex cabal-install haddock
       happy hscolour
       # - needed by Spacemacs Haskell layer and generally useful anyway.
       apply-refact hlint stylish-haskell hasktags hoogle
@@ -89,8 +89,7 @@ with types;
 
       # - Tasty framework with the components I've found most useful.
       tasty tasty-hunit tasty-golden tasty-smallcheck tasty-quickcheck
-      tasty-html
-      (skip-tests tasty-discover)  # for some reason these tests keep on failing
+      tasty-html tasty-discover
     ];
 
     listPkgs = ps: (listDevBase ps) ++ (cfg.with-extra-hpkgs ps);
