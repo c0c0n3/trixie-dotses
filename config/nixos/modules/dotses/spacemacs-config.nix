@@ -21,7 +21,7 @@ in {
       '';
     };
     ext.spacemacs.config.font.family = mkOption {
-      type = string;
+      type = str;
       default = "Source Code Pro";
       description = ''
         Makes Spacemacs use this font.
@@ -35,21 +35,21 @@ in {
       '';
     };
     ext.spacemacs.config.font.weight = mkOption {
-      type = string;
+      type = str;
       default = "normal";
       description = ''
         Makes Spacemacs use this font weight.
       '';
     };
     ext.spacemacs.config.font.width = mkOption {
-      type = string;
+      type = str;
       default = "normal";
       description = ''
         Makes Spacemacs use this font width.
       '';
     };
     ext.spacemacs.config.font.powerline-scale = mkOption {
-      type = string;
+      type = str;
       default = "1.1";
       description = ''
         Makes Spacemacs use this powerline-scale.

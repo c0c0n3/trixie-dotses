@@ -18,7 +18,7 @@ with types;
       '';
     };
     ext.containers.networking.nat-interface = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         Specify an actual host network interface, e.g. "enp0s25" if you want

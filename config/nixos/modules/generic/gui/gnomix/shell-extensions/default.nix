@@ -33,7 +33,7 @@ with import ../gsettings/utils.nix;
       '';
     };
     ext.gnomix.shell.extensions.uuids = mkOption {
-      type = listOf string;
+      type = listOf str;
       default = [];
       description = ''
         GNOME Shell extension UUID's. These are UUID's of extensions you've

@@ -18,7 +18,7 @@ with types;
       '';
     };
     ext.wmx.wmName = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = "i3";
       description = ''
         What WM to use.
@@ -32,7 +32,7 @@ with types;
       '';
     };
     ext.wmx.dmName = mkOption {
-      type = string;
+      type = str;
       default = "slim";
       description = ''
         What display manager to use, e.g. "gdm".

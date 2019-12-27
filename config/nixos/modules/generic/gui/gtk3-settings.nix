@@ -23,14 +23,14 @@ in {
       '';
     };
     ext.gtk3.theme.name = mkOption {
-      type = string;
+      type = str;
       default = "Adwaita";
       description = ''
         The name of the GTK 3 theme to use. Defaults to Adwaita.
       '';
     };
     ext.gtk3.theme.icons-name = mkOption {
-      type = string;
+      type = str;
       default = "Adwaita";
       description = ''
         The name of the GTK 3 icon theme to use. Defaults to Adwaita.
@@ -44,7 +44,7 @@ in {
       '';
     };
     ext.gtk3.font = mkOption {
-      type = string;
+      type = str;
       default = "DejaVu Sans 11";
       description = ''
         The GTK 3 app font to use. Defaults to "DejaVu Sans 11".

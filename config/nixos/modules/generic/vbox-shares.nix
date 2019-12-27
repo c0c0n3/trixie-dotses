@@ -14,14 +14,14 @@ with types;
 
   options = {
     ext.vbox-shares.names = mkOption {
-      type = listOf string;
+      type = listOf str;
       default = [];
       description = ''
         Names of VirtualBox folders to mount.
       '';
     };
     ext.vbox-shares.username = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         The owner of the mount points (and of all the files in them).

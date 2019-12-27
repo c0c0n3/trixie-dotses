@@ -11,7 +11,7 @@ with import ./utils.nix;
 
   options = {
     ext.gnomix.gsettings.script.cmd-name = mkOption {
-      type = string;
+      type = str;
       default = "gnomix-settings.load";
       description = ''
         The name of the script to load the settings.
@@ -26,7 +26,7 @@ with import ./utils.nix;
       '';
     };
     ext.gnomix.gsettings.script.lines = mkOption {
-      type = attrsOf string;
+      type = attrsOf str;
       default = {};
       description = ''
         The lines that make up the script. Each module adds its specific bits.

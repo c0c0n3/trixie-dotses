@@ -16,7 +16,7 @@ with types;
       '';
     };
     ext.aspell.lang = mkOption {
-      type = listOf string;
+      type = listOf str;
       default = [ "en" ];
       description = ''
         List of language codes to specify what dictionaries to install.

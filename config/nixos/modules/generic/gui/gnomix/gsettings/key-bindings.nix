@@ -13,21 +13,21 @@ with import ./utils.nix;
 
   options = {
     ext.gnomix.gsettings.keys.switch-to-workspace-down = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to switch to the next workspace down the stack.
       '';
     };
     ext.gnomix.gsettings.keys.switch-to-workspace-up = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to switch to the next workspace up in the stack.
       '';
     };
     ext.gnomix.gsettings.keys.switch-to-workspace = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         Key combination to switch to workspaces 1 to 10. We generate 10 key
@@ -38,7 +38,7 @@ with import ./utils.nix;
       '';
     };
     ext.gnomix.gsettings.keys.move-to-workspace = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         Key combination to move to workspaces 1 to 10. We generate 10 key
@@ -49,56 +49,56 @@ with import ./utils.nix;
       '';
     };
     ext.gnomix.gsettings.keys.move-to-monitor-left = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to move to the monitor to the left.
       '';
     };
     ext.gnomix.gsettings.keys.move-to-monitor-right = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to move to the monitor to the right.
       '';
     };
     ext.gnomix.gsettings.keys.move-to-monitor-up = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to move to the monitor above.
       '';
     };
     ext.gnomix.gsettings.keys.move-to-monitor-down = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to move to the monitor below.
       '';
     };
     ext.gnomix.gsettings.keys.close = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to close a window.
       '';
     };
     ext.gnomix.gsettings.keys.maximize = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to maximise a window.
       '';
     };
     ext.gnomix.gsettings.keys.unmaximize = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to restore a window.
       '';
     };
     ext.gnomix.gsettings.keys.minimize = mkOption {
-      type = nullOr (listOf string);
+      type = nullOr (listOf str);
       default = null;
       description = ''
         List of key combinations to minimise a window.

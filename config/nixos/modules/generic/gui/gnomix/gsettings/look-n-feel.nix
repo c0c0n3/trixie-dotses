@@ -21,35 +21,35 @@ with import ./utils.nix;
       '';
     };
     ext.gnomix.gsettings.fonts.window-titles = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         Window titles font.
       '';
     };
     ext.gnomix.gsettings.fonts.interface = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         Interface font.
       '';
     };
     ext.gnomix.gsettings.fonts.documents = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         Documents font.
       '';
     };
     ext.gnomix.gsettings.fonts.monospace = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         Monospace font.
       '';
     };
     ext.gnomix.gsettings.gtk-theme = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         GTK theme.
@@ -63,7 +63,7 @@ with import ./utils.nix;
       '';
     };
     ext.gnomix.gsettings.icon-theme = mkOption {
-      type = nullOr string;
+      type = nullOr str;
       default = null;
       description = ''
         Icon theme.

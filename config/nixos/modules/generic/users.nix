@@ -14,7 +14,7 @@ with types;
 
   options = {
     ext.users.admins = mkOption {
-      type = listOf string;
+      type = listOf str;
       default = [];
       description = ''
         List of usernames for which to create admin users.
