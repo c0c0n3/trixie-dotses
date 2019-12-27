@@ -55,13 +55,11 @@ with types;
   let
     cfg = config.ext.haskell.dev;
 
-    skip-tests = pkgs.haskell.lib.dontCheck;
     listDevBase = ps: with ps; [
       # Programs and Tools
       # ------------------
       # - Haskell platform tools except for Stack.
-      alex cabal-install haddock
-      happy hscolour
+      alex cabal-install haddock happy hscolour
       # - needed by Spacemacs Haskell layer and generally useful anyway.
       apply-refact hlint stylish-haskell hasktags hoogle
       # - other tools I've found useful.
