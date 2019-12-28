@@ -48,7 +48,7 @@ in
   # Make my admin user a member of the Vbox group too and set up my usual
   # VBox shares for him.
   ext.vbox-shares = {
-    names = [ "dropbox" "github" "playground" "projects" ];
+    names = [ "dropbox" "github" "playground" ];
     username = adminName;
   };
 

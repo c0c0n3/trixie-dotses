@@ -31,7 +31,6 @@ In VM *Settings ➲ Shared Folders*, add
     /Volumes/data/VMs/dropbox
     /Volumes/data/github
     /Volume/data/playground
-    /Volumes/data/projects
 
 Do *not* enable auto-mount. Also make sure directory names match those
 declared in `ext.vbox-shares.names` or the system will fail to start.
