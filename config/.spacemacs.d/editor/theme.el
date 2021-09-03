@@ -23,27 +23,11 @@
    dotspacemacs-themes '(solarized-dark solarized-light
                          zenburn)
 
-   ;; Default font. Tweak powerline-scale if separators don't look good.
+   ;; Default font.
    dotspacemacs-default-font (spacefont
                               '("Source Code Pro"
                                :size 18
                                :weight light
-                               :width normal
-                               :powerline-scale 1.1))
+                               :width normal))
    )
   )
-
-(defun theme/user-config ()
-  ;; Make NeoTree and dired use the icons provided by 'all-the-icons' pkg.
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
-  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-
-  ;; Fill column indicator style.
-  (setq fci-rule-width 1)
-  (setq fci-rule-color "#073642")  ;; Solarized Base02
-  )
-;; NOTE
-;; 1. Hard-coded fill column indicator colour.
-;; Any way I can avoid hard-coding it? Ideally it should be some constant
-;; that is defined in both themes I'm using so that when switching themes
-;; the colour is switched too.

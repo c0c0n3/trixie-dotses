@@ -16,11 +16,16 @@
 
    ;; Enable smooth scrolling (native-scrolling). This overrides Emacs default
    ;; behavior which recenters the point when it reaches the top or bottom of
-   ;; the screen.
+   ;; the screen. Plus, don't show the scroll bar while scrolling.
    dotspacemacs-smooth-scrolling t
+   dotspacemacs-scroll-bar-while-scrolling nil
 
    ;; Show line numbers when in 'prog-mode' or 'text-mode'.
    dotspacemacs-line-numbers t
+
+   ;; Use Spacemacs powerline. Tweak scale if separators don't look good.
+   dotspacemacs-mode-line-theme '(spacemacs :separator arrow
+                                            :separator-scale 1.5)
    )
   )
 ;; NOTE

@@ -51,6 +51,7 @@
   ;; spacemacs does that already
 
   ;; Activate fill column indicator in prog-mode and text-mode.
-  (add-hook 'prog-mode-hook 'turn-on-fci-mode)
-  (add-hook 'text-mode-hook 'turn-on-fci-mode)
+  ;; No need to set the column fill, since Spacemacs already sets it to 80.
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
   )
