@@ -41,8 +41,7 @@ Fonts
     $ brew cask install font-ubuntu
     
 Now download and install *KG Miss Speechy IPA* and *Sansita One* yourself
-as I couldn't find a cask for it. Same for the [icon fonts][all-the-icons-fonts]
-used by the [all-the-icons.el][all-the-icons] Emacs package.
+as I couldn't find a cask for it.
 
 ###### Notes
 1. **Alegreya & AlegreyaSC**. Using both fonts for blog and doc sites.
@@ -60,8 +59,7 @@ it doesn't have Greek letters!)
 8. **Ubuntu**. Actually the only font in the family I've ever used is
 *Ubuntu Mono* for presentations, but couldn't find a cask for just this
 font, so am installing the whole family.
-9. [all-the-icons.el][all-the-icons]'s fonts add some eye-candy to my
-Spacemacs theme.
+
 
 Google Chrome
 -------------
@@ -223,10 +221,6 @@ with it so I had to put it on my personal laptop.
 
 
 
-[all-the-icons]: https://github.com/domtronn/all-the-icons.el
-    "all-the-icons.el on GitHub"
-[all-the-icons-fonts]: https://github.com/domtronn/all-the-icons.el/tree/master/fonts
-    "all-the-icons.el fonts directory on GitHub"
 [aspell.remove-opts]: https://github.com/Homebrew/homebrew-core/pull/36225
     "Aspell: remove options"
 [backup]: backup.md
