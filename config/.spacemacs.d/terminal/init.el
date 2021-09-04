@@ -8,34 +8,15 @@
 (defun dotspacemacs/layers ()
   (setq-default
    dotspacemacs-configuration-layers '()
-   dotspacemacs-excluded-packages '(eval-sexp-fu
-                                    evil-anzu
-                                    evil-search-highlight-persist
-                                    evil-surround
-                                    flx-ido
-                                    helm   ;; keep?
-                                    ido-vertical-mode
-                                    info+  ;; keep?
-                                    ;; page-break-lines ;; something else needs it...
-                                    persp-mode
-                                    popwin  ;; keep?
-                                    smartparens
-                                    vi-tilde-fringe
-                                    volatile-highlights
-                                    undo-tree
-                                    which-key ;; keep?
-                                    window-numbering
-                                    ws-butler)
+   dotspacemacs-distribution 'spacemacs-base
    ;; Do *not* delete any orphan packages as they're needed by
    ;; '~/.spacemacs.d/init.el'.
    dotspacemacs-install-packages 'used-but-keep-unused)
   )
 ;; NOTE
-;; 1. Excluding the above packages results in slightly shorter startup times
-;; (~300ms on my VM). But now I have to maintain this list and also am not
-;; sure about package deps. (I looked at the loaded modes with 'C-h m' to come
-;; up with the above list, not very safe!) Don't think the small performance
-;; gain is worth the hassle though...
+;; 1. Spacemacs load time. Using the `spacemacs-base' distribution avoids
+;; loading tons of packages most of which I won't need for the shell and
+;; so you get a shorter startup time---saves about 2 seconds on average.
 
 (defun dotspacemacs/init ()
   (frame/init)
@@ -43,7 +24,16 @@
   (theme/init)
   )
 
+(defun dotspacemacs/user-env ()
+  ;; Env vars file not really needed since I usually start Emacs from a Nix
+  ;; shell.
+  ;; (spacemacs/load-spacemacs-env)
+  )
+
 (defun dotspacemacs/user-init ()
+  )
+
+(defun dotspacemacs/user-load ()
   )
 
 (defun dotspacemacs/user-config ()
