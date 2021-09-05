@@ -32,12 +32,37 @@ Install Emacs first. Then:
     $ cp -r /path/to/this/.spacemacs.d ~/
 
 Note that you can't use any existing Emacs config. But you can restore it later
-if you want to switch back to it. Also, you can sym-link this repo's 
+if you want to switch back to it. Also, you can sym-link this repo's
 `.spacemacs.d` into your home instead of copying it.
 
-###### Default Font
+#### Default font
 Spacemacs uses "Source Code Pro" as default font. I use that too in my config,
 so install it or change the font settings, see below.
+
+#### Spacemacs version compatibility
+It looks like Spacemacs sort of adopts a rolling release model these
+days. In fact, point releases used to come off the `master` branch, but
+this branch hasn't got any updates in ages and the `develop` branch,
+where all the action takes place, has become the default branch on GitHub.
+So when you clone with
+
+    $ git clone https://github.com/syl20bnr/spacemacs
+
+as documented in the official install instructions, what you get is actually
+the latest of `develop`. Will my config in `.spacemacs.d` still work
+with the Spacemacs code you check out at some time in the future? Dunno.
+But if something breaks and you don't want to fix it, just go back to
+the the same `develop` commit I tested with:
+
+- https://api.github.com/repos/syl20bnr/spacemacs/commits/3875f7a2fdef2f7373a1f01622dc228b1ed2b534
+
+To do that quickly, just
+
+    $ cd ~/.emacs.d
+    $ git checkout 3875f7a2fdef2f7373a1f01622dc228b1ed2b534
+
+but keep in mind your Spacemacs repo is now in a [detached head][git.det-head]
+state.
 
 
 Usage
@@ -73,7 +98,7 @@ file, so you should have no `~/.spacemacs` or `SPACEMACSDIR` and should
 have copied (or sym-linked) the directory containing this README to your
 home---see Installation section above.
 
-### Spacemacs Theme
+### Spacemacs theme
 Theme settings are in `editor/theme.el`. One thing you may want to tweak
 is the font, especially the size. You can do this by directly editing the
 theme file or by setting the `SPACEFONT` environment variable to a font
@@ -81,6 +106,26 @@ spec in the format `dotspacemacs-default-font` expects, e.g.
 
     SPACEFONT="'(\"Monaco\" :size 16)"
     SPACEFONT="'(\"Source Code Pro\" :size 18 :weight light)"
+
+### Spacemacs layers
+The editor config set loads some Spacemacs layers that I use often. The
+corresponding config stanza sits in `editor/layers.el`. If you want to
+load a different set of layers within the editor config set, define a
+`custom-layers` function and put it in `~/.spacemacs.layers.el`. Have a
+look at `editor/layers.el` for the details.
+
+Notice `editor/layers.el` configures [Treemacs][treemacs] and adds a
+`navbar` interactive function to bring up a Treemacs window with just
+a project for the current directory in it as opposed to the default
+workspace and projects:
+
+    $ cd my/proj/root
+    $ emacs . &
+    (Emacs) M-x navbar
+
+But keep in mind `navbar` replaces all the projects in your current
+Treemacs workspace with a project for the current directory. Fully-fledged
+workspaces are actually much more useful, [check them out][treemacs]!
 
 
 Configuration Organisation
@@ -99,8 +144,8 @@ settings.
 
 ### Initial Spacemacs configuration
 I generated an initial Spacemacs config file by launching Spacemacs with
-no config and selecting the Holy mode option (Emacs editing style) when
-prompted. Then
+no config and selecting the Holy mode option (Emacs editing style) and the
+default Spacemacs distribution bundle (`spacemacs`) when prompted. Then
 
     $ mkdir ~/.spacemacs.d
     $ mv  ~/.spacemacs ~/.spacemacs.d/.spacemacs.original
@@ -116,7 +161,7 @@ Issues
 ------
 There are some annoyances, but nothing I can't live with.
 
-###### Performance
+#### Performance
 Spacemacs takes a couple of seconds to start up. This is no problem when I
 launch the editor, but it's sort of annoying when starting the terminal
 emulator (i.e. Spacemacs started with `terminal/init.el`) as I'd like it to
@@ -127,15 +172,23 @@ just overkill. (Well, it's quite a bit of work if you want to have a
 proper, robust, and flexible set up, unlike the one we've sketched
 out earlier!)
 
-###### Smooth Scrolling
+#### Smooth scrolling
 Seems to cause sluggish performance on my Ubuntu workstation after a few
 hours of editing. No noticeable issue in my Arch Linux VM though...
 
-###### Transparency
+#### Transparency
 Active/inactive transparency settings seem to have no effect. See `frame.el`
 and `terminal\frame.el`. Switching themes in the terminal emulator (i.e.
 Spacemacs started with `terminal/init.el`) causes transparency issues.
 
-###### Spacemacs Buffer
+#### Spacemacs buffer
 Could not find a clean way to inhibit it. See notes in `frame.el` and
 `terminal\frame.el`.
+
+
+
+
+[git.det-head]: https://git-scm.com/docs/git-checkout#_detached_head
+    "git-checkout Documentation - Detached head"
+[treemacs]: https://github.com/Alexander-Miller/treemacs
+    "Treemacs - a tree layout file explorer for Emacs"

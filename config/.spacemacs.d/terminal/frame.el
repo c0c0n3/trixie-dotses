@@ -7,8 +7,9 @@
 
    ;; Enable smooth scrolling (native-scrolling). This overrides Emacs default
    ;; behavior which recenters the point when it reaches the top or bottom of
-   ;; the screen.
+   ;; the screen. Plus, don't show the scroll bar while scrolling.
    dotspacemacs-smooth-scrolling t
+   dotspacemacs-scroll-bar-while-scrolling nil
 
    ;; Show line numbers when in 'prog-mode' or 'text-mode'.
    dotspacemacs-line-numbers t
@@ -26,6 +27,9 @@
   ;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
   (set-frame-parameter (selected-frame) 'alpha '(85 85))
   (add-to-list 'default-frame-alist '(alpha 85 85))
+
+  ;; Hide the mode line.
+  (setq-default mode-line-format nil)
   )
 
 ;; Get rid of initial Spacemacs buffer.
@@ -36,12 +40,10 @@
 
 
 ;; NOTE
-;; 1. Think Spacemacs hides the initial splash screen with
+;; 1. I think Spacemacs hides the initial splash screen with
 ;;     (setq inhibit-startup-screen t)
-;; and replaces it with its own buffer ("spacemacs") which I managed to kill
-;; but then I get an annoying message in the status bar:
-;;     save-current-buffer: Wrong type argument: stringp, nil.
-;; There must be a better way of doing this?
+;; and replaces it with its own buffer ("spacemacs") which I managed to kill.
+;; Is there a better way of doing this?
 ;; Note the 'append param: we have to add this hook at the rear of the
 ;; queue so it gets executed after Spacemacs own start up hook.
 ;;
