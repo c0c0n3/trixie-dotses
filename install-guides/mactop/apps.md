@@ -111,12 +111,12 @@ First clone the Spacemacs repo
 
     $ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
-Then install Emacs using the `emacs-plus` formula cos it builds Emacs with
+Then install Emacs 27 using the `emacs-plus` formula b/c it builds Emacs with
 some options that make it more Mac-friendly as well as the Spacemacs icon.
 
     $ brew tap d12frosted/emacs-plus
-    $ brew install emacs-plus
-    $ ln -s /usr/local/opt/emacs-plus/Emacs.app /Applications
+    $ brew install emacs-plus@27 --with-spacemacs-icon
+    $ ln -s /usr/local/opt/emacs-plus@27/Emacs.app /Applications
 
 Hook up my config.
 
