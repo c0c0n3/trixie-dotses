@@ -20,7 +20,8 @@
   (setq-default
 
    ;; Start off with Solarized dark. Hit 'M-m T n' to cycle to next theme.
-   dotspacemacs-themes '(solarized-dark solarized-light
+   dotspacemacs-themes '(nord
+                         solarized-dark solarized-light
                          zenburn)
 
    ;; Default font.
